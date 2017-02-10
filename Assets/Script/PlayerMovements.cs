@@ -20,7 +20,11 @@ public class PlayerMovements : MonoBehaviour
     float PeriodBetweenShoot = 0.25f;
     [SerializeField]
     Transform BulletPrefab;
-    float BulletLeft = 10;
+    [SerializeField]float BulletLeft;
+    float EmptyGun = 0;
+    [SerializeField]
+    float ReloadTime = 1f;
+
 
 
     void Awake()
@@ -58,6 +62,9 @@ public class PlayerMovements : MonoBehaviour
 
         ////////////FIRE////////////////
         Fire(false);
+        ////////////////////////////////
+
+        Reload();
 	}
 
      void FixedUpdate()
@@ -79,17 +86,20 @@ public class PlayerMovements : MonoBehaviour
 
         if (inputDevice != null && timeBetweenShoot > PeriodBetweenShoot &&
             (Mathf.Abs(inputDevice.RightStick.X) > WalkDeadZone || Mathf.Abs(inputDevice.RightStick.Y) > WalkDeadZone)
-            && InputManager.Devices[0].RightBumper.WasPressed)
+            && InputManager.Devices[0].RightBumper.WasPressed && BulletLeft > EmptyGun)
         {
             direction = new Vector3(inputDevice.RightStick.X, inputDevice.RightStick.Y);
             timeBetweenShoot = 0;
+            BulletLeft -= 1;
+
         }
-        else if (Input.GetMouseButtonDown(0) && timeBetweenShoot > PeriodBetweenShoot)
+        else if (Input.GetMouseButtonDown(0) && timeBetweenShoot > PeriodBetweenShoot && BulletLeft > EmptyGun)
         {
             Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y);
             mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
             direction = mousePosition - transform.position;
             timeBetweenShoot = 0;
+            BulletLeft -= 1;
         }
         else
         {
@@ -102,6 +112,19 @@ public class PlayerMovements : MonoBehaviour
         {
             shot.isEnemyShot = isEnemy;
             shot.Direction = direction.normalized;
+        }
+    }
+
+    void Reload()
+    {
+        if(BulletLeft <= EmptyGun)
+        {
+            ReloadTime -= Time.deltaTime;
+        }
+        if(ReloadTime <= 0 && BulletLeft <= EmptyGun)
+        {
+            BulletLeft = 10;
+            ReloadTime = 1f;
         }
     }
 }
