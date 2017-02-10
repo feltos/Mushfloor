@@ -16,10 +16,11 @@ public class PlayerMovements : MonoBehaviour
     bool IsTurnedRight = true;
     Vector2 direction;
     const float WalkDeadZone = 0.01f;
-    float PeriodBetweenShoot = 0.2f;
-    float timeBetweenShoot = 0.2f;
+    float timeBetweenShoot = 0.25f;
+    float PeriodBetweenShoot = 0.25f;
     [SerializeField]
     Transform BulletPrefab;
+    float BulletLeft = 10;
 
 
     void Awake()
@@ -56,7 +57,7 @@ public class PlayerMovements : MonoBehaviour
         ///////////////////////////////////
 
         ////////////FIRE////////////////
-        Fire();
+        Fire(false);
 	}
 
      void FixedUpdate()
@@ -72,21 +73,23 @@ public class PlayerMovements : MonoBehaviour
         IsTurnedRight = !IsTurnedRight;
     }
 
-    void Fire()
+    void Fire(bool isEnemy)
     {
         var inputDevice = (InputManager.Devices.Count > 0) ? InputManager.Devices[0] : null;
 
         if (inputDevice != null && timeBetweenShoot > PeriodBetweenShoot &&
-            (Mathf.Abs(inputDevice.RightStick.X) > WalkDeadZone || Mathf.Abs(inputDevice.RightStick.Y) > WalkDeadZone))
+            (Mathf.Abs(inputDevice.RightStick.X) > WalkDeadZone || Mathf.Abs(inputDevice.RightStick.Y) > WalkDeadZone)
+            && InputManager.Devices[0].RightBumper.WasPressed)
         {
             direction = new Vector3(inputDevice.RightStick.X, inputDevice.RightStick.Y);
             timeBetweenShoot = 0;
         }
-        else if (Input.GetMouseButtonDown(0))
+        else if (Input.GetMouseButtonDown(0) && timeBetweenShoot > PeriodBetweenShoot)
         {
             Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y);
             mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
             direction = mousePosition - transform.position;
+            timeBetweenShoot = 0;
         }
         else
         {
@@ -94,9 +97,11 @@ public class PlayerMovements : MonoBehaviour
         }
         var shotTransform = Instantiate(BulletPrefab,transform.position,transform.rotation) as Transform;
         shotTransform.position = transform.position;
-        if(BulletPrefab != null)
+        ShotBasic shot = shotTransform.gameObject.GetComponent<ShotBasic>();
+        if(shot != null)
         {
-            shotTransform.position = direction.normalized;
+            shot.isEnemyShot = isEnemy;
+            shot.Direction = direction.normalized;
         }
     }
 }
