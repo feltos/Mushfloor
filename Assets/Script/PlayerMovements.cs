@@ -6,7 +6,9 @@ using InControl;
 public class PlayerMovements : MonoBehaviour
 {
     [SerializeField]
-    Vector2 speed;
+    Vector2 BasicSpeed;
+    [SerializeField]
+    Vector2 DashSpeed;
     private Vector2 Movement;
     float horizontal;
     float vertical;
@@ -24,6 +26,8 @@ public class PlayerMovements : MonoBehaviour
     float EmptyGun = 0;
     [SerializeField]
     float ReloadTime = 1f;
+    float DashReload = 0.25f;
+    float PeriodBetweenDash = 0.25f;
 
 
 
@@ -34,19 +38,20 @@ public class PlayerMovements : MonoBehaviour
 
     void Start ()
     {
-		
+       
 	}
 	
 	
 	void Update ()
     {
         timeBetweenShoot += Time.deltaTime;
+        DashReload += Time.deltaTime;
         ////////////////WALK//////////////////
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
         Movement = new Vector2(
-        speed.x * horizontal,
-        speed.y * vertical);
+        BasicSpeed.x * horizontal,
+        BasicSpeed.y * vertical);
         /////////////////////////////////////
 
         //////////////FLIP/////////////////
@@ -64,7 +69,11 @@ public class PlayerMovements : MonoBehaviour
         Fire(false);
         ////////////////////////////////
 
+        /////////////RELOAD////////////
         Reload();
+        ///////////////////////////////
+        Dash();
+
 	}
 
      void FixedUpdate()
@@ -125,6 +134,15 @@ public class PlayerMovements : MonoBehaviour
         {
             BulletLeft = 10;
             ReloadTime = 1f;
+        }
+    }
+    void Dash()
+    {
+        var inputDevice = (InputManager.Devices.Count > 0) ? InputManager.Devices[0] : null;
+
+        if ((inputDevice != null && InputManager.Devices[0].Action2.WasPressed && DashReload > PeriodBetweenDash) || (Input.GetMouseButtonDown(1) && DashReload > PeriodBetweenDash))
+        {
+            BasicSpeed = DashSpeed;
         }
     }
 }
