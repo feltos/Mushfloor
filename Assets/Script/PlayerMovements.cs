@@ -73,8 +73,10 @@ public class PlayerMovements : MonoBehaviour
         /////////////RELOAD////////////
         Reload();
         ///////////////////////////////
-        Dash();
 
+        ////////////////DASH///////////
+        Dash();
+        //////////////////////////////
 	}
 
      void FixedUpdate()
