@@ -14,6 +14,7 @@ public class LittleMonster : MonoBehaviour
     [SerializeField]
     Vector2 Speed;
     Vector2 Direction;
+    bool IsEnemy = true;
 
     void Awake()
     {
@@ -38,4 +39,23 @@ public class LittleMonster : MonoBehaviour
     {
         rb2dLM.velocity = Movement;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+         
+        ShotBasic shot = collision.gameObject.GetComponent<ShotBasic>();
+        if (shot != null)
+        {
+            if (shot.isEnemyShot != IsEnemy)
+            {
+                HP -= shot.damage;
+                Destroy(shot.gameObject);
+            }
+            if (HP <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+    
+}
 }
