@@ -15,6 +15,11 @@ public class LittleMonster : MonoBehaviour
     Vector2 Speed;
     Vector2 Direction;
     bool IsEnemy = true;
+    Vector2 direction;
+    [SerializeField]
+    Transform BulletPrefab;
+    float ShootCooldown = 2f;
+    float BulletShoot = 2f;
 
     void Awake()
     {
@@ -23,16 +28,21 @@ public class LittleMonster : MonoBehaviour
 
     void Start ()
     {
-    
+        ShootCooldown = 0f;
 	}
 	
 	
 	void Update ()
     {
+        ShootCooldown += Time.deltaTime;
+
         Direction = (Target.transform.position - transform.position).normalized;
         Movement = new Vector2(
             Speed.x * Direction.x,
             Speed.y * Direction.y);
+        /////////////FIRE//////////////
+        fire();
+        //////////////////////////////
 	}
 
     void FixedUpdate()
@@ -57,5 +67,21 @@ public class LittleMonster : MonoBehaviour
             }
         }
     
-}
+    }
+
+    void fire()
+    {
+        if(ShootCooldown >= BulletShoot)
+        {
+            var shotTransform = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
+            shotTransform.position = transform.position;
+            ShotBasic shot = shotTransform.gameObject.GetComponent<ShotBasic>();
+            direction = Target.transform.position - transform.position;
+
+            shot.isEnemyShot = true;
+            shot.Direction = direction.normalized;
+            ShootCooldown = 0f;
+        }
+        
+    }
 }
