@@ -9,6 +9,8 @@ public class PlayerMovements : MonoBehaviour
     Vector2 BasicSpeed;
     [SerializeField]
     Vector2 DashSpeed;
+    [SerializeField]
+    Vector2 ActualSpeed;
     private Vector2 Movement;
     float horizontal;
     float vertical;
@@ -26,9 +28,8 @@ public class PlayerMovements : MonoBehaviour
     float EmptyGun = 0;
     [SerializeField]
     float ReloadTime = 1f;
-    float DashReload = 0.25f;
-    float PeriodBetweenDash = 0.25f;
-
+    float DashReload = 0.2f;
+    float PeriodBetweenDash = 0.2f;
 
 
     void Awake()
@@ -38,7 +39,7 @@ public class PlayerMovements : MonoBehaviour
 
     void Start ()
     {
-       
+        ActualSpeed = BasicSpeed;
 	}
 	
 	
@@ -50,8 +51,8 @@ public class PlayerMovements : MonoBehaviour
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
         Movement = new Vector2(
-        BasicSpeed.x * horizontal,
-        BasicSpeed.y * vertical);
+        ActualSpeed.x * horizontal,
+        ActualSpeed.y * vertical);
         /////////////////////////////////////
 
         //////////////FLIP/////////////////
@@ -142,7 +143,12 @@ public class PlayerMovements : MonoBehaviour
 
         if ((inputDevice != null && InputManager.Devices[0].Action2.WasPressed && DashReload > PeriodBetweenDash) || (Input.GetMouseButtonDown(1) && DashReload > PeriodBetweenDash))
         {
-            BasicSpeed = DashSpeed;
+            ActualSpeed = DashSpeed;
+            DashReload = 0f;
+        }
+        if (DashReload > PeriodBetweenDash)
+        {
+            ActualSpeed = BasicSpeed;
         }
     }
 }
