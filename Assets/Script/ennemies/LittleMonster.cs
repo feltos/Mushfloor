@@ -15,7 +15,6 @@ public class LittleMonster : MonoBehaviour
     Vector2 Speed;
     Vector2 Direction;
     bool IsEnemy = true;
-    Vector2 direction;
     [SerializeField]
     Transform BulletPrefab;
     float ShootCooldown = 1.5f;
@@ -76,12 +75,15 @@ public class LittleMonster : MonoBehaviour
             var shotTransform = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
             shotTransform.position = transform.position;
             ShotBasic shot = shotTransform.gameObject.GetComponent<ShotBasic>();
-            direction = Target.transform.position - transform.position;
+            
 
             shot.isEnemyShot = true;
-            shot.Direction = direction.normalized;
+            shot.Direction = Direction;
             ShootCooldown = 0f;
         }
         
     }
+
+
+   
 }

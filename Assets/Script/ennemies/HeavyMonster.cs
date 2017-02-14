@@ -11,14 +11,13 @@ public class HeavyMonster : MonoBehaviour
     [SerializeField]
     Rigidbody2D rb2dHM;
     private Vector2 Movement;
-    private Vector2 MovementOfShot;
+    [SerializeField]
+    Rigidbody2D HeavyBullet;
     [SerializeField]
     Vector2 Speed;
     [SerializeField]
-    Vector2 SpeedOfShot;
     Vector2 Direction;
     bool IsEnemy = true;
-    Vector2 direction;
     [SerializeField]
     Transform HeavyBulletPrefab;
     float ShootCooldown = 4f;
@@ -45,16 +44,14 @@ public class HeavyMonster : MonoBehaviour
             Speed.y * Direction.y);
         /////////////FIRE//////////////
         fire();
-        ///////////SHOT DIRECTION////////////
-         
-        MovementOfShot = new Vector2(
-            SpeedOfShot.x * Direction.x,
-            SpeedOfShot.y * Direction.y);
+     
+
     }
 
     void FixedUpdate()
     {
         rb2dHM.velocity = Movement;
+      
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -78,12 +75,17 @@ public class HeavyMonster : MonoBehaviour
 
     void fire()
     {
+        
+
         if (ShootCooldown >= BulletShoot)
         {
-            var shotTransform = Instantiate(HeavyBulletPrefab, transform.position, transform.rotation) as Transform;
-            shotTransform.position = transform.position;
+            var HeavyBulletShot = Instantiate(HeavyBulletPrefab, transform.position, transform.rotation);
+            HeavyBulletShot.transform.position = transform.position;
+            ShotBasic HeavyBullet = HeavyBulletShot.gameObject.GetComponent<ShotBasic>();
+
+            HeavyBullet.isEnemyShot = true;
+            HeavyBullet.Direction = Direction;
            
-          
             ShootCooldown = 0f;
         }
 
