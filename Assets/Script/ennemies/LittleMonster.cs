@@ -18,8 +18,8 @@ public class LittleMonster : MonoBehaviour
     Vector2 direction;
     [SerializeField]
     Transform BulletPrefab;
-    float ShootCooldown = 2f;
-    float BulletShoot = 2f;
+    float ShootCooldown = 1.5f;
+    float BulletShoot = 1.5f;
 
     void Awake()
     {
