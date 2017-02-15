@@ -22,7 +22,7 @@ public class RafaleEnemy : MonoBehaviour
     float Rafale = 2f;
     float RafaleCooldown = 2f;
     float BulletLeft = 12f;
-    bool StopToShoot = true;
+    bool StopToShoot;
 
     void Awake()
     {
@@ -33,6 +33,7 @@ public class RafaleEnemy : MonoBehaviour
     {
         RafaleCooldown = 0f;
         BulletLeft = 0f;
+        StopToShoot = true;
 	}
 	
 	
@@ -78,29 +79,33 @@ public class RafaleEnemy : MonoBehaviour
         {
             var RafaleShot = Instantiate(RafalePrefab, transform.position, transform.rotation) as Transform;
             RafaleShot.position = transform.position;
-            ShotBasic shot = RafaleShot.gameObject.GetComponent<ShotBasic>();
+            ShotBasic Rafale = RafaleShot.gameObject.GetComponent<ShotBasic>();
 
 
-            shot.isEnemyShot = true;
-            shot.Direction = Direction;
+            Rafale.isEnemyShot = true;
+            Rafale.Direction = Direction;
             BulletShoot = 0f;
             BulletLeft -= 1f;
+           
         }
        
     }
 
     void reload()
     {
-        if(BulletLeft <= 0)
+        if(BulletLeft <= 0f)
         {
             StopToShoot = true;
             RafaleCooldown += Time.deltaTime;
+            
+           
         }
         if((RafaleCooldown >= Rafale) && (BulletLeft <= 0) && StopToShoot)
         {
             BulletLeft = 12f;
-            RafaleCooldown = 2f;
+            RafaleCooldown = 0f;
             StopToShoot = false;
+            
         }
     }
 }
