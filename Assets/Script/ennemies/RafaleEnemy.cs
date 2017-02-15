@@ -19,8 +19,8 @@ public class RafaleEnemy : MonoBehaviour
     Transform RafalePrefab;
     float BulletShoot = 0.2f;
     float BulletCooldown = 0.2f;
-    float Rafale = 2f;
-    float RafaleCooldown = 2f;
+    float Rafale = 3f;
+    float RafaleCooldown = 3f;
     float BulletLeft = 12f;
     bool StopToShoot;
 
@@ -98,7 +98,6 @@ public class RafaleEnemy : MonoBehaviour
             StopToShoot = true;
             RafaleCooldown += Time.deltaTime;
             
-           
         }
         if((RafaleCooldown >= Rafale) && (BulletLeft <= 0) && StopToShoot)
         {
