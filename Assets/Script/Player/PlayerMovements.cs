@@ -28,8 +28,8 @@ public class PlayerMovements : MonoBehaviour
     float EmptyGun = 0;
     [SerializeField]
     float ReloadTime = 1f;
-    float DashReload = 0.2f;
-    float PeriodBetweenDash = 0.2f;
+    float DashReload = 0.3f;
+    float PeriodBetweenDash = 0.3f;
 
 
     void Awake()
