@@ -40,7 +40,14 @@ public class LittleMonster : MonoBehaviour
             Speed.x * Direction.x,
             Speed.y * Direction.y);
         /////////////FIRE//////////////
-        fire();
+        if (ShootCooldown >= BulletShoot)
+        {
+            for(int i = -2; i <= 2; i++)
+            {
+                fire(Quaternion.AngleAxis(i*10, new Vector3 (0,0,1))* Direction);
+            }
+            
+        }
         //////////////////////////////
 	}
 
@@ -68,19 +75,19 @@ public class LittleMonster : MonoBehaviour
     
     }
 
-    void fire()
+    void fire(Vector2 direction)
     {
-        if(ShootCooldown >= BulletShoot)
-        {
+        
+        
             var shotTransform = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
             shotTransform.position = transform.position;
             ShotBasic shot = shotTransform.gameObject.GetComponent<ShotBasic>();
             
 
             shot.isEnemyShot = true;
-            shot.Direction = Direction;
+            shot.Direction = direction;
             ShootCooldown = 0f;
-        }
+        
         
     }
 
