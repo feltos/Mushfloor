@@ -40,14 +40,10 @@ public class LittleMonster : MonoBehaviour
             Speed.x * Direction.x,
             Speed.y * Direction.y);
         /////////////FIRE//////////////
-        if (ShootCooldown >= BulletShoot)
+        if(ShootCooldown >= BulletShoot)
         {
-            for(int i = -2; i <= 2; i++)
-            {
-                fire(Quaternion.AngleAxis(i*10, new Vector3 (0,0,1))* Direction);
-            }
-            
-        }
+            fire();
+        }       
         //////////////////////////////
 	}
 
@@ -75,7 +71,7 @@ public class LittleMonster : MonoBehaviour
     
     }
 
-    void fire(Vector2 direction)
+    void fire()
     {
         
         
@@ -85,7 +81,7 @@ public class LittleMonster : MonoBehaviour
             
 
             shot.isEnemyShot = true;
-            shot.Direction = direction;
+            shot.Direction = Direction;
             ShootCooldown = 0f;
         
         
