@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using InControl;
 
-public class PlayerMovements : MonoBehaviour
+public class PlayerManager : MonoBehaviour
 {
     [SerializeField]
     Vector2 BasicSpeed;
@@ -30,7 +30,11 @@ public class PlayerMovements : MonoBehaviour
     float ReloadTime = 1f;
     float DashReload = 0.3f;
     float PeriodBetweenDash = 0.3f;
-
+    [SerializeField]
+    float HP = 5;
+    float TimeBetweenDamage = 2f;
+    float PeriodBetweenDamage = 2f;
+    bool IsEnemy = true;
 
     void Awake()
     {
@@ -47,6 +51,7 @@ public class PlayerMovements : MonoBehaviour
     {
         timeBetweenShoot += Time.deltaTime;
         DashReload += Time.deltaTime;
+        TimeBetweenDamage += Time.deltaTime;
         ////////////////WALK//////////////////
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
@@ -151,6 +156,39 @@ public class PlayerMovements : MonoBehaviour
         if (DashReload > PeriodBetweenDash)
         {
             ActualSpeed = BasicSpeed;
+        }
+    }
+    public void LoseHP(float LoseLife)
+    {
+        HP -= LoseLife;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") && TimeBetweenDamage >= PeriodBetweenDamage)
+        {
+            HP -= 1; Debug.Log("done");
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        
+       
+
+        ShotBasic shot = collision.gameObject.GetComponent<ShotBasic>();
+        if (shot != null)
+        {
+            if (shot.isEnemyShot == IsEnemy)
+            {
+                HP -= shot.damage;
+                Destroy(shot.gameObject);
+            }
+        }
+
+            if (HP <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 }

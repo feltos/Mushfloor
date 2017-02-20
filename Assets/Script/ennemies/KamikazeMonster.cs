@@ -51,7 +51,6 @@ public class KamikazeMonster : MonoBehaviour
             {
                 HP -= shot.damage;
                 Destroy(shot.gameObject);
-                Debug.Log(HP);
             }
             if (HP <= 0)
             {

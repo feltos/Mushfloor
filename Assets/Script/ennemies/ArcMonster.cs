@@ -43,7 +43,7 @@ public class ArcMonster : MonoBehaviour
         {
             for (int i = -2; i <= 2; i++)
             {
-                fire(Quaternion.AngleAxis(i * 10, new Vector3(0, 0, 1)) * Direction);
+                fire(Quaternion.AngleAxis(i * 10, new Vector3(0, 0, 1)) * Direction.normalized);
             }
 
         }
