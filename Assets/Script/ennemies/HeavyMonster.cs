@@ -64,12 +64,17 @@ public class HeavyMonster : MonoBehaviour
                 HP -= shot.damage;
                 Destroy(shot.gameObject);
             }
+
             if (HP <= 0)
             {
                 Destroy(gameObject);
             }
         }
 
+        if (collision.gameObject.layer == LayerMask.NameToLayer("AOE"))
+        {
+            HP -= 1;
+        }
     }
 
 
@@ -91,8 +96,5 @@ public class HeavyMonster : MonoBehaviour
 
     }
 
-    public void LoseHP(float LoseLife)
-    {
-        HP -= LoseLife;
-    }
+
 }

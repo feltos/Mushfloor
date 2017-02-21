@@ -31,7 +31,7 @@ public class PlayerManager : MonoBehaviour
     float DashReload = 0.3f;
     float PeriodBetweenDash = 0.3f;
     [SerializeField]
-    float HP = 5;
+    float HP;
     float TimeBetweenDamage = 2f;
     float PeriodBetweenDamage = 2f;
     bool IsEnemy = true;
@@ -82,6 +82,7 @@ public class PlayerManager : MonoBehaviour
         ////////////////DASH///////////
         Dash();
         //////////////////////////////
+        
 	}
 
      void FixedUpdate()
@@ -158,15 +159,7 @@ public class PlayerManager : MonoBehaviour
             ActualSpeed = BasicSpeed;
         }
     }
-    public void LoseHP(float LoseLife)
-    {
-        if(TimeBetweenDamage >= PeriodBetweenDamage)
-        {
-            HP -= LoseLife;
-            TimeBetweenDamage = 0;
-        }
-        
-    }
+  
 
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -189,11 +182,16 @@ public class PlayerManager : MonoBehaviour
                 Destroy(shot.gameObject);
                 TimeBetweenDamage = 0;
             }
-        }
 
             if (HP <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        if(collision.gameObject.layer == LayerMask.NameToLayer("AOE"))
         {
-            Destroy(gameObject);
+            HP -= 1;
         }
     }
 }

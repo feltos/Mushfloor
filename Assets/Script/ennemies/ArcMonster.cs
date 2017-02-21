@@ -18,6 +18,7 @@ public class ArcMonster : MonoBehaviour
     [SerializeField]Transform BulletPrefab;
     float ShootCooldown = 1.5f;
     float BulletShoot = 1.5f;
+    bool IsEnemy = true;
 
     void Awake()
     {
@@ -69,8 +70,28 @@ public class ArcMonster : MonoBehaviour
         ShootCooldown = 0f;
     }
 
-    public void LoseHP(float LoseLife)
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        HP -= LoseLife;
+        ShotBasic shot = collision.gameObject.GetComponent<ShotBasic>();
+        if (shot != null)
+        {
+            if (shot.isEnemyShot != IsEnemy)
+            {
+                HP -= shot.damage;
+                Destroy(shot.gameObject);
+            }
+
+            if (HP <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+        if (collision.gameObject.layer == LayerMask.NameToLayer("AOE"))
+        {
+            HP -= 1;
+        }
+
+      
+
     }
 }

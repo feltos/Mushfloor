@@ -54,12 +54,19 @@ public class KamikazeMonster : MonoBehaviour
                 HP -= shot.damage;
                 Destroy(shot.gameObject);
             }
+
             if (HP <= 0)
             {
                 Destroy(gameObject);
             }
         }
-        if(collision.gameObject.tag == "Player")
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("AOE"))
+        {
+            HP -= 1;
+        }
+
+        if (collision.gameObject.tag == "Player")
         {
             Instantiate(FlamesCircle, transform.position, transform.rotation);
             Destroy(gameObject);

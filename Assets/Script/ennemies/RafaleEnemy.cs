@@ -65,12 +65,17 @@ public class RafaleEnemy : MonoBehaviour
                 HP -= shot.damage;
                 Destroy(shot.gameObject);
             }
+
             if (HP <= 0)
             {
                 Destroy(gameObject);
             }
         }
 
+        if (collision.gameObject.layer == LayerMask.NameToLayer("AOE"))
+        {
+            HP -= 1;
+        }
     }
 
     void fire()
@@ -108,9 +113,6 @@ public class RafaleEnemy : MonoBehaviour
         }
     }
 
-    public void LoseHP(float LoseLife)
-    {
-        HP -= LoseLife;
-    }
+
 
 }

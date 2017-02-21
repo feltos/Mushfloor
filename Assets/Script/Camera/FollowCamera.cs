@@ -14,7 +14,13 @@ public class FollowCamera : MonoBehaviour
     float MinPosY;
     [SerializeField]
     float MaxPosy;
-	void Start ()
+
+    void Awake()
+    {
+        Player = GameObject.Find("Player");
+    }
+
+    void Start ()
     {
         offset = transform.position - Player.transform.position;
 	}

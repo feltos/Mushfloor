@@ -52,7 +52,7 @@ public class LittleMonster : MonoBehaviour
         rb2dLM.velocity = Movement;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
          
         ShotBasic shot = collision.gameObject.GetComponent<ShotBasic>();
@@ -68,7 +68,14 @@ public class LittleMonster : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("AOE"))
+        {
+            HP -= 1;
+        }
+
     
+
     }
 
     void fire()
@@ -86,9 +93,6 @@ public class LittleMonster : MonoBehaviour
        
     }
 
-    public void LoseHP(float LoseLife)
-    {
-        HP -= LoseLife;
-    }
+   
 
 }
