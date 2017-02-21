@@ -16,7 +16,7 @@ public class KamikazeMonster : MonoBehaviour
     [SerializeField]
     GameObject Target;
     bool IsEnemy = true;
-    [SerializeField]GameObject FlamesCircle;
+    [SerializeField]GameObject PoisonCircle;
 
     void Awake()
     {
@@ -57,6 +57,7 @@ public class KamikazeMonster : MonoBehaviour
 
             if (HP <= 0)
             {
+                Instantiate(PoisonCircle, transform.position, transform.rotation);
                 Destroy(gameObject);
             }
         }
@@ -68,7 +69,7 @@ public class KamikazeMonster : MonoBehaviour
 
         if (collision.gameObject.tag == "Player")
         {
-            Instantiate(FlamesCircle, transform.position, transform.rotation);
+            Instantiate(PoisonCircle, transform.position, transform.rotation);
             Destroy(gameObject);
         }
 
