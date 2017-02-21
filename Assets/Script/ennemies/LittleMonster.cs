@@ -5,7 +5,7 @@ using UnityEngine;
 public class LittleMonster : MonoBehaviour
 {
     [SerializeField]
-    int HP;
+    float HP;
     [SerializeField]
     GameObject Target;
     [SerializeField]
@@ -83,10 +83,12 @@ public class LittleMonster : MonoBehaviour
             shot.isEnemyShot = true;
             shot.Direction = Direction;
             ShootCooldown = 0f;
-        
-        
+       
     }
 
+    public void LoseHP(float LoseLife)
+    {
+        HP -= LoseLife;
+    }
 
-   
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class RafaleEnemy : MonoBehaviour
 {
     [SerializeField]
-    int HP;
+    float HP;
     [SerializeField]
     GameObject Target;
     [SerializeField]
@@ -108,5 +108,9 @@ public class RafaleEnemy : MonoBehaviour
         }
     }
 
+    public void LoseHP(float LoseLife)
+    {
+        HP -= LoseLife;
+    }
 
 }

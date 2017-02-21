@@ -5,7 +5,7 @@ using UnityEngine;
 public class HeavyMonster : MonoBehaviour
 {
     [SerializeField]
-    int HP;
+    float HP;
     [SerializeField]
     GameObject Target;
     [SerializeField]
@@ -89,5 +89,10 @@ public class HeavyMonster : MonoBehaviour
             ShootCooldown = 0f;
         }
 
+    }
+
+    public void LoseHP(float LoseLife)
+    {
+        HP -= LoseLife;
     }
 }

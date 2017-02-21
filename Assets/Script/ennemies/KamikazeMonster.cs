@@ -6,7 +6,7 @@ public class KamikazeMonster : MonoBehaviour
 {
 
     [SerializeField]
-    int HP;
+    float HP;
     [SerializeField]
     Rigidbody2D rb2dKM;
     Vector2 Direction;
@@ -42,6 +42,8 @@ public class KamikazeMonster : MonoBehaviour
         rb2dKM.velocity = Movement;
     }
 
+
+
     void OnTriggerEnter2D(Collider2D collision)
     {
         ShotBasic shot = collision.gameObject.GetComponent<ShotBasic>();
@@ -64,4 +66,6 @@ public class KamikazeMonster : MonoBehaviour
         }
 
     }
+
+  
 }

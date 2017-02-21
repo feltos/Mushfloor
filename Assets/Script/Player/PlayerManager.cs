@@ -160,29 +160,34 @@ public class PlayerManager : MonoBehaviour
     }
     public void LoseHP(float LoseLife)
     {
-        HP -= LoseLife;
+        if(TimeBetweenDamage >= PeriodBetweenDamage)
+        {
+            HP -= LoseLife;
+            TimeBetweenDamage = 0;
+        }
+        
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") && TimeBetweenDamage >= PeriodBetweenDamage)
         {
-            HP -= 1; Debug.Log("done");
+            HP -= 1;
+            TimeBetweenDamage = 0;
         }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         
-       
-
         ShotBasic shot = collision.gameObject.GetComponent<ShotBasic>();
         if (shot != null)
         {
-            if (shot.isEnemyShot == IsEnemy)
+            if (shot.isEnemyShot == IsEnemy && TimeBetweenDamage >= PeriodBetweenDamage)
             {
                 HP -= shot.damage;
                 Destroy(shot.gameObject);
+                TimeBetweenDamage = 0;
             }
         }
 

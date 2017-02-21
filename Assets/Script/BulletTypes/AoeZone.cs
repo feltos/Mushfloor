@@ -6,6 +6,14 @@ public class AoeZone : MonoBehaviour
 {
     [SerializeField]
     PlayerManager Player;
+    [SerializeField]
+    LittleMonster LittleM;
+    [SerializeField]
+    HeavyMonster HeavyM;
+    [SerializeField]
+    ArcMonster ArcM;
+    [SerializeField]
+    RafaleEnemy RafaleM;
     float Damage = 1;
 
     void Awake()
@@ -15,7 +23,7 @@ public class AoeZone : MonoBehaviour
 
     void Start ()
     {
-		
+        Destroy(gameObject,10);
 	}
 	
 	
@@ -29,6 +37,21 @@ public class AoeZone : MonoBehaviour
         {
             Player.LoseHP(Damage);
         }
-        
+        if (collision.gameObject.tag == ("LittleM"))
+        {
+            LittleM.LoseHP(Damage);
+        }
+        if(collision.gameObject.tag == ("HeavyM"))
+        {
+            HeavyM.LoseHP(Damage);
+        }
+        if(collision.gameObject.tag == ("ArcM"))
+        {
+            ArcM.LoseHP(Damage);
+        }
+        if(collision.gameObject.tag == ("RafaleM"))
+        {
+            RafaleM.LoseHP(Damage);
+        }
     }
 }

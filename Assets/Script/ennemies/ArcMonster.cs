@@ -6,7 +6,7 @@ public class ArcMonster : MonoBehaviour
 {
 
     [SerializeField]
-    int HP;
+    float HP;
     [SerializeField]
     GameObject Target;
     Vector2 Direction;
@@ -67,7 +67,10 @@ public class ArcMonster : MonoBehaviour
         shot.isEnemyShot = true;
         shot.Direction = direction.normalized;
         ShootCooldown = 0f;
+    }
 
-
+    public void LoseHP(float LoseLife)
+    {
+        HP -= LoseLife;
     }
 }
