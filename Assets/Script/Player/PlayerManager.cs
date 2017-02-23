@@ -35,6 +35,8 @@ public class PlayerManager : MonoBehaviour
     float TimeBetweenDamage = 2f;
     float PeriodBetweenDamage = 2f;
     bool IsEnemy = true;
+    [SerializeField]
+    Animator Chest;
 
     void Awake()
     {
@@ -168,6 +170,7 @@ public class PlayerManager : MonoBehaviour
             HP -= 1;
             TimeBetweenDamage = 0;
         }
+       
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -193,5 +196,6 @@ public class PlayerManager : MonoBehaviour
         {
             HP -= 1;
         }
+        
     }
 }
