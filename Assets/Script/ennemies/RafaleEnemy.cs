@@ -58,7 +58,7 @@ public class RafaleEnemy : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         ShotBasic shot = collision.gameObject.GetComponent<ShotBasic>();
-        if (shot != null)
+        
         {
             if (shot.isEnemyShot != IsEnemy)
             {
@@ -69,7 +69,7 @@ public class RafaleEnemy : MonoBehaviour
             if (HP <= 0)
             {
                 Destroy(gameObject);
-            }
+            }       
         }
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("AOE"))
