@@ -20,5 +20,12 @@ public class TreeManager : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         ShotBasic shot = collision.gameObject.GetComponent<ShotBasic>();
+        if(shot != null)
+        {
+            if(shot)
+            {
+                Destroy(shot.gameObject);
+            }
+        }
     }
 }
