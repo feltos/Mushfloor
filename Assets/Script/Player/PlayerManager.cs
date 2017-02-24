@@ -6,6 +6,8 @@ using InControl;
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField]
+    FollowCamera cameraScript;
+    [SerializeField]
     Vector2 BasicSpeed;
     [SerializeField]
     Vector2 DashSpeed;
@@ -36,7 +38,7 @@ public class PlayerManager : MonoBehaviour
     float PeriodBetweenDamage = 2f;
     bool IsEnemy = true;
     [SerializeField]
-    Animator Chest;
+    BoxCollider2D BoxC2D;
 
     void Awake()
     {
@@ -155,10 +157,12 @@ public class PlayerManager : MonoBehaviour
         {
             ActualSpeed = DashSpeed;
             DashReload = 0f;
+            BoxC2D.enabled = false;
         }
         if (DashReload > PeriodBetweenDash)
         {
             ActualSpeed = BasicSpeed;
+            BoxC2D.enabled = true;
         }
     }
   
@@ -196,6 +200,11 @@ public class PlayerManager : MonoBehaviour
         {
             HP -= 1;
         }
-        
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Door1"))
+        {
+            cameraScript.changeSwitchAreaRoom2();
+            
+        }
     }
 }
