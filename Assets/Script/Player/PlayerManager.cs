@@ -203,8 +203,12 @@ public class PlayerManager : MonoBehaviour
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Door1"))
         {
-            cameraScript.changeSwitchAreaRoom2();
-            
+            cameraScript.changeSwitchAreaRoom2();            
+        }
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Door2"))
+        {
+            cameraScript.changeSwitchAreaRoom3();
         }
     }
 }
