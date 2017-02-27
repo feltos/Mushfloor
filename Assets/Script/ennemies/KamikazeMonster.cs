@@ -31,7 +31,7 @@ public class KamikazeMonster : MonoBehaviour
 	
 	void Update ()
     {
-        Direction = (Target.transform.position - transform.position);
+        Direction = (Target.transform.position - transform.position).normalized;
         Movement = new Vector2(
             Speed.x * Direction.x,
             Speed.y * Direction.y);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using InControl;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -40,6 +41,10 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     BoxCollider2D BoxC2D;
 
+    bool ImmuneToTraps = false;
+    [SerializeField]
+    GameObject AntiTraps;
+
     void Awake()
     {
         Cursor.visible = true;
@@ -53,6 +58,7 @@ public class PlayerManager : MonoBehaviour
 	
 	void Update ()
     {
+        AntiTraps = GameObject.Find("AntiTraps");
         timeBetweenShoot += Time.deltaTime;
         DashReload += Time.deltaTime;
         TimeBetweenDamage += Time.deltaTime;
@@ -192,18 +198,33 @@ public class PlayerManager : MonoBehaviour
 
             if (HP <= 0)
             {
-                Destroy(gameObject);
+                SceneManager.LoadScene(1);
             }
+        }
+
+        if(collision.gameObject.layer == LayerMask.NameToLayer("ImmuneToTraps"))
+        {
+            ImmuneToTraps = true;
+            Destroy(AntiTraps.gameObject);
         }
 
         if(collision.gameObject.layer == LayerMask.NameToLayer("AOE"))
         {
-            HP -= 1;
+            if(!ImmuneToTraps)
+            {
+                HP -= 1;
+            }
+            
+        }
+
+        if(collision.gameObject.layer == LayerMask.NameToLayer("DungeonDoor"))
+        {
+            SceneManager.LoadScene(0);
         }
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Door1"))
-        {
-            cameraScript.changeSwitchAreaRoom2();            
+        {                                            
+                cameraScript.changeSwitchAreaRoom2();                                                                                                         
         }
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Door2"))

@@ -4,23 +4,16 @@ using System.Collections;
 public class FollowCamera : MonoBehaviour
 {
    
-    private Vector3 offset;
-    [SerializeField]
-    float MinPosX;
-    [SerializeField]
-    float MaxPosX;
-    [SerializeField]
+    private Vector3 offset;    
+    float MinPosX;    
+    float MaxPosX;    
     float MinPosY;
-    [SerializeField]
     float MaxPosy;
 
     [SerializeField]
     GameObject Player;
-    [SerializeField]
-    BoxCollider2D PlayerBox;
-
+   
     
-
     enum SwitchRoom
     {
         DEFAULT,
@@ -46,9 +39,17 @@ public class FollowCamera : MonoBehaviour
         CheckRoom();
     }
 
+    public void changeSwitchAreaRoom1()
+    {
+        SwitchArea = SwitchRoom.DEFAULT;
+        CheckRoom();
+    }
+
     void Start ()
     {
         offset = transform.position - Player.transform.position;
+        SwitchArea = SwitchRoom.DEFAULT;
+        CheckRoom();
 	}
 
     void Update()
@@ -83,25 +84,30 @@ public class FollowCamera : MonoBehaviour
         switch(SwitchArea)
         {
             case SwitchRoom.DEFAULT:
+                {
+                    MinPosX = -4.2f;
+                    MaxPosX = 3.998743f;
+                    MinPosY = -2.25f;
+                    MaxPosy = 2.12631f;
+                }              
                 break;
 
             case SwitchRoom.ROOM2:
                 {
-                    MinPosX = 17.39f;
-                    MaxPosX = 27.1f;
-                    MinPosY = -2.47f;
-                    MaxPosy = 2.63f;
-                    Player.transform.position = transform.position;
+                    MinPosX = 14.72f;
+                    MaxPosX = 24.41f;
+                    MinPosY = -2.56f;
+                    MaxPosy = 2.55f;
+                    
                 }
                 break;
 
             case SwitchRoom.ROOM3:
                 {
-                    MinPosX = -4.61f;
-                    MaxPosX = 5.13f;
-                    MinPosY = 11.51f;
-                    MaxPosy = 16.73f;
-                    Player.transform.position = transform.position;
+                    MinPosX = -3.8f;
+                    MaxPosX = 3.42f;
+                    MinPosY = 8.47f;
+                    MaxPosy = 12.25f;                    
                 }
                 break;
         }
