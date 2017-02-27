@@ -35,10 +35,10 @@ public class ArcMonster : MonoBehaviour
     {
 
         ShootCooldown += Time.deltaTime;
-        Direction = Target.transform.position - transform.position.normalized;
+        Direction = Target.transform.position - transform.position;
         Movement = new Vector2(
             Speed.x * Direction.x,
-            Speed.y * Direction.y).normalized;
+            Speed.y * Direction.y);
         /////////////////FIRE/////////////////////
         if (ShootCooldown >= BulletShoot)
         {
