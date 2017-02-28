@@ -7,10 +7,27 @@ public class BossManager : MonoBehaviour
     [SerializeField]
     GameObject Target;
     Vector2 DirectionOfShoot;
-    float ShootCooldown = 1.5f;
-    float BulletShoot = 1.5f;
+    float AttackCooldown = 2f;
+    float AttackShoot = 2f;
+    float FireCircleCooldown = 2f;
+    float FireCircleShoot = 2f;
+    float HeavyBulletCooldown = 3f;
+    float HeavyBulletShoot = 3f;
+    float HeavyBulletremaining = 5f;
+    float FireCircleRamaining = 3f;
     [SerializeField]
     Transform BulletPrefab;
+    [SerializeField]
+    Transform HeavyBulletPrefab;
+
+    int attackListBossLenght = AttackListBoss.GetNames(typeof(AttackListBoss)).Length;
+
+    enum AttackListBoss
+    {
+        FIRE1,
+        FIRE2
+    }
+    AttackListBoss AttackList;
 
     void Awake()
     {
@@ -19,34 +36,73 @@ public class BossManager : MonoBehaviour
 
     void Start ()
     {
-        ShootCooldown = 0f;
+        FireCircleCooldown = 0f;
+        HeavyBulletCooldown = 0f;
+        AttackList = AttackListBoss.FIRE1;
 	}
-	
-	
-	void Update ()
+
+
+    void checkAttack()
     {
-        ShootCooldown += Time.deltaTime;
-        DirectionOfShoot = Target.transform.position - transform.position;
-        if(ShootCooldown >= BulletShoot)
+        switch (AttackList)
         {
-            for (int i = 0; i <= 35; i++)
-            {
-                fire(Quaternion.AngleAxis(i * 10, new Vector3(0, 0, 1)) * DirectionOfShoot.normalized);
-            }
+            case AttackListBoss.FIRE1:
+                {
+                    FireCircle(DirectionOfShoot);
+                }
+                break;
+
+            case AttackListBoss.FIRE2:
+                {
+                    FireHeavyBullet();
+                }
+                break;
         }
-     
     }
 
-    void fire(Vector2 direction)
+	void Update ()
     {
+        FireCircleCooldown += Time.deltaTime;
+        HeavyBulletCooldown += Time.deltaTime;
+        DirectionOfShoot = Target.transform.position - transform.position;
 
-        var shotTransform = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
-        shotTransform.position = transform.position;
-        ShotBasic shot = shotTransform.gameObject.GetComponent<ShotBasic>();
+        if (AttackCooldown >= AttackShoot)
+        {
+            AttackList = (AttackListBoss)Random.Range(0, attackListBossLenght);
+            checkAttack();
+        }
+        
+    }
+
+    void FireCircle(Vector2 direction)
+    {
+        
+        
+            var shotTransform = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
+            shotTransform.position = transform.position;
+            ShotBasic shot = shotTransform.gameObject.GetComponent<ShotBasic>();
 
 
-        shot.isEnemyShot = true;
-        shot.Direction = direction.normalized;
-        ShootCooldown = 0f;   
+            shot.isEnemyShot = true;
+            shot.Direction = direction.normalized;
+            FireCircleCooldown = 0f;
+        
+       
+    }
+
+    void FireHeavyBullet()
+    {
+       
+            
+            var shotTransform = Instantiate(HeavyBulletPrefab, transform.position, transform.rotation) as Transform;
+            shotTransform.position = transform.position;
+            ShotBasic shot = shotTransform.gameObject.GetComponent<ShotBasic>();
+
+
+            shot.isEnemyShot = true;
+            shot.Direction = DirectionOfShoot.normalized;
+            FireCircleCooldown = 0f;
+        
+     
     }
 }

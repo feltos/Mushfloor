@@ -27,21 +27,29 @@ public class FollowCamera : MonoBehaviour
         Player = GameObject.Find("Player");
     }
 
-    public void changeSwitchAreaRoom1()
-    {
-        SwitchArea = SwitchRoom.DEFAULT;
-        CheckRoom();
-    }
-
     public void changeSwitchAreaRoom2()
     {
-        SwitchArea = SwitchRoom.ROOM2;
+        if(SwitchArea == SwitchRoom.DEFAULT)
+        {
+            SwitchArea = SwitchRoom.ROOM2;
+        }
+        else
+        {
+            SwitchArea = SwitchRoom.DEFAULT;
+        }
         CheckRoom();
     }
 
     public void changeSwitchAreaRoom3()
     {
-        SwitchArea = SwitchRoom.ROOM3;
+        if(SwitchArea == SwitchRoom.DEFAULT)
+        {
+            SwitchArea = SwitchRoom.ROOM3;
+        }
+        else
+        {
+            SwitchArea = SwitchRoom.DEFAULT;
+        }
         CheckRoom();
     }
 
