@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading;
 
 public class BossManager : MonoBehaviour
 {
@@ -11,15 +12,17 @@ public class BossManager : MonoBehaviour
     float AttackShoot = 2f;
     float FireCircleCooldown = 2f;
     float FireCircleShoot = 2f;
-    float HeavyBulletCooldown = 0.2f;
-    float HeavyBulletShoot = 0.2f;
-    float HeavyBulletremaining = 5f;
-    float FireCircleRamaining = 3f;
+    float HeavyBulletCooldown = 1f;
+    float HeavyBulletShoot = 1f;
+    float HeavyBulletremaining = 4f;
+    float FireCircleremaining = 2f;
     [SerializeField]
     Transform BulletPrefab;
     [SerializeField]
     Transform HeavyBulletPrefab;
     bool StopToShoot = false;
+
+    bool canRandom = true;
 
     int attackListBossLenght = AttackListBoss.GetNames(typeof(AttackListBoss)).Length;
 
@@ -35,12 +38,12 @@ public class BossManager : MonoBehaviour
         Target = GameObject.Find("Player");
     }
 
-    void Start ()
+    void Start()
     {
-        FireCircleCooldown = 0f;
+        
         HeavyBulletCooldown = 0f;
         AttackList = AttackListBoss.FIRE1;
-	}
+    }
 
 
     void checkAttack()
@@ -49,30 +52,32 @@ public class BossManager : MonoBehaviour
         {
             case AttackListBoss.FIRE1:
                 {
-                    for (int j = 0; j <= FireCircleRamaining; j++)
-                    {
-                        if (FireCircleCooldown >= FireCircleShoot)
+                        while(FireCircleCooldown >= FireCircleShoot && FireCircleremaining >= 0)
                         {
                             for (int l = 0; l <= 36; l++)
                             {
+                                FireCircleremaining -= 1;
                                 FireCircle(Quaternion.AngleAxis(l * 10, new Vector3(0, 0, 1)) * DirectionOfShoot.normalized);
-                            }
-                        }                        
-                    }
-                    StopToShoot = false;
+                                StopToShoot = true;
+                            }                      
+                        }
+                    FireCircleremaining = 3;
+                    canRandom = true;                    
                     AttackCooldown = 0f;
+                    StopToShoot = false;
                 }
                 break;
 
             case AttackListBoss.FIRE2:
-                {
-                    for (int i = 0; i <= HeavyBulletremaining; i++)
-                    {
-                        if (HeavyBulletCooldown >= HeavyBulletShoot)
+                {                    
+                        while (HeavyBulletCooldown >= HeavyBulletShoot && HeavyBulletremaining >= 0)
                         {
+                            HeavyBulletremaining -= 1;
                             FireHeavyBullet();
-                        }                                                                                               
-                    }
+                            StopToShoot = true;
+                        }   
+                    HeavyBulletremaining = 5;                
+                    canRandom = true;
                     AttackCooldown = 0f;
                     StopToShoot = false;
                 }
@@ -80,52 +85,48 @@ public class BossManager : MonoBehaviour
         }
     }
 
-	void Update ()
+    void Update()
     {
         FireCircleCooldown += Time.deltaTime;
         HeavyBulletCooldown += Time.deltaTime;
-        AttackCooldown += Time.deltaTime;
         DirectionOfShoot = Target.transform.position - transform.position;
 
-        if (AttackCooldown >= AttackShoot && !StopToShoot)
+        if (!StopToShoot)
+        {
+            AttackCooldown += Time.deltaTime;
+        }  
+             
+        if (canRandom && AttackCooldown >= AttackShoot && !StopToShoot)
         {
             AttackList = (AttackListBoss)Random.Range(0, attackListBossLenght);
+            canRandom = false;
             checkAttack();
         }
         
+
     }
 
     void FireCircle(Vector2 direction)
-    {                
-                  
-                var shotTransform = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
-                shotTransform.position = transform.position;
-                ShotBasic shot = shotTransform.gameObject.GetComponent<ShotBasic>();
+    {
+        var shotTransform = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
+        shotTransform.position = transform.position;
+        ShotBasic shot = shotTransform.gameObject.GetComponent<ShotBasic>();
 
 
-                shot.isEnemyShot = true;
-                shot.Direction = direction.normalized;
-                FireCircleCooldown = 0f;
-                StopToShoot = true;                     
-        
-        
-                   
+        shot.isEnemyShot = true;
+        shot.Direction = direction.normalized;
+        FireCircleCooldown = 0f;        
     }
 
     void FireHeavyBullet()
-    {                          
-            
-            
-                var shotTransform = Instantiate(HeavyBulletPrefab, transform.position, transform.rotation) as Transform;
-                shotTransform.position = transform.position;
-                ShotBasic shot = shotTransform.gameObject.GetComponent<ShotBasic>();
+    {
+        var shotTransform = Instantiate(HeavyBulletPrefab, transform.position, transform.rotation) as Transform;
+        shotTransform.position = transform.position;
+        ShotBasic shot = shotTransform.gameObject.GetComponent<ShotBasic>();
 
 
-                shot.isEnemyShot = true;
-                shot.Direction = DirectionOfShoot.normalized;
-                HeavyBulletCooldown = 0f;
-                StopToShoot = true;
-                   
-      
+        shot.isEnemyShot = true;
+        shot.Direction = DirectionOfShoot.normalized;
+        HeavyBulletCooldown = 0f;        
     }
 }

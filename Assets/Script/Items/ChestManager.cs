@@ -6,8 +6,13 @@ public class ChestManager : MonoBehaviour
 {
     [SerializeField]
     Animator Chest;
-	
-	void Start ()
+    [SerializeField]
+    GameObject[] Items;
+    bool ChestOpen = false;
+    [SerializeField]
+    GameObject SpawnPoint;
+
+    void Start ()
     {
 		
 	}
@@ -20,9 +25,11 @@ public class ChestManager : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Player") && !ChestOpen)
         {
             Chest.enabled = true;
+            Instantiate(Items[UnityEngine.Random.Range(0,3)],SpawnPoint.transform.position,SpawnPoint.transform.rotation);
+            ChestOpen = true;
         }
     }
 }

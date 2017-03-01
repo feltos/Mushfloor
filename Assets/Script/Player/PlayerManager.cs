@@ -45,6 +45,12 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     GameObject AntiTraps;
 
+    float BasicKeyHold = 0;
+    bool BossKeyHold = false;
+    [SerializeField]GameObject BasicKey;
+    [SerializeField]GameObject BossKey;
+    [SerializeField]GameObject Heart;
+
     void Awake()
     {
         Cursor.visible = true;
@@ -58,7 +64,7 @@ public class PlayerManager : MonoBehaviour
 	
 	void Update ()
     {
-        AntiTraps = GameObject.Find("AntiTraps");
+        
         timeBetweenShoot += Time.deltaTime;
         DashReload += Time.deltaTime;
         TimeBetweenDamage += Time.deltaTime;
@@ -213,8 +219,25 @@ public class PlayerManager : MonoBehaviour
             if(!ImmuneToTraps)
             {
                 HP -= 1;
-            }
-            
+            }            
+        }
+
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Heart"))
+        {
+            HP += 1;
+            Destroy(Heart.gameObject);
+        }
+
+        if(collision.gameObject.layer == LayerMask.NameToLayer("BasicKey"))
+        {
+            BasicKeyHold += 1;
+            Destroy(BasicKey.gameObject);
+        }
+
+        if(collision.gameObject.layer == LayerMask.NameToLayer("BossKey"))
+        {
+            BossKeyHold = true;
+            Destroy(BossKey.gameObject);
         }
 
         if(collision.gameObject.layer == LayerMask.NameToLayer("DungeonDoor"))
