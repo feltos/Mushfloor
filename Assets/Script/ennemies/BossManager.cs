@@ -11,14 +11,15 @@ public class BossManager : MonoBehaviour
     float AttackShoot = 2f;
     float FireCircleCooldown = 2f;
     float FireCircleShoot = 2f;
-    float HeavyBulletCooldown = 3f;
-    float HeavyBulletShoot = 3f;
+    float HeavyBulletCooldown = 0.2f;
+    float HeavyBulletShoot = 0.2f;
     float HeavyBulletremaining = 5f;
     float FireCircleRamaining = 3f;
     [SerializeField]
     Transform BulletPrefab;
     [SerializeField]
     Transform HeavyBulletPrefab;
+    bool StopToShoot = false;
 
     int attackListBossLenght = AttackListBoss.GetNames(typeof(AttackListBoss)).Length;
 
@@ -48,13 +49,32 @@ public class BossManager : MonoBehaviour
         {
             case AttackListBoss.FIRE1:
                 {
-                    FireCircle(DirectionOfShoot);
+                    for (int j = 0; j <= FireCircleRamaining; j++)
+                    {
+                        if (FireCircleCooldown >= FireCircleShoot)
+                        {
+                            for (int l = 0; l <= 36; l++)
+                            {
+                                FireCircle(Quaternion.AngleAxis(l * 10, new Vector3(0, 0, 1)) * DirectionOfShoot.normalized);
+                            }
+                        }                        
+                    }
+                    StopToShoot = false;
+                    AttackCooldown = 0f;
                 }
                 break;
 
             case AttackListBoss.FIRE2:
                 {
-                    FireHeavyBullet();
+                    for (int i = 0; i <= HeavyBulletremaining; i++)
+                    {
+                        if (HeavyBulletCooldown >= HeavyBulletShoot)
+                        {
+                            FireHeavyBullet();
+                        }                                                                                               
+                    }
+                    AttackCooldown = 0f;
+                    StopToShoot = false;
                 }
                 break;
         }
@@ -64,9 +84,10 @@ public class BossManager : MonoBehaviour
     {
         FireCircleCooldown += Time.deltaTime;
         HeavyBulletCooldown += Time.deltaTime;
+        AttackCooldown += Time.deltaTime;
         DirectionOfShoot = Target.transform.position - transform.position;
 
-        if (AttackCooldown >= AttackShoot)
+        if (AttackCooldown >= AttackShoot && !StopToShoot)
         {
             AttackList = (AttackListBoss)Random.Range(0, attackListBossLenght);
             checkAttack();
@@ -75,34 +96,36 @@ public class BossManager : MonoBehaviour
     }
 
     void FireCircle(Vector2 direction)
-    {
-        
-        
-            var shotTransform = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
-            shotTransform.position = transform.position;
-            ShotBasic shot = shotTransform.gameObject.GetComponent<ShotBasic>();
+    {                
+                  
+                var shotTransform = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
+                shotTransform.position = transform.position;
+                ShotBasic shot = shotTransform.gameObject.GetComponent<ShotBasic>();
 
 
-            shot.isEnemyShot = true;
-            shot.Direction = direction.normalized;
-            FireCircleCooldown = 0f;
+                shot.isEnemyShot = true;
+                shot.Direction = direction.normalized;
+                FireCircleCooldown = 0f;
+                StopToShoot = true;                     
         
-       
+        
+                   
     }
 
     void FireHeavyBullet()
-    {
-       
+    {                          
             
-            var shotTransform = Instantiate(HeavyBulletPrefab, transform.position, transform.rotation) as Transform;
-            shotTransform.position = transform.position;
-            ShotBasic shot = shotTransform.gameObject.GetComponent<ShotBasic>();
+            
+                var shotTransform = Instantiate(HeavyBulletPrefab, transform.position, transform.rotation) as Transform;
+                shotTransform.position = transform.position;
+                ShotBasic shot = shotTransform.gameObject.GetComponent<ShotBasic>();
 
 
-            shot.isEnemyShot = true;
-            shot.Direction = DirectionOfShoot.normalized;
-            FireCircleCooldown = 0f;
-        
-     
+                shot.isEnemyShot = true;
+                shot.Direction = DirectionOfShoot.normalized;
+                HeavyBulletCooldown = 0f;
+                StopToShoot = true;
+                   
+      
     }
 }
