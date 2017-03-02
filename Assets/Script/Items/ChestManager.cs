@@ -11,13 +11,13 @@ public class ChestManager : MonoBehaviour
     bool ChestOpen = false;
     [SerializeField]
     GameObject SpawnPoint;
-    [SerializeField]PlayerManager PlayerScript;
+    PlayerManager PlayerScript;
     float BasicKeyHold;
     
 
     void Start ()
     {
-		
+        PlayerScript = GameObject.Find("Player").GetComponent<PlayerManager>();
 	}
 	
 	
