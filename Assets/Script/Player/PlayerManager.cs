@@ -47,9 +47,7 @@ public class PlayerManager : MonoBehaviour
 
     float BasicKeyHold = 0;
     bool BossKeyHold = false;
-    [SerializeField]GameObject BasicKey;
-    [SerializeField]GameObject BossKey;
-    [SerializeField]GameObject Heart;
+
 
     void Awake()
     {
@@ -206,41 +204,42 @@ public class PlayerManager : MonoBehaviour
             {
                 SceneManager.LoadScene(1);
             }
+
         }
 
-        if(collision.gameObject.layer == LayerMask.NameToLayer("ImmuneToTraps"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("AOE"))
         {
-            ImmuneToTraps = true;
-            Destroy(AntiTraps.gameObject);
-        }
-
-        if(collision.gameObject.layer == LayerMask.NameToLayer("AOE"))
-        {
-            if(!ImmuneToTraps)
+            if (!ImmuneToTraps)
             {
                 HP -= 1;
-            }            
+            }
         }
 
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Heart"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("AntiTraps"))
+        {
+            ImmuneToTraps = true;
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Hearth"))
         {
             HP += 1;
-            Destroy(Heart.gameObject);
+            Destroy(collision.gameObject);
         }
 
-        if(collision.gameObject.layer == LayerMask.NameToLayer("BasicKey"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("BasicKey"))
         {
-            BasicKeyHold += 1;
-            Destroy(BasicKey.gameObject);
+            BasicKeyHold += 1f;
+            Destroy(collision.gameObject);
         }
 
-        if(collision.gameObject.layer == LayerMask.NameToLayer("BossKey"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("BossKey"))
         {
             BossKeyHold = true;
-            Destroy(BossKey.gameObject);
+            Destroy(collision.gameObject);
         }
 
-        if(collision.gameObject.layer == LayerMask.NameToLayer("DungeonDoor"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("DungeonDoor"))
         {
             SceneManager.LoadScene(0);
         }
@@ -254,5 +253,15 @@ public class PlayerManager : MonoBehaviour
         {
             cameraScript.changeSwitchAreaRoom3();
         }
+    }
+
+    public float GetKeyHold()
+    {
+        return BasicKeyHold;
+    }
+
+    public void SetKeyHold()
+    {
+        BasicKeyHold -= 1;
     }
 }
