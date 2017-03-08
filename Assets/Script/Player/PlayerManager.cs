@@ -47,6 +47,11 @@ public class PlayerManager : MonoBehaviour
 
     float BasicKeyHold = 0;
     bool BossKeyHold = false;
+    float GrowTime = 0f;
+    float GrowCooldown = 2f;
+    Vector3 DefaultScale = new Vector3(0.2f, 0.2f, 0.2f);
+    Vector3 NewScale = new Vector3(0.01f, 0.01f, 0.01f);
+    [SerializeField] GameObject PositionbeforeFall;
 
 
     void Awake()
@@ -100,8 +105,8 @@ public class PlayerManager : MonoBehaviour
 	}
 
      void FixedUpdate()
-    {
-        rb2d.velocity = Movement;
+    {        
+            rb2d.velocity = Movement;
     }
 
     void Flip()
@@ -245,13 +250,46 @@ public class PlayerManager : MonoBehaviour
         }
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Door1"))
-        {                                            
-                cameraScript.changeSwitchAreaRoom2();                                                                                                         
+        {
+            if(cameraScript.SwitchArea == FollowCamera.SwitchRoom.DEFAULT)
+            {
+                cameraScript.SwitchArea = FollowCamera.SwitchRoom.ROOM2;
+                cameraScript.CheckRoom();
+            }
+            else
+            {
+                cameraScript.SwitchArea = FollowCamera.SwitchRoom.DEFAULT;
+                cameraScript.CheckRoom();
+            }
+                                                                                                                 
         }
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Door2"))
         {
-            cameraScript.changeSwitchAreaRoom3();
+            if(cameraScript.SwitchArea == FollowCamera.SwitchRoom.DEFAULT)
+            {
+                cameraScript.SwitchArea = FollowCamera.SwitchRoom.ROOM3;
+                cameraScript.CheckRoom();
+            }
+            else
+            {
+                cameraScript.SwitchArea = FollowCamera.SwitchRoom.DEFAULT;
+                cameraScript.CheckRoom();
+            }
+        }
+
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Hole"))
+        {
+            GrowTime += Time.deltaTime;
+            rb2d.velocity = Vector3.zero;
+            while (GrowTime < GrowCooldown)
+            {
+                transform.localScale -= NewScale * Time.deltaTime;
+            }
+            transform.position = PositionbeforeFall.transform.position;
+            transform.localScale = DefaultScale;
+            GrowTime = 0;
+                           
         }
     }
 

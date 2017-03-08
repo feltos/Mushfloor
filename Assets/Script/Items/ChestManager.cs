@@ -24,7 +24,7 @@ public class ChestManager : MonoBehaviour
         
 	void Update ()
     {
-        Debug.Log(PlayerScript.GetKeyHold());
+        
         BasicKeyHold = PlayerScript.GetKeyHold();
 
     }

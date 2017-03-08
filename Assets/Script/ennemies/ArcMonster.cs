@@ -89,9 +89,6 @@ public class ArcMonster : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("AOE"))
         {
             HP -= 1;
-        }
-
-      
-
+        }     
     }
 }

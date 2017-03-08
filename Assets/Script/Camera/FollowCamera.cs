@@ -14,45 +14,20 @@ public class FollowCamera : MonoBehaviour
     GameObject Player;
    
     
-    enum SwitchRoom
+    public enum SwitchRoom
     {
         DEFAULT,
         ROOM2,
         ROOM3        
     }
-    SwitchRoom SwitchArea = SwitchRoom.DEFAULT;
+    public SwitchRoom SwitchArea = SwitchRoom.DEFAULT;
 
     void Awake()
     {
         Player = GameObject.Find("Player");
     }
 
-    public void changeSwitchAreaRoom2()
-    {
-        if(SwitchArea == SwitchRoom.DEFAULT)
-        {
-            SwitchArea = SwitchRoom.ROOM2;
-        }
-        else
-        {
-            SwitchArea = SwitchRoom.DEFAULT;
-        }
-        CheckRoom();
-    }
-
-    public void changeSwitchAreaRoom3()
-    {
-        if(SwitchArea == SwitchRoom.DEFAULT)
-        {
-            SwitchArea = SwitchRoom.ROOM3;
-        }
-        else
-        {
-            SwitchArea = SwitchRoom.DEFAULT;
-        }
-        CheckRoom();
-    }
-
+   
     void Start ()
     {
         offset = transform.position - Player.transform.position;
@@ -87,7 +62,7 @@ public class FollowCamera : MonoBehaviour
         transform.position = CameraPosition;
 	}
 
-   void CheckRoom()
+   public void CheckRoom()
     {
         switch(SwitchArea)
         {
