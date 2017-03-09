@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RafaleEnemy : MonoBehaviour
+public class RafaleEnemy : AllEnemiesManager
 {
     [SerializeField]
     float HP;
@@ -23,6 +23,7 @@ public class RafaleEnemy : MonoBehaviour
     float RafaleCooldown = 3f;
     float BulletLeft = 12f;
     bool StopToShoot;
+    
 
     void Awake()
     {
@@ -34,6 +35,7 @@ public class RafaleEnemy : MonoBehaviour
         RafaleCooldown = 0f;
         BulletLeft = 0f;
         StopToShoot = true;
+        
 	}
 	
 	

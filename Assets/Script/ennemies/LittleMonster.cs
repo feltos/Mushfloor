@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LittleMonster : MonoBehaviour
+public class LittleMonster : AllEnemiesManager
 {
     [SerializeField]
     float HP;
@@ -19,15 +19,16 @@ public class LittleMonster : MonoBehaviour
     Transform BulletPrefab;
     float ShootCooldown = 1.5f;
     float BulletShoot = 1.5f;
+    
 
     void Awake()
     {
         Target = GameObject.Find("Player");
     }
 
-    void Start ()
+    void Start()
     {
-        ShootCooldown = 0f;
+        ShootCooldown = 0f;        
 	}
 	
 	

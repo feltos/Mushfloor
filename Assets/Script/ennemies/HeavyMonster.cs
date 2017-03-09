@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeavyMonster : MonoBehaviour
+public class HeavyMonster : AllEnemiesManager
 {
     [SerializeField]
     float HP;
@@ -22,6 +22,7 @@ public class HeavyMonster : MonoBehaviour
     Transform HeavyBulletPrefab;
     float ShootCooldown = 4f;
     float BulletShoot = 4f;
+    
 
     void Awake()
     {
@@ -31,6 +32,7 @@ public class HeavyMonster : MonoBehaviour
     void Start ()
     {
         ShootCooldown = 0f;
+        
     }
 	
 	

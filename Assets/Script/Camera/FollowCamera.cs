@@ -5,22 +5,17 @@ public class FollowCamera : MonoBehaviour
 {
    
     private Vector3 offset;    
-    float MinPosX;    
-    float MaxPosX;    
-    float MinPosY;
-    float MaxPosy;
+    public float MinPosX;    
+    public float MaxPosX;    
+    public float MinPosY;
+    public float MaxPosy;
 
     [SerializeField]
     GameObject Player;
+
+    [SerializeField]
+    GameManager gameManager;
    
-    
-    public enum SwitchRoom
-    {
-        DEFAULT,
-        ROOM2,
-        ROOM3        
-    }
-    public SwitchRoom SwitchArea = SwitchRoom.DEFAULT;
 
     void Awake()
     {
@@ -31,8 +26,7 @@ public class FollowCamera : MonoBehaviour
     void Start ()
     {
         offset = transform.position - Player.transform.position;
-        SwitchArea = SwitchRoom.DEFAULT;
-        CheckRoom();
+        gameManager.CheckRoom();
 	}
 
     void Update()
@@ -62,37 +56,5 @@ public class FollowCamera : MonoBehaviour
         transform.position = CameraPosition;
 	}
 
-   public void CheckRoom()
-    {
-        switch(SwitchArea)
-        {
-            case SwitchRoom.DEFAULT:
-                {
-                    MinPosX = -4.2f;
-                    MaxPosX = 3.998743f;
-                    MinPosY = -2.25f;
-                    MaxPosy = 2.12631f;
-                }              
-                break;
-
-            case SwitchRoom.ROOM2:
-                {
-                    MinPosX = 14.72f;
-                    MaxPosX = 24.41f;
-                    MinPosY = -2.56f;
-                    MaxPosy = 2.55f;
-                    
-                }
-                break;
-
-            case SwitchRoom.ROOM3:
-                {
-                    MinPosX = -3.8f;
-                    MaxPosX = 3.42f;
-                    MinPosY = 8.47f;
-                    MaxPosy = 12.25f;                    
-                }
-                break;
-        }
-    }
+   
 }

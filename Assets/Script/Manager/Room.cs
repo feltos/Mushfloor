@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Room : MonoBehaviour
+ public class Room : MonoBehaviour
 {
+
     [SerializeField]
-    GameObject[] ennemies;
-   
+    GameObject[] GameObjects;
+
+ 
 	
 	void Start ()
     {
-		
+        Desactivate();
 	}
 	
 	
@@ -21,9 +23,17 @@ public class Room : MonoBehaviour
 
     public void Desactivate()
     {
-        foreach(var e in ennemies)
+        foreach(var e in GameObjects)
         {
             e.SetActive(false);
+        }
+    }
+    public void Activate()
+    {
+        foreach (var e in GameObjects)
+        {
+            e.SetActive(true);
+            e.GetComponent<AllEnemiesManager>().Reset();
         }
     }
 }

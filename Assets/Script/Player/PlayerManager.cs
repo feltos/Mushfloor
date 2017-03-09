@@ -6,8 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
-    [SerializeField]
-    FollowCamera cameraScript;
+    
     [SerializeField]
     Vector2 BasicSpeed;
     [SerializeField]
@@ -53,6 +52,8 @@ public class PlayerManager : MonoBehaviour
     Vector3 NewScale = new Vector3(0.01f, 0.01f, 0.01f);
     GameObject PositionbeforeFall;
     bool Fall = false;
+
+    [SerializeField]GameManager gameManager;
 
 
     void Awake()
@@ -274,30 +275,30 @@ public class PlayerManager : MonoBehaviour
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Door1"))
         {
-            if(cameraScript.SwitchArea == FollowCamera.SwitchRoom.DEFAULT)
+            if(gameManager.SwitchArea == GameManager.SwitchRoom.DEFAULT)
             {
-                cameraScript.SwitchArea = FollowCamera.SwitchRoom.ROOM2;
-                cameraScript.CheckRoom();
+                gameManager.SwitchArea = GameManager.SwitchRoom.ROOM2;
+                gameManager.CheckRoom();
             }
             else
             {
-                cameraScript.SwitchArea = FollowCamera.SwitchRoom.DEFAULT;
-                cameraScript.CheckRoom();
+                gameManager.SwitchArea = GameManager.SwitchRoom.DEFAULT;
+                gameManager.CheckRoom();
             }
                                                                                                                  
         }
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Door2"))
         {
-            if(cameraScript.SwitchArea == FollowCamera.SwitchRoom.DEFAULT)
+            if(gameManager.SwitchArea == GameManager.SwitchRoom.DEFAULT)
             {
-                cameraScript.SwitchArea = FollowCamera.SwitchRoom.ROOM3;
-                cameraScript.CheckRoom();
+                gameManager.SwitchArea = GameManager.SwitchRoom.ROOM3;
+                gameManager.CheckRoom();
             }
             else
             {
-                cameraScript.SwitchArea = FollowCamera.SwitchRoom.DEFAULT;
-                cameraScript.CheckRoom();
+                gameManager.SwitchArea = GameManager.SwitchRoom.DEFAULT;
+                gameManager.CheckRoom();
             }
         }
 

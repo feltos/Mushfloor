@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArcMonster : MonoBehaviour
+public class ArcMonster : AllEnemiesManager
 {
 
     [SerializeField]
@@ -19,6 +19,7 @@ public class ArcMonster : MonoBehaviour
     float ShootCooldown = 1.5f;
     float BulletShoot = 1.5f;
     bool IsEnemy = true;
+    
 
     void Awake()
     {
@@ -27,7 +28,7 @@ public class ArcMonster : MonoBehaviour
 
     void Start ()
     {
-        ShootCooldown = 0f;
+        ShootCooldown = 0f;        
     }
 	
 	

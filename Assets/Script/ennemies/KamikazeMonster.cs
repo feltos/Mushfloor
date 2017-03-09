@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KamikazeMonster : MonoBehaviour
+public class KamikazeMonster : AllEnemiesManager
 {
 
     [SerializeField]
@@ -17,6 +17,7 @@ public class KamikazeMonster : MonoBehaviour
     GameObject Target;
     bool IsEnemy = true;
     [SerializeField]GameObject PoisonCircle;
+    
 
     void Awake()
     {
@@ -25,7 +26,7 @@ public class KamikazeMonster : MonoBehaviour
 
     void Start ()
     {
-		
+        
 	}
 	
 	
