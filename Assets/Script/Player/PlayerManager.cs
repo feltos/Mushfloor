@@ -48,10 +48,11 @@ public class PlayerManager : MonoBehaviour
     float BasicKeyHold = 0;
     bool BossKeyHold = false;
     float GrowTime = 0f;
-    float GrowCooldown = 2f;
+    float GrowCooldown = 1.5f;
     Vector3 DefaultScale = new Vector3(0.2f, 0.2f, 0.2f);
     Vector3 NewScale = new Vector3(0.01f, 0.01f, 0.01f);
-    [SerializeField] GameObject PositionbeforeFall;
+    GameObject PositionbeforeFall;
+    bool Fall = false;
 
 
     void Awake()
@@ -101,12 +102,34 @@ public class PlayerManager : MonoBehaviour
         ////////////////DASH///////////
         Dash();
         //////////////////////////////
-        
-	}
+
+        //////////////FALL IN A HOLE/////////////
+        if(Fall)
+        {
+            rb2d.velocity = Vector3.zero;
+            GrowTime += Time.deltaTime;
+            if(GrowTime >= GrowCooldown)
+            {
+                transform.localScale -= NewScale;
+            }
+            if (transform.localScale.x <= 0)
+            {
+                transform.position = PositionbeforeFall.transform.position;
+                transform.localScale = DefaultScale;
+                GrowTime = 0;
+                HP -= 1;
+                Fall = false;
+            }
+        }
+
+    }
 
      void FixedUpdate()
     {        
+        if(!Fall)
+        {
             rb2d.velocity = Movement;
+        }
     }
 
     void Flip()
@@ -280,16 +303,8 @@ public class PlayerManager : MonoBehaviour
 
         if(collision.gameObject.layer == LayerMask.NameToLayer("Hole"))
         {
-            GrowTime += Time.deltaTime;
-            rb2d.velocity = Vector3.zero;
-            while (GrowTime < GrowCooldown)
-            {
-                transform.localScale -= NewScale * Time.deltaTime;
-            }
-            transform.position = PositionbeforeFall.transform.position;
-            transform.localScale = DefaultScale;
-            GrowTime = 0;
-                           
+            PositionbeforeFall = collision.gameObject.transform.FindChild("PositionBeforeFall").gameObject;
+            Fall = true;                         
         }
     }
 
