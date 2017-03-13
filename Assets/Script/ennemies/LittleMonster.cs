@@ -28,7 +28,8 @@ public class LittleMonster : AllEnemiesManager
 
     void Start()
     {
-        ShootCooldown = 0f;        
+        ShootCooldown = 0f;
+        OriginPosition = transform.position;      
 	}
 	
 	
@@ -66,6 +67,7 @@ public class LittleMonster : AllEnemiesManager
             }
             if (HP <= 0)
             {
+                XP += 5;
                 Destroy(gameObject);
             }
         }

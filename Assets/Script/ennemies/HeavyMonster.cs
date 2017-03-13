@@ -32,7 +32,7 @@ public class HeavyMonster : AllEnemiesManager
     void Start ()
     {
         ShootCooldown = 0f;
-        
+        OriginPosition = transform.position;
     }
 	
 	
@@ -69,6 +69,7 @@ public class HeavyMonster : AllEnemiesManager
 
             if (HP <= 0)
             {
+                XP += 10;
                 Destroy(gameObject);
             }
         }

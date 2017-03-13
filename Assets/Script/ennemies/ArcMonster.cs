@@ -28,7 +28,8 @@ public class ArcMonster : AllEnemiesManager
 
     void Start ()
     {
-        ShootCooldown = 0f;        
+        ShootCooldown = 0f;
+        OriginPosition = transform.position;     
     }
 	
 	
@@ -84,6 +85,7 @@ public class ArcMonster : AllEnemiesManager
 
             if (HP <= 0)
             {
+                XP += 10;
                 Destroy(gameObject);
             }
         }

@@ -279,6 +279,7 @@ public class PlayerManager : MonoBehaviour
             {
                 gameManager.SwitchArea = GameManager.SwitchRoom.ROOM2;
                 gameManager.CheckRoom();
+                
             }
             else
             {

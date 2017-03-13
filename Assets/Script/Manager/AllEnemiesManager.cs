@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class AllEnemiesManager : MonoBehaviour
 {
-    Vector3 OriginPosition;
-	
+    public Vector3 OriginPosition;
+    public float XP;
+
 	public void Start ()
     {
-        OriginPosition = transform.position;
+              
 	}
 	
 	
 	void Update ()
     {
-		
+     
 	}
 
     public void Reset()
-    {
+    {        
         transform.position = OriginPosition;
     }
 }

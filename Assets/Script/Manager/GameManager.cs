@@ -9,8 +9,9 @@ public class GameManager : MonoBehaviour
     FollowCamera followCamera;
     [SerializeField]
     Room[]Rooms;
+    
    
-
+    
     public enum SwitchRoom
     {
         DEFAULT,
@@ -27,11 +28,17 @@ public class GameManager : MonoBehaviour
 	
 	void Update ()
     {
-		
+        DontDestroyOnLoad(gameObject);
 	}
   
+    public void WinXP()
+    {
+        
+    }
+
     public void CheckRoom()
     {
+       
         switch (SwitchArea)
         {
             case SwitchRoom.DEFAULT:

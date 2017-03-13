@@ -26,7 +26,7 @@ public class KamikazeMonster : AllEnemiesManager
 
     void Start ()
     {
-        
+        OriginPosition = transform.position;
 	}
 	
 	
@@ -58,6 +58,7 @@ public class KamikazeMonster : AllEnemiesManager
 
             if (HP <= 0)
             {
+                XP += 5;
                 Instantiate(PoisonCircle, transform.position, transform.rotation);
                 Destroy(gameObject);
             }

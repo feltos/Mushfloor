@@ -35,6 +35,7 @@ public class RafaleEnemy : AllEnemiesManager
         RafaleCooldown = 0f;
         BulletLeft = 0f;
         StopToShoot = true;
+        OriginPosition = transform.position;
         
 	}
 	
@@ -70,6 +71,7 @@ public class RafaleEnemy : AllEnemiesManager
 
             if (HP <= 0)
             {
+                XP += 5;
                 Destroy(gameObject);
             }       
         }

@@ -7,8 +7,8 @@ using UnityEngine;
 
     [SerializeField]
     GameObject[] GameObjects;
+   
 
- 
 	
 	void Start ()
     {

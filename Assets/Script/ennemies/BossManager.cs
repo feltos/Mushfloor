@@ -27,7 +27,7 @@ public class BossManager : MonoBehaviour
 
     [SerializeField]
     float HP;
-    bool IsEnemy = true;
+    bool IsEnemy = false;
     [SerializeField]
     Slider HealthSlider;
 
