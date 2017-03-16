@@ -13,21 +13,24 @@ public class BossManager : MonoBehaviour
     float AttackShoot = 2f;
     float FireCircleCooldown = 2f;
     float FireCircleShoot = 2f;
-    float HeavyBulletCooldown = 1f;
-    float HeavyBulletShoot = 1f;
+    float HeavyBulletCooldown = 0.5f;
+    float HeavyBulletShoot = 0.5f;
     float HeavyBulletremaining = 4f;
     float FireCircleremaining = 2f;
+    float TornadoFireRemaining = 1;
+    float TornadoShoot = 0.05f;
+    float TornadoCooldown = 0.05f;
     [SerializeField]
     Transform BulletPrefab;
     [SerializeField]
     Transform HeavyBulletPrefab;
-    bool StopToShoot = false;
+    bool StopToShoot = true;
 
     bool canRandom = true;
 
     [SerializeField]
     float HP;
-    bool IsEnemy = false;
+    bool IsEnemy = true;
     [SerializeField]
     Slider HealthSlider;
 
@@ -36,7 +39,8 @@ public class BossManager : MonoBehaviour
     enum AttackListBoss
     {
         CircleFire,
-        HeavyBulletFire
+        HeavyBulletFire,
+        Tornadofire
     }
     AttackListBoss AttackList;
 
@@ -49,6 +53,7 @@ public class BossManager : MonoBehaviour
     {
         FireCircleCooldown = 0f;
         HeavyBulletCooldown = 0f;
+        TornadoCooldown = 0f;
         AttackList = AttackListBoss.CircleFire;
     }
 
@@ -59,7 +64,7 @@ public class BossManager : MonoBehaviour
         {
             case AttackListBoss.CircleFire:
                 {
-                    Debug.Log(FireCircleremaining);                
+                                
                     if (FireCircleremaining >= 0)
                         {                                                      
                             if (FireCircleCooldown >= FireCircleShoot)
@@ -70,7 +75,7 @@ public class BossManager : MonoBehaviour
                                     FireCircleCooldown = 0;
                                 }
                             FireCircleremaining -= 1;
-                            Debug.Log(FireCircleremaining);
+                            
                             
                         }                                                                                                                  
                         }                                       
@@ -78,14 +83,36 @@ public class BossManager : MonoBehaviour
                     if(FireCircleremaining <= 0)
                     {
                         StopToShoot = false;
+                    }                    
+                }
+                break;
+
+            case AttackListBoss.Tornadofire:
+                {
+                    if(TornadoFireRemaining >= 0) 
+                        {
+                        Debug.Log(TornadoFireRemaining);
+                        if (TornadoCooldown >= TornadoShoot)
+                        {
+                                for (int i = 0; i <= 72; i++)
+                                {
+                                TornadoFire(Quaternion.AngleAxis(i * 10, new Vector3(0, 0, 1)) * DirectionOfShoot.normalized);
+                                TornadoCooldown = 0;
+                            }                          
+                        }
+                        TornadoFireRemaining -= 1;
                     }
-                    
+                    AttackCooldown = 0f;
+                    if(TornadoFireRemaining >= 0)
+                    {
+                        StopToShoot = false;
+                    }
                 }
                 break;
 
             case AttackListBoss.HeavyBulletFire:
                 {
-                    Debug.Log(HeavyBulletremaining);
+                   
                     if(HeavyBulletremaining >= 0)
                     {
                         if(HeavyBulletCooldown >= HeavyBulletShoot)
@@ -93,7 +120,7 @@ public class BossManager : MonoBehaviour
                             FireHeavyBullet();
                             HeavyBulletremaining -= 1;
                             HeavyBulletCooldown = 0;
-                            Debug.Log(HeavyBulletremaining);
+                           
                         }
 
                     }   
@@ -111,6 +138,7 @@ public class BossManager : MonoBehaviour
     {
         FireCircleCooldown += Time.deltaTime;
         HeavyBulletCooldown += Time.deltaTime;
+        TornadoCooldown += Time.deltaTime;
         DirectionOfShoot = Target.transform.position - transform.position;
 
         if (!StopToShoot)
@@ -130,6 +158,9 @@ public class BossManager : MonoBehaviour
                 case AttackListBoss.HeavyBulletFire:
                     HeavyBulletremaining = 4;
                     break;
+                case AttackListBoss.Tornadofire:
+                    TornadoFireRemaining = 1;
+                    break;
             }
             StopToShoot = true;
         }
@@ -148,7 +179,7 @@ public class BossManager : MonoBehaviour
         
             var shotTransform = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
             shotTransform.position = transform.position;
-            ShotBasic shot = shotTransform.gameObject.GetComponent<ShotBasic>();
+            BulletBasic shot = shotTransform.gameObject.GetComponent<BulletBasic>();
 
 
             shot.isEnemyShot = true;
@@ -164,7 +195,7 @@ public class BossManager : MonoBehaviour
         
             var shotTransform = Instantiate(HeavyBulletPrefab, transform.position, transform.rotation) as Transform;
             shotTransform.position = transform.position;
-            ShotBasic shot = shotTransform.gameObject.GetComponent<ShotBasic>();
+            BulletBasic shot = shotTransform.gameObject.GetComponent<BulletBasic>();
 
 
             shot.isEnemyShot = true;
@@ -174,9 +205,25 @@ public class BossManager : MonoBehaviour
              
     }
 
+    void TornadoFire(Vector2 direction)
+    {
+
+
+        var shotTransform = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
+        shotTransform.position = transform.position;
+        BulletBasic shot = shotTransform.gameObject.GetComponent<BulletBasic>();
+
+
+        shot.isEnemyShot = true;
+        shot.Direction = direction.normalized;
+        FireCircleCooldown = 0f;
+
+
+    }
+
     void OnTriggerEnter2D(Collider2D collision)
     {
-        ShotBasic shot = collision.gameObject.GetComponent<ShotBasic>();
+        BulletBasic shot = collision.gameObject.GetComponent<BulletBasic>();
         if (shot != null)
         {
             if (shot.isEnemyShot != IsEnemy)

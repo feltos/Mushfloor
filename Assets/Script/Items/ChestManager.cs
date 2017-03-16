@@ -7,7 +7,7 @@ public class ChestManager : MonoBehaviour
     [SerializeField]
     Animator Chest;
     [SerializeField]
-    GameObject[] Items;
+    GameObject[] GunsPrefab;
     bool ChestOpen = false;
     [SerializeField]
     GameObject SpawnPoint;
@@ -34,7 +34,7 @@ public class ChestManager : MonoBehaviour
         if(collision.gameObject.layer == LayerMask.NameToLayer("Player") && !ChestOpen && BasicKeyHold > 0)
         {
             Chest.enabled = true;
-            Instantiate(Items[UnityEngine.Random.Range(0,3)],SpawnPoint.transform.position,SpawnPoint.transform.rotation);
+            Instantiate(GunsPrefab[Random.Range(0,GunsPrefab.Length)],SpawnPoint.transform.position,SpawnPoint.transform.rotation);
             ChestOpen = true;
             PlayerScript.SetKeyHold();
         }

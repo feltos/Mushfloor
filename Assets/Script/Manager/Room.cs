@@ -1,39 +1,71 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
- public class Room : MonoBehaviour
+
+public class Room : MonoBehaviour
 {
 
+    public List<GameObject>Ennemies;
     [SerializeField]
-    GameObject[] GameObjects;
-   
+    GameObject[] Items;
+    bool EnnemiesDown = true;
 
-	
-	void Start ()
+    
+
+    void Start ()
     {
+        foreach(var e in Ennemies)
+        {
+            e.GetComponent<AllEnemiesManager>().room = this;
+        }
         Desactivate();
+       
 	}
 	
-	
-	void Update ()
+	public void RemoveEnemy(GameObject enemy)
     {
-		
-	}
+        Ennemies.Remove(enemy);
+    }
+	void Update ()
+    {      
+        
+
+        if(Ennemies.Count == 0 && EnnemiesDown)
+        {
+            DropItem();
+        }
+    }
 
     public void Desactivate()
     {
-        foreach(var e in GameObjects)
+       foreach(var e in Ennemies)
         {
-            e.SetActive(false);
+            if(e != null)
+            {
+                e.SetActive(false);
+            }
         }
     }
     public void Activate()
     {
-        foreach (var e in GameObjects)
+        foreach (var e in Ennemies)
         {
-            e.SetActive(true);
-            e.GetComponent<AllEnemiesManager>().Reset();
+            if(e != null)
+            {
+                e.SetActive(true);
+                e.GetComponent<AllEnemiesManager>().Reset();
+            }
         }
     }
+
+    public void DropItem()
+    {           
+            Instantiate(Items[UnityEngine.Random.Range(0, 3)], transform.position, transform.rotation);
+            EnnemiesDown = false;             
+    }
+
+
+
 }

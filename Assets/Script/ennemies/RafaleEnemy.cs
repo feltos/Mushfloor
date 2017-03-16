@@ -60,7 +60,7 @@ public class RafaleEnemy : AllEnemiesManager
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        ShotBasic shot = collision.gameObject.GetComponent<ShotBasic>();
+        BulletBasic shot = collision.gameObject.GetComponent<BulletBasic>();
         
         {
             if (shot.isEnemyShot != IsEnemy)
@@ -71,7 +71,7 @@ public class RafaleEnemy : AllEnemiesManager
 
             if (HP <= 0)
             {
-                XP += 5;
+                room.RemoveEnemy(gameObject);
                 Destroy(gameObject);
             }       
         }
@@ -88,7 +88,7 @@ public class RafaleEnemy : AllEnemiesManager
         {
             var RafaleShot = Instantiate(RafalePrefab, transform.position, transform.rotation) as Transform;
             RafaleShot.position = transform.position;
-            ShotBasic Rafale = RafaleShot.gameObject.GetComponent<ShotBasic>();
+            BulletBasic Rafale = RafaleShot.gameObject.GetComponent<BulletBasic>();
 
 
             Rafale.isEnemyShot = true;

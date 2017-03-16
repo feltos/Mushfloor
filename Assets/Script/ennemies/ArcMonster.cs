@@ -48,9 +48,7 @@ public class ArcMonster : AllEnemiesManager
             {
                 fire(Quaternion.AngleAxis(i * 10, new Vector3(0, 0, 1)) * Direction.normalized);
             }
-
         }
-
     }
 
     void FixedUpdate()
@@ -60,11 +58,9 @@ public class ArcMonster : AllEnemiesManager
 
     void fire(Vector2 direction)
     {
-
-
         var shotTransform = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
         shotTransform.position = transform.position;
-        ShotBasic shot = shotTransform.gameObject.GetComponent<ShotBasic>();
+        BulletBasic shot = shotTransform.gameObject.GetComponent<BulletBasic>();
 
 
         shot.isEnemyShot = true;
@@ -74,7 +70,7 @@ public class ArcMonster : AllEnemiesManager
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        ShotBasic shot = collision.gameObject.GetComponent<ShotBasic>();
+        BulletBasic shot = collision.gameObject.GetComponent<BulletBasic>();
         if (shot != null)
         {
             if (shot.isEnemyShot != IsEnemy)
@@ -85,7 +81,7 @@ public class ArcMonster : AllEnemiesManager
 
             if (HP <= 0)
             {
-                XP += 10;
+                room.RemoveEnemy(gameObject);
                 Destroy(gameObject);
             }
         }

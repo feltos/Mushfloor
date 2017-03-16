@@ -5,7 +5,7 @@ using UnityEngine;
 public class AllEnemiesManager : MonoBehaviour
 {
     public Vector3 OriginPosition;
-    public float XP;
+    public Room room;
 
 	public void Start ()
     {

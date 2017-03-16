@@ -47,7 +47,7 @@ public class KamikazeMonster : AllEnemiesManager
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        ShotBasic shot = collision.gameObject.GetComponent<ShotBasic>();
+        BulletBasic shot = collision.gameObject.GetComponent<BulletBasic>();
         if (shot != null)
         {
             if (shot.isEnemyShot != IsEnemy)
@@ -57,9 +57,9 @@ public class KamikazeMonster : AllEnemiesManager
             }
 
             if (HP <= 0)
-            {
-                XP += 5;
+            {           
                 Instantiate(PoisonCircle, transform.position, transform.rotation);
+                room.RemoveEnemy(gameObject);
                 Destroy(gameObject);
             }
         }

@@ -58,7 +58,7 @@ public class HeavyMonster : AllEnemiesManager
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        ShotBasic shot = collision.gameObject.GetComponent<ShotBasic>();
+        BulletBasic shot = collision.gameObject.GetComponent<BulletBasic>();
         if (shot != null)
         {
             if (shot.isEnemyShot != IsEnemy)
@@ -69,7 +69,7 @@ public class HeavyMonster : AllEnemiesManager
 
             if (HP <= 0)
             {
-                XP += 10;
+                room.RemoveEnemy(gameObject);
                 Destroy(gameObject);
             }
         }
@@ -89,7 +89,7 @@ public class HeavyMonster : AllEnemiesManager
         {
             var HeavyBulletShot = Instantiate(HeavyBulletPrefab, transform.position, transform.rotation);
             HeavyBulletShot.transform.position = transform.position;
-            ShotBasic HeavyBullet = HeavyBulletShot.gameObject.GetComponent<ShotBasic>();
+            BulletBasic HeavyBullet = HeavyBulletShot.gameObject.GetComponent<BulletBasic>();
 
             HeavyBullet.isEnemyShot = true;
             HeavyBullet.Direction = Direction;

@@ -57,7 +57,7 @@ public class LittleMonster : AllEnemiesManager
     void OnTriggerEnter2D(Collider2D collision)
     {
          
-        ShotBasic shot = collision.gameObject.GetComponent<ShotBasic>();
+        BulletBasic shot = collision.gameObject.GetComponent<BulletBasic>();
         if (shot != null)
         {
             if (shot.isEnemyShot != IsEnemy)
@@ -67,7 +67,7 @@ public class LittleMonster : AllEnemiesManager
             }
             if (HP <= 0)
             {
-                XP += 5;
+                room.RemoveEnemy(gameObject);
                 Destroy(gameObject);
             }
         }
@@ -87,7 +87,7 @@ public class LittleMonster : AllEnemiesManager
         
             var shotTransform = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
             shotTransform.position = transform.position;
-            ShotBasic shot = shotTransform.gameObject.GetComponent<ShotBasic>();
+            BulletBasic shot = shotTransform.gameObject.GetComponent<BulletBasic>();
             
 
             shot.isEnemyShot = true;

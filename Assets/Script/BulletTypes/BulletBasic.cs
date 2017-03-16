@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShotBasic : MonoBehaviour
+public class BulletBasic : MonoBehaviour
 {
-    public static ShotBasic instance;
+    public static BulletBasic instance;
 
     public int damage = 1;
     public bool isEnemyShot = false;
@@ -14,6 +14,7 @@ public class ShotBasic : MonoBehaviour
     public Vector2 Direction = new Vector2(-1, 0);
     [SerializeField]
     Rigidbody2D rb2d;
+
 
     void Start()
     {

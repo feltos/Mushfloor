@@ -9,8 +9,8 @@ public class GameManager : MonoBehaviour
     FollowCamera followCamera;
     [SerializeField]
     Room[]Rooms;
-    
-   
+    public List<PlayerManager.Guns> AvailableGun = new List<PlayerManager.Guns>();
+      
     
     public enum SwitchRoom
     {
@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour
     void Start ()
     {
         SwitchArea = SwitchRoom.DEFAULT;
+        for(int i = (int)PlayerManager.Guns.Shotgun;i < (int)PlayerManager.Guns.Length;i++)
+        {
+            AvailableGun.Add((PlayerManager.Guns)i);
+        }
     }
 	
 	
@@ -31,10 +35,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 	}
   
-    public void WinXP()
-    {
-        
-    }
+    
 
     public void CheckRoom()
     {
@@ -77,5 +78,4 @@ public class GameManager : MonoBehaviour
                 room.Desactivate();
         }
     }
-
 }
