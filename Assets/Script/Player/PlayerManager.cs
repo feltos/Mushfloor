@@ -58,8 +58,11 @@ public class PlayerManager : MonoBehaviour
     public
     List<GameObject> GunsOwned = new List<GameObject>();
 
+
+    [SerializeField]GameObject[] GunsPrefab;
     [SerializeField]Transform AK_47Bullets;
     float AK_47BulletsRemaining = 8;
+    [SerializeField]GameObject Hand;
     
     public enum Guns
     {
@@ -202,13 +205,9 @@ public class PlayerManager : MonoBehaviour
                     }
                 }
                 break;
-            case Guns.AK_47:
-               
-                InvokeRepeating("AK_47Fire", 0f, 0.1f);
-                          
-                    
-                break;
-                    
+            case Guns.AK_47:              
+                InvokeRepeating("AK_47Fire", 0f, 0.1f);                                              
+                break;                    
         }
        
     }
@@ -302,19 +301,41 @@ public class PlayerManager : MonoBehaviour
 
         if(collision.gameObject.layer == LayerMask.NameToLayer("Shotgun"))
         {
+            foreach(var g in GunsOwned)
+            {
+                g.SetActive(false);
+                
+            }
+            var Shotgun = Instantiate(GunsPrefab[0], Hand.transform.position, Hand.transform.rotation);
+            Shotgun.transform.parent = transform;
+            GunsOwned.Add(Shotgun.gameObject);
             CurrentGun = Guns.Shotgun;
-            Destroy(collision.gameObject);
-        }
-
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Sniper"))
-        {
-            CurrentGun = Guns.Sniper;
             Destroy(collision.gameObject);
         }
 
         if(collision.gameObject.layer == LayerMask.NameToLayer("AK_47"))
         {
+            foreach(var g in GunsOwned)
+            {
+                g.SetActive(false);
+            }
+            var AK_47 = Instantiate(GunsPrefab[1], Hand.transform.position, Hand.transform.rotation);
+            AK_47.transform.parent = transform;
+            GunsOwned.Add(AK_47.gameObject);
             CurrentGun = Guns.AK_47;
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Sniper"))
+        {
+            foreach(var g in GunsOwned)
+            {
+                g.SetActive(false);
+            }
+            var Sniper = Instantiate(GunsPrefab[2], Hand.transform.position, Hand.transform.rotation);
+            Sniper.transform.parent = transform;
+            GunsOwned.Add(Sniper.gameObject);
+            CurrentGun = Guns.Sniper;
             Destroy(collision.gameObject);
         }
 
