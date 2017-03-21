@@ -115,8 +115,20 @@ public class PlayerManager : MonoBehaviour
 
         ////////////FIRE////////////////
         Fire(false);
-        ////////////////////////////////
-
+        //////////CHANGE WEAPON/////////////
+        if(Input.GetAxis("Mouse ScrollWheel") > 0f)
+        {
+            foreach(var g in GunsOwned)
+            {
+                g.SetActive(false);
+            }
+            for(int i = 0; i < GunsOwned.Count;i++)
+            {
+                GunsOwned[i].SetActive(true);
+            }
+        }
+        
+        
         /////////////RELOAD////////////
         Reload();
         ///////////////////////////////
@@ -130,7 +142,7 @@ public class PlayerManager : MonoBehaviour
         {
             FallInHole();
         }
-
+        //////////////DIE/////////////////////
         if (HP <= 0)
         {
             SceneManager.LoadScene(1);
@@ -207,7 +219,20 @@ public class PlayerManager : MonoBehaviour
                 break;
             case Guns.AK_47:              
                 InvokeRepeating("AK_47Fire", 0f, 0.1f);                                              
-                break;                    
+                break;
+            case Guns.Sniper:
+                for(int i = 0; i <= 5; i++)
+                {
+                    var SniperBullet = Instantiate(BulletPrefab, transform.position, transform.rotation)as Transform;
+                    SniperBullet.position = transform.position;
+                    BulletBasic SniperShot = SniperBullet.gameObject.GetComponent<BulletBasic>();
+                    if(SniperShot != null)
+                    {
+                        SniperShot.isEnemyShot = isEnemy;
+                        SniperShot.Direction = direction.normalized;
+                    }
+                }
+                break;                         
         }
        
     }
