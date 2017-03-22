@@ -3,10 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using InControl;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
-    
+
+    public enum Guns
+    {
+        BasicGun,
+        Shotgun,
+        AK_47,
+        Sniper,
+        Length
+    }
+
+
     [SerializeField]
     Vector2 BasicSpeed;
     [SerializeField]
@@ -63,22 +74,21 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]Transform AK_47Bullets;
     float AK_47BulletsRemaining = 8;
     [SerializeField]GameObject Hand;
-    
-    public enum Guns
-    {
-        BasicGun,
-        Shotgun,
-        AK_47,
-        Sniper,
-        Length
-    }
+    [SerializeField]
+    Transform sniperBullet;
+    [SerializeField]
+    Text Keystext;
     Guns CurrentGun = Guns.BasicGun;
+    int CurrentIndex = 0;
+ 
+    
 
 
 
     void Awake()
     {
         Cursor.visible = true;
+
     }
 
     void Start ()
@@ -90,7 +100,7 @@ public class PlayerManager : MonoBehaviour
 	
 	void Update ()
     {
-        
+        Keystext.text = "Clés en main : " + BasicKeyHold;
         timeBetweenShoot += Time.deltaTime;
         DashReload += Time.deltaTime;
         TimeBetweenDamage += Time.deltaTime;
@@ -122,10 +132,28 @@ public class PlayerManager : MonoBehaviour
             {
                 g.SetActive(false);
             }
-            for(int i = 0; i < GunsOwned.Count;i++)
+            
+            CurrentIndex++;
+            if(CurrentIndex >= GunsOwned.Count)
             {
-                GunsOwned[i].SetActive(true);
+                CurrentIndex = 0;
             }
+            GunsOwned[CurrentIndex].SetActive(true);
+            CurrentGun = GetGunType(GunsOwned[CurrentIndex].name);
+        }
+        if(Input.GetAxis("Mouse ScrollWheel") < 0f)
+        {
+            foreach(var g in GunsOwned)
+            {
+                g.SetActive(false);
+            }
+            CurrentIndex--;
+            if(CurrentIndex < 0)
+            {
+                CurrentIndex = GunsOwned.Count -1;
+            }
+                GunsOwned[CurrentIndex].SetActive(true);
+                CurrentGun = GetGunType(GunsOwned[CurrentIndex].name);
         }
         
         
@@ -145,7 +173,7 @@ public class PlayerManager : MonoBehaviour
         //////////////DIE/////////////////////
         if (HP <= 0)
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(0);
         }
 
     }
@@ -223,7 +251,7 @@ public class PlayerManager : MonoBehaviour
             case Guns.Sniper:
                 for(int i = 0; i <= 5; i++)
                 {
-                    var SniperBullet = Instantiate(BulletPrefab, transform.position, transform.rotation)as Transform;
+                    var SniperBullet = Instantiate(sniperBullet, transform.position, transform.rotation)as Transform;
                     SniperBullet.position = transform.position;
                     BulletBasic SniperShot = SniperBullet.gameObject.GetComponent<BulletBasic>();
                     if(SniperShot != null)
@@ -335,6 +363,8 @@ public class PlayerManager : MonoBehaviour
             Shotgun.transform.parent = transform;
             GunsOwned.Add(Shotgun.gameObject);
             CurrentGun = Guns.Shotgun;
+            Shotgun.transform.localScale = Vector3.one;
+            CurrentIndex = GunsOwned.Count -1;
             Destroy(collision.gameObject);
         }
 
@@ -348,6 +378,8 @@ public class PlayerManager : MonoBehaviour
             AK_47.transform.parent = transform;
             GunsOwned.Add(AK_47.gameObject);
             CurrentGun = Guns.AK_47;
+            AK_47.transform.localScale = Vector3.one;
+            CurrentIndex = GunsOwned.Count - 1;
             Destroy(collision.gameObject);
         }
 
@@ -360,13 +392,10 @@ public class PlayerManager : MonoBehaviour
             var Sniper = Instantiate(GunsPrefab[2], Hand.transform.position, Hand.transform.rotation);
             Sniper.transform.parent = transform;
             GunsOwned.Add(Sniper.gameObject);
+            Sniper.transform.localScale = Vector3.one;
             CurrentGun = Guns.Sniper;
+            CurrentIndex = GunsOwned.Count - 1;
             Destroy(collision.gameObject);
-        }
-
-        if (collision.gameObject.layer == LayerMask.NameToLayer("DungeonDoor"))
-        {
-            SceneManager.LoadScene(0);
         }
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Door1"))
@@ -448,8 +477,29 @@ public class PlayerManager : MonoBehaviour
         {
             CancelInvoke("AK_47Fire");
             AK_47BulletsRemaining = 8;
+        }       
+    }
+
+    Guns GetGunType(string name)
+    {
+        Guns gunType = Guns.BasicGun;
+        if(name.Contains("Basic_gun"))
+        {
+            gunType= Guns.BasicGun;
         }
-        
+        if(name.Contains("AK_47"))
+        {
+            gunType = Guns.AK_47;            
+        }
+        if(name.Contains("Shotgun"))
+        {
+            gunType = Guns.Shotgun;            
+        }
+        if(name.Contains("Sniper_gun"))
+        {
+            gunType = Guns.Sniper;           
+        }
+        return gunType;
     }
 
 }
