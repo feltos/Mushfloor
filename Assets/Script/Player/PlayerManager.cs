@@ -48,8 +48,7 @@ public class PlayerManager : MonoBehaviour
     float TimeBetweenDamage = 2f;
     float PeriodBetweenDamage = 2f;
     bool IsEnemy = true;
-    [SerializeField]
-    BoxCollider2D BoxC2D;
+    bool Dashed = false;
 
     bool ImmuneToTraps = false;
     [SerializeField]
@@ -126,7 +125,8 @@ public class PlayerManager : MonoBehaviour
         ////////////FIRE////////////////
         Fire(false);
         //////////CHANGE WEAPON/////////////
-        if(Input.GetAxis("Mouse ScrollWheel") > 0f)
+        var inputDevice = (InputManager.Devices.Count > 0) ? InputManager.Devices[0] : null;
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f || inputDevice != null && InputManager.Devices[0].RightTrigger.WasPressed)
         {
             foreach(var g in GunsOwned)
             {
@@ -141,7 +141,7 @@ public class PlayerManager : MonoBehaviour
             GunsOwned[CurrentIndex].SetActive(true);
             CurrentGun = GetGunType(GunsOwned[CurrentIndex].name);
         }
-        if(Input.GetAxis("Mouse ScrollWheel") < 0f)
+        if(Input.GetAxis("Mouse ScrollWheel") < 0f || inputDevice != null && InputManager.Devices[0].LeftTrigger.WasPressed)
         {
             foreach(var g in GunsOwned)
             {
@@ -285,12 +285,12 @@ public class PlayerManager : MonoBehaviour
         {
             ActualSpeed = DashSpeed;
             DashReload = 0f;
-            BoxC2D.enabled = false;
+            Dashed = true;
         }
         if (DashReload > PeriodBetweenDash)
         {
             ActualSpeed = BasicSpeed;
-            BoxC2D.enabled = true;
+            Dashed = false;
         }
     }
   
@@ -311,7 +311,7 @@ public class PlayerManager : MonoBehaviour
         BulletBasic shot = collision.gameObject.GetComponent<BulletBasic>();
         if (shot != null)
         {
-            if (shot.isEnemyShot == IsEnemy && TimeBetweenDamage >= PeriodBetweenDamage)
+            if (shot.isEnemyShot == IsEnemy && TimeBetweenDamage >= PeriodBetweenDamage && !Dashed)
             {
                 HP -= shot.damage;
                 Destroy(shot.gameObject);
@@ -320,7 +320,7 @@ public class PlayerManager : MonoBehaviour
 
         }
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("AOE"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("AOE") && !Dashed)
         {
             if (!ImmuneToTraps)
             {

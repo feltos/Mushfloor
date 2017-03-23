@@ -92,8 +92,7 @@ public class LittleMonster : AllEnemiesManager
 
             shot.isEnemyShot = true;
             shot.Direction = Direction;
-            ShootCooldown = 0f;
-       
+            ShootCooldown = 0f;       
     }
 
    

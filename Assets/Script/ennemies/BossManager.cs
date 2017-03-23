@@ -18,12 +18,12 @@ public class BossManager : MonoBehaviour
     float HeavyBulletremaining = 4f;
     float FireCircleremaining = 2f;
     float TornadoFireRemaining = 1;
-    float TornadoShoot = 0.05f;
-    float TornadoCooldown = 0.05f;
     [SerializeField]
     Transform BulletPrefab;
     [SerializeField]
     Transform HeavyBulletPrefab;
+    [SerializeField]
+    Transform TornadoBullet;
     bool StopToShoot = true;
 
     bool canRandom = true;
@@ -33,6 +33,7 @@ public class BossManager : MonoBehaviour
     bool IsEnemy = true;
     [SerializeField]
     Slider HealthSlider;
+    float AngleOfShoot = 0f;
 
     int attackListBossLenght = AttackListBoss.GetNames(typeof(AttackListBoss)).Length;
 
@@ -53,7 +54,6 @@ public class BossManager : MonoBehaviour
     {
         FireCircleCooldown = 0f;
         HeavyBulletCooldown = 0f;
-        TornadoCooldown = 0f;
         AttackList = AttackListBoss.CircleFire;
     }
 
@@ -66,19 +66,17 @@ public class BossManager : MonoBehaviour
                 {
                                 
                     if (FireCircleremaining >= 0)
-                        {                                                      
-                            if (FireCircleCooldown >= FireCircleShoot)
+                    {                                                      
+                        if (FireCircleCooldown >= FireCircleShoot)
+                        {
+                            for (int l = 0; l <= 36; l++)
                             {
-                                for (int l = 0; l <= 36; l++)
-                                {
-                                    FireCircle(Quaternion.AngleAxis(l * 10, new Vector3(0, 0, 1)) * DirectionOfShoot.normalized);
-                                    FireCircleCooldown = 0;
-                                }
-                            FireCircleremaining -= 1;
-                            
-                            
+                                FireCircle(Quaternion.AngleAxis(l * 10, new Vector3(0, 0, 1)) * DirectionOfShoot.normalized);
+                                FireCircleCooldown = 0;
+                            }
+                            FireCircleremaining -= 1;                                                    
                         }                                                                                                                  
-                        }                                       
+                    }                                       
                     AttackCooldown = 0f;
                     if(FireCircleremaining <= 0)
                     {
@@ -90,17 +88,8 @@ public class BossManager : MonoBehaviour
             case AttackListBoss.Tornadofire:
                 {
                     if(TornadoFireRemaining >= 0) 
-                        {
-                        Debug.Log(TornadoFireRemaining);
-                        if (TornadoCooldown >= TornadoShoot)
-                        {
-                                for (int i = 0; i <= 72; i++)
-                                {
-                                TornadoFire(Quaternion.AngleAxis(i * 10, new Vector3(0, 0, 1)) * DirectionOfShoot.normalized);
-                                TornadoCooldown = 0;
-                            }                          
-                        }
-                        TornadoFireRemaining -= 1;
+                    {
+                        InvokeRepeating("TornadoFire", 0f, 0.05f);                                                                                                 
                     }
                     AttackCooldown = 0f;
                     if(TornadoFireRemaining >= 0)
@@ -138,7 +127,6 @@ public class BossManager : MonoBehaviour
     {
         FireCircleCooldown += Time.deltaTime;
         HeavyBulletCooldown += Time.deltaTime;
-        TornadoCooldown += Time.deltaTime;
         DirectionOfShoot = Target.transform.position - transform.position;
 
         if (!StopToShoot)
@@ -159,7 +147,7 @@ public class BossManager : MonoBehaviour
                     HeavyBulletremaining = 4;
                     break;
                 case AttackListBoss.Tornadofire:
-                    TornadoFireRemaining = 1;
+                    TornadoFireRemaining = 108;
                     break;
             }
             StopToShoot = true;
@@ -205,18 +193,27 @@ public class BossManager : MonoBehaviour
              
     }
 
-    void TornadoFire(Vector2 direction)
+    void TornadoFire()
     {
 
 
-        var shotTransform = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
-        shotTransform.position = transform.position;
-        BulletBasic shot = shotTransform.gameObject.GetComponent<BulletBasic>();
+        var TornadoShoot = Instantiate(TornadoBullet, transform.position, transform.rotation) as Transform;
+        TornadoShoot.position = transform.position;
+        BulletBasic shot = TornadoShoot.gameObject.GetComponent<BulletBasic>();
 
+        if(TornadoShoot!= null)
+        {
+            shot.isEnemyShot = true;
+            shot.Direction = Quaternion.AngleAxis(AngleOfShoot * 10, new Vector3(0, 0, 1)) * DirectionOfShoot.normalized;
+            AngleOfShoot += 1;
+            TornadoFireRemaining -= 1;
+            AttackCooldown = 0f;
+        }
+        if(TornadoFireRemaining <= 0)
+        {
+            CancelInvoke("TornadoFire");
+        }
 
-        shot.isEnemyShot = true;
-        shot.Direction = direction.normalized;
-        FireCircleCooldown = 0f;
 
 
     }
