@@ -336,7 +336,10 @@ public class PlayerManager : MonoBehaviour
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Hearth"))
         {
-            HP += 1;
+            if(HP <= 5)
+            {
+                HP += 1;
+            }
             Destroy(collision.gameObject);
         }
 
@@ -446,19 +449,22 @@ public class PlayerManager : MonoBehaviour
 
     void FallInHole()
     {
-        rb2d.velocity = Vector3.zero;
-        GrowTime += Time.deltaTime;
-        if (GrowTime >= GrowCooldown)
+        if(!Dashed)
         {
-            transform.localScale -= NewScale;
-        }
-        if (transform.localScale.x <= 0)
-        {
-            transform.position = PositionbeforeFall.transform.position;
-            transform.localScale = DefaultScale;
-            GrowTime = 0;
-            HP -= 1;
-            Fall = false;
+            rb2d.velocity = Vector3.zero;
+            GrowTime += Time.deltaTime;
+            if (GrowTime >= GrowCooldown)
+            {
+                transform.localScale -= NewScale;
+            }
+            if (transform.localScale.x <= 0)
+            {
+                transform.position = PositionbeforeFall.transform.position;
+                transform.localScale = DefaultScale;
+                GrowTime = 0;
+                HP -= 1;
+                Fall = false;
+            }
         }
     }
 
