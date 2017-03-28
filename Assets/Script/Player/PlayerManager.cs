@@ -58,7 +58,7 @@ public class PlayerManager : MonoBehaviour
     bool BossKeyHold = false;
     float GrowTime = 0f;
     float GrowCooldown = 1.5f;
-    Vector3 DefaultScale = new Vector3(0.2f, 0.2f, 0.2f);
+    Vector3 DefaultScale = new Vector3(0.15f, 0.15f, 1f);
     Vector3 NewScale = new Vector3(0.01f, 0.01f, 0.01f);
     GameObject PositionbeforeFall;
     bool Fall = false;
@@ -223,6 +223,7 @@ public class PlayerManager : MonoBehaviour
         switch(CurrentGun)
         {
             case Guns.BasicGun:
+                PeriodBetweenShoot = 0.25f;
                 SoundManager.Instance.BasicFire();
                 var BasicBullet = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
                 BasicBullet.position = transform.position;
@@ -234,6 +235,7 @@ public class PlayerManager : MonoBehaviour
                 }
                 break;
             case Guns.Shotgun:
+                PeriodBetweenShoot = 1.25f;
                 SoundManager.Instance.ShotgunFire();
                 for(int i = -2; i <= 2;i++)
                 {
@@ -247,10 +249,12 @@ public class PlayerManager : MonoBehaviour
                     }
                 }
                 break;
-            case Guns.AK_47:              
+            case Guns.AK_47:
+                PeriodBetweenShoot = 1.5f;             
                 InvokeRepeating("AK_47Fire", 0f, 0.1f);                                              
                 break;
             case Guns.Sniper:
+                PeriodBetweenShoot = 2f;
                 SoundManager.Instance.SniperFire();
                 for(int i = 0; i <= 5; i++)
                 {
@@ -431,22 +435,57 @@ public class PlayerManager : MonoBehaviour
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Door2"))
         {
-            if(gameManager.SwitchArea == GameManager.SwitchRoom.DEFAULT)
+            if(gameManager.SwitchArea == GameManager.SwitchRoom.ROOM2)
             {
                 gameManager.SwitchArea = GameManager.SwitchRoom.ROOM3;
                 gameManager.CheckRoom();
             }
             else
             {
-                gameManager.SwitchArea = GameManager.SwitchRoom.DEFAULT;
+                gameManager.SwitchArea = GameManager.SwitchRoom.ROOM2;
+                gameManager.CheckRoom();
+            }
+         }
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Door3"))
+        {
+            if (gameManager.SwitchArea == GameManager.SwitchRoom.ROOM3)
+            {
+                gameManager.SwitchArea = GameManager.SwitchRoom.ROOM4;
+                gameManager.CheckRoom();
+            }
+            else
+            {
+                gameManager.SwitchArea = GameManager.SwitchRoom.ROOM3;
                 gameManager.CheckRoom();
             }
         }
 
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Hole"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Door4"))
         {
-            PositionbeforeFall = collision.gameObject.transform.FindChild("PositionBeforeFall").gameObject;
-            Fall = true;                         
+            if (gameManager.SwitchArea == GameManager.SwitchRoom.ROOM4)
+            {
+                gameManager.SwitchArea = GameManager.SwitchRoom.ROOM5;
+                gameManager.CheckRoom();
+            }
+            else
+            {
+                gameManager.SwitchArea = GameManager.SwitchRoom.ROOM4;
+                gameManager.CheckRoom();
+            }
+        }
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Hole"))
+        {
+            if(!Dashed)
+            {
+                if(!ImmuneToTraps)
+                {
+                    PositionbeforeFall = collision.gameObject.transform.FindChild("PositionBeforeFall").gameObject;
+                    Fall = true;
+                }      
+            }
+                                
         }
     }
 
@@ -462,8 +501,6 @@ public class PlayerManager : MonoBehaviour
 
     void FallInHole()
     {
-        if(!Dashed)
-        {
             rb2d.velocity = Vector3.zero;
             GrowTime += Time.deltaTime;
             if (GrowTime >= GrowCooldown)
@@ -478,7 +515,6 @@ public class PlayerManager : MonoBehaviour
                 HP -= 1;
                 Fall = false;
             }
-        }
     }
 
     void AK_47Fire()

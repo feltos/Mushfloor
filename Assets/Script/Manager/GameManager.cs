@@ -16,7 +16,9 @@ public class GameManager : MonoBehaviour
     {
         DEFAULT,
         ROOM2,
-        ROOM3
+        ROOM3,
+        ROOM4,
+        ROOM5
     }
     public SwitchRoom SwitchArea = SwitchRoom.DEFAULT;
 
@@ -47,27 +49,45 @@ public class GameManager : MonoBehaviour
                     followCamera.MinPosX = -4.2f;
                     followCamera.MaxPosX = 3.998743f;
                     followCamera.MinPosY = -2.25f;
-                    followCamera.MaxPosy = 2.12631f;                    
+                    followCamera.MaxPosy = 2.55f;                    
                 }
                 break;
 
             case SwitchRoom.ROOM2:
                 {
                     followCamera.MinPosX = 14.72f;
-                    followCamera.MaxPosX = 24.41f;
-                    followCamera.MinPosY = -2.56f;
+                    followCamera.MaxPosX = 23.6f;
+                    followCamera.MinPosY = -2.20f;
                     followCamera.MaxPosy = 2.55f;                                        
                 }
                 break;
 
             case SwitchRoom.ROOM3:
                 {
-                    followCamera.MinPosX = -3.8f;
-                    followCamera.MaxPosX = 3.42f;
-                    followCamera.MinPosY = 8.47f;
-                    followCamera.MaxPosy = 12.25f;                   
+                    followCamera.MinPosX = 35.25f;
+                    followCamera.MaxPosX = 42f;
+                    followCamera.MinPosY = -2.20f;
+                    followCamera.MaxPosy = 2.55f;                   
                 }
                 break;
+            case SwitchRoom.ROOM4:
+                {
+                    followCamera.MinPosX = 34.02f;
+                    followCamera.MaxPosX = 42f;
+                    followCamera.MinPosY = -12.67f;
+                    followCamera.MaxPosy = -8.15f;
+                }
+                break;
+
+            case SwitchRoom.ROOM5:
+                {
+                    followCamera.MinPosX = 15.1f;
+                    followCamera.MaxPosX = 23.79f;
+                    followCamera.MinPosY = -12.67f;
+                    followCamera.MaxPosy = -8.15f;
+                }
+                break;
+
             
                
         }
