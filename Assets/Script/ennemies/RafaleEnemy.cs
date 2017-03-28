@@ -71,6 +71,7 @@ public class RafaleEnemy : AllEnemiesManager
 
             if (HP <= 0)
             {
+                SoundManager.Instance.EnnemyHurt();
                 room.RemoveEnemy(gameObject);
                 Destroy(gameObject);
             }       
@@ -86,6 +87,7 @@ public class RafaleEnemy : AllEnemiesManager
     {
         if ((BulletShoot >= BulletCooldown) && !StopToShoot)
         {
+            SoundManager.Instance.Ak_47Fire();
             var RafaleShot = Instantiate(RafalePrefab, transform.position, transform.rotation) as Transform;
             RafaleShot.position = transform.position;
             BulletBasic Rafale = RafaleShot.gameObject.GetComponent<BulletBasic>();

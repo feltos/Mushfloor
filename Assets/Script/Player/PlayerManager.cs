@@ -173,7 +173,7 @@ public class PlayerManager : MonoBehaviour
         //////////////DIE/////////////////////
         if (HP <= 0)
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(2);
         }
 
     }
@@ -223,6 +223,7 @@ public class PlayerManager : MonoBehaviour
         switch(CurrentGun)
         {
             case Guns.BasicGun:
+                SoundManager.Instance.BasicFire();
                 var BasicBullet = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
                 BasicBullet.position = transform.position;
                 BulletBasic BasicShot = BasicBullet.gameObject.GetComponent<BulletBasic>();
@@ -233,6 +234,7 @@ public class PlayerManager : MonoBehaviour
                 }
                 break;
             case Guns.Shotgun:
+                SoundManager.Instance.ShotgunFire();
                 for(int i = -2; i <= 2;i++)
                 {
                     var ShotgunBullet = Instantiate(BulletPrefab, transform.position, transform.rotation)as Transform;
@@ -249,6 +251,7 @@ public class PlayerManager : MonoBehaviour
                 InvokeRepeating("AK_47Fire", 0f, 0.1f);                                              
                 break;
             case Guns.Sniper:
+                SoundManager.Instance.SniperFire();
                 for(int i = 0; i <= 5; i++)
                 {
                     var SniperBullet = Instantiate(sniperBullet, transform.position, transform.rotation)as Transform;
@@ -299,6 +302,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") && TimeBetweenDamage >= PeriodBetweenDamage)
         {
+            SoundManager.Instance.PlayerHurt();
             HP -= 1;
             TimeBetweenDamage = 0;
         }
@@ -313,6 +317,7 @@ public class PlayerManager : MonoBehaviour
         {
             if (shot.isEnemyShot == IsEnemy && TimeBetweenDamage >= PeriodBetweenDamage && !Dashed)
             {
+                SoundManager.Instance.PlayerHurt();
                 HP -= shot.damage;
                 Destroy(shot.gameObject);
                 TimeBetweenDamage = 0;
@@ -324,6 +329,7 @@ public class PlayerManager : MonoBehaviour
         {
             if (!ImmuneToTraps)
             {
+                SoundManager.Instance.PlayerHurt();
                 HP -= 1;
             }
         }
@@ -331,6 +337,7 @@ public class PlayerManager : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("AntiTraps"))
         {
             ImmuneToTraps = true;
+            SoundManager.Instance.GunPick();
             Destroy(collision.gameObject);
         }
 
@@ -339,18 +346,21 @@ public class PlayerManager : MonoBehaviour
             if(HP <= 5)
             {
                 HP += 1;
-            }
-            Destroy(collision.gameObject);
+                SoundManager.Instance.HearthPick();
+                Destroy(collision.gameObject);
+            }         
         }
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("BasicKey"))
         {
+            SoundManager.Instance.KeyPick();
             BasicKeyHold += 1f;
             Destroy(collision.gameObject);
         }
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("BossKey"))
         {
+            SoundManager.Instance.KeyPick();
             BossKeyHold = true;
             Destroy(collision.gameObject);
         }
@@ -368,6 +378,7 @@ public class PlayerManager : MonoBehaviour
             CurrentGun = Guns.Shotgun;
             Shotgun.transform.localScale = Vector3.one;
             CurrentIndex = GunsOwned.Count -1;
+            SoundManager.Instance.GunPick();
             Destroy(collision.gameObject);
         }
 
@@ -383,6 +394,7 @@ public class PlayerManager : MonoBehaviour
             CurrentGun = Guns.AK_47;
             AK_47.transform.localScale = Vector3.one;
             CurrentIndex = GunsOwned.Count - 1;
+            SoundManager.Instance.GunPick();
             Destroy(collision.gameObject);
         }
 
@@ -398,6 +410,7 @@ public class PlayerManager : MonoBehaviour
             Sniper.transform.localScale = Vector3.one;
             CurrentGun = Guns.Sniper;
             CurrentIndex = GunsOwned.Count - 1;
+            SoundManager.Instance.GunPick();
             Destroy(collision.gameObject);
         }
 
@@ -470,6 +483,7 @@ public class PlayerManager : MonoBehaviour
 
     void AK_47Fire()
     {
+        SoundManager.Instance.Ak_47Fire();
         var AK_47Bullet = Instantiate(AK_47Bullets, transform.position, transform.rotation);
         AK_47Bullet.position = transform.position;
         BulletBasic AK_47Shot = AK_47Bullet.gameObject.GetComponent<BulletBasic>();

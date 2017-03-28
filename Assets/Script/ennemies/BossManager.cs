@@ -163,8 +163,8 @@ public class BossManager : MonoBehaviour
 
     void FireCircle(Vector2 direction)
     {
-       
-        
+
+            SoundManager.Instance.CircleFire();
             var shotTransform = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
             shotTransform.position = transform.position;
             BulletBasic shot = shotTransform.gameObject.GetComponent<BulletBasic>();
@@ -179,8 +179,8 @@ public class BossManager : MonoBehaviour
 
     void FireHeavyBullet()
     {
-        
-        
+
+            SoundManager.Instance.BigBulletFire();
             var shotTransform = Instantiate(HeavyBulletPrefab, transform.position, transform.rotation) as Transform;
             shotTransform.position = transform.position;
             BulletBasic shot = shotTransform.gameObject.GetComponent<BulletBasic>();
@@ -196,7 +196,7 @@ public class BossManager : MonoBehaviour
     void TornadoFire()
     {
 
-
+        SoundManager.Instance.TornadoFire();
         var TornadoShoot = Instantiate(TornadoBullet, transform.position, transform.rotation) as Transform;
         TornadoShoot.position = transform.position;
         BulletBasic shot = TornadoShoot.gameObject.GetComponent<BulletBasic>();

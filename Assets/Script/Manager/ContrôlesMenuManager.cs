@@ -20,7 +20,7 @@ public class ContrôlesMenuManager : MonoBehaviour
 		NextSceneTimer += Time.deltaTime;
         if(NextSceneTimer >= NextSceneCooldown && InputManager.AnyKeyIsPressed)
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(2);
         }
 	}
 

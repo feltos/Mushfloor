@@ -59,6 +59,7 @@ public class KamikazeMonster : AllEnemiesManager
             if (HP <= 0)
             {           
                 Instantiate(PoisonCircle, transform.position, transform.rotation);
+                SoundManager.Instance.EnnemyHurt();
                 room.RemoveEnemy(gameObject);
                 Destroy(gameObject);
             }

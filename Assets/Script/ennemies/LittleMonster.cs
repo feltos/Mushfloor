@@ -44,6 +44,7 @@ public class LittleMonster : AllEnemiesManager
         /////////////FIRE//////////////
         if(ShootCooldown >= BulletShoot)
         {
+            SoundManager.Instance.BasicFire();
             fire();
         }       
         //////////////////////////////
@@ -67,6 +68,7 @@ public class LittleMonster : AllEnemiesManager
             }
             if (HP <= 0)
             {
+                SoundManager.Instance.EnnemyHurt();
                 room.RemoveEnemy(gameObject);
                 Destroy(gameObject);
             }

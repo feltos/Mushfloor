@@ -20,13 +20,15 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     AudioClip TornadoShot;
     [SerializeField]
-    AudioClip EnnemyDamage;
+    AudioClip EnnemyDeath;
     [SerializeField]
     AudioClip PlayerDamage;
     [SerializeField]
     AudioClip OpenChest;
     [SerializeField]
     AudioClip PickKey;
+    [SerializeField]
+    AudioClip PickGun;
     [SerializeField]
     AudioClip PickHearth;
     [SerializeField]
@@ -35,10 +37,17 @@ public class SoundManager : MonoBehaviour
     AudioClip DonjonMusic;
     [SerializeField]
     AudioClip BossMusic;
-    
-       
-	
-	void Start ()
+
+    void Awake()
+    {
+        if (Instance != null)
+        {
+            Debug.Log("Multiple instances of SoundEffects!");
+        }
+        Instance = this;
+    }
+
+    void Start ()
     {
         DontDestroyOnLoad(this);
 	}
@@ -53,64 +62,68 @@ public class SoundManager : MonoBehaviour
     {
         AudioSource.PlayClipAtPoint(OriginalClip, transform.position);
     }
-    void BasicFire()
+    public void BasicFire()
     {
         MakeSound(BasicShot);
     }
-    void Ak_47Fire()
+    public void Ak_47Fire()
     {
         MakeSound(AK_47Shot);
     }
-    void ShotgunFire()
+    public void ShotgunFire()
     {
         MakeSound(ShotgunShot);
     }
-    void SniperFire()
+    public void SniperFire()
     {
         MakeSound(SniperShot);
     }
-    void BigBulletFire()
+    public void BigBulletFire()
     {
         MakeSound(BigBullet);
     }
-    void CircleFire()
+    public void CircleFire()
     {
         MakeSound(CircleShot);
     }
-    void TornadoFire()
+    public void TornadoFire()
     {
         MakeSound(TornadoShot);
     }
-    void EnnemyHurt()
+    public void EnnemyHurt()
     {
-        MakeSound(EnnemyDamage);
+        MakeSound(EnnemyDeath);
     }
-    void PlayerHurt()
+    public void PlayerHurt()
     {
         MakeSound(PlayerDamage);
     }
-    void ChestOpen()
+    public void ChestOpen()
     {
         MakeSound(OpenChest);
     }
-    void KeyPick()
+    public void KeyPick()
     {
         MakeSound(PickKey);
     }
-    void HearthPick()
+    public void HearthPick()
     {
         MakeSound(PickHearth);
     }
-    void OpenBossDoor()
+    public void OpenBossDoor()
     {
         MakeSound(BossDoor);
     }
-    void DungeonMusic()
+    public void DungeonMusic()
     {
         MakeSound(DonjonMusic);
     }
-    void BossBattleMusic()
+    public void BossBattleMusic()
     {
         MakeSound(BossMusic);
+    }
+    public void GunPick()
+    {
+        MakeSound(PickGun);
     }
 }

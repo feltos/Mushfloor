@@ -44,6 +44,7 @@ public class ArcMonster : AllEnemiesManager
         /////////////////FIRE/////////////////////
         if (ShootCooldown >= BulletShoot)
         {
+            SoundManager.Instance.ShotgunFire();
             for (int i = -2; i <= 2; i++)
             {
                 fire(Quaternion.AngleAxis(i * 10, new Vector3(0, 0, 1)) * Direction.normalized);
@@ -81,6 +82,7 @@ public class ArcMonster : AllEnemiesManager
 
             if (HP <= 0)
             {
+                SoundManager.Instance.EnnemyHurt();
                 room.RemoveEnemy(gameObject);
                 Destroy(gameObject);
             }

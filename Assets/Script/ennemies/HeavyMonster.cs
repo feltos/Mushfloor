@@ -69,6 +69,7 @@ public class HeavyMonster : AllEnemiesManager
 
             if (HP <= 0)
             {
+                SoundManager.Instance.EnnemyHurt();
                 room.RemoveEnemy(gameObject);
                 Destroy(gameObject);
             }
@@ -87,6 +88,7 @@ public class HeavyMonster : AllEnemiesManager
 
         if (ShootCooldown >= BulletShoot)
         {
+            SoundManager.Instance.BigBulletFire();
             var HeavyBulletShot = Instantiate(HeavyBulletPrefab, transform.position, transform.rotation);
             HeavyBulletShot.transform.position = transform.position;
             BulletBasic HeavyBullet = HeavyBulletShot.gameObject.GetComponent<BulletBasic>();
