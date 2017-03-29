@@ -32,8 +32,6 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     AudioClip PickHearth;
     [SerializeField]
-    AudioClip BossDoor;
-    [SerializeField]
     AudioClip DonjonMusic;
     [SerializeField]
     AudioClip BossMusic;
@@ -55,7 +53,7 @@ public class SoundManager : MonoBehaviour
 	
 	void Update ()
     {
-		
+        
 	}
 
     private void MakeSound(AudioClip OriginalClip)
@@ -110,20 +108,16 @@ public class SoundManager : MonoBehaviour
     {
         MakeSound(PickHearth);
     }
-    public void OpenBossDoor()
+    public void GunPick()
     {
-        MakeSound(BossDoor);
-    }
-    public void DungeonMusic()
-    {
-        MakeSound(DonjonMusic);
+        MakeSound(PickGun);
     }
     public void BossBattleMusic()
     {
         MakeSound(BossMusic);
     }
-    public void GunPick()
+    public void DungeonMusic()
     {
-        MakeSound(PickGun);
+        MakeSound(DonjonMusic);
     }
 }

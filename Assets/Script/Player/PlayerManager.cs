@@ -79,9 +79,12 @@ public class PlayerManager : MonoBehaviour
     Text Keystext;
     Guns CurrentGun = Guns.BasicGun;
     int CurrentIndex = 0;
- 
-    
 
+
+    [SerializeField]
+    AudioClip DungeonMusic;
+    [SerializeField]
+    AudioClip BossMusic;
 
 
     void Awake()
@@ -534,6 +537,7 @@ public class PlayerManager : MonoBehaviour
             if (gameManager.SwitchArea == GameManager.SwitchRoom.ROOM9)
             {
                 gameManager.SwitchArea = GameManager.SwitchRoom.ROOM10;
+                SoundManager.Instance.BossBattleMusic();
                 gameManager.CheckRoom();
             }
             else
