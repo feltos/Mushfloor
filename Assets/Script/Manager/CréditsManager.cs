@@ -18,7 +18,7 @@ public class CréditsManager : MonoBehaviour
 	void Update ()
     {
         TimeBeforeLeave += Time.deltaTime;
-        if(TimeBeforeLeave >= CooldownBeforeLeave && Input.anyKeyDown)
+        if(TimeBeforeLeave >= CooldownBeforeLeave && InputManager.AnyKeyIsPressed)
         {
             SceneManager.LoadScene(3);
         }

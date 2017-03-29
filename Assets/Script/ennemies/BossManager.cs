@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Threading;
 using UnityEngine.UI;
 
-public class BossManager : MonoBehaviour
+public class BossManager : AllEnemiesManager
 {
     [SerializeField]
     GameObject Target;
@@ -55,6 +55,7 @@ public class BossManager : MonoBehaviour
         FireCircleCooldown = 0f;
         HeavyBulletCooldown = 0f;
         AttackList = AttackListBoss.CircleFire;
+        OriginPosition = transform.position;
     }
 
 

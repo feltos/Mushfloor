@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
 	
 	void Update ()
     {
-        DontDestroyOnLoad(gameObject);
+        
 	}
   
     
@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
                 {
                     followCamera.MinPosX = 34.5f;
                     followCamera.MaxPosX = 43.1f;
-                    followCamera.MinPosY = -22.9f;
+                    followCamera.MinPosY = -23.2f;
                     followCamera.MaxPosy = -18.9f;
                 }
                 break;
@@ -126,10 +126,10 @@ public class GameManager : MonoBehaviour
                 break;
             case SwitchRoom.ROOM10:
                 {
-                    followCamera.MinPosX = 53f;
-                    followCamera.MaxPosX = 61.5f;
-                    followCamera.MinPosY = -23.1f;
-                    followCamera.MaxPosy = -19f;
+                    followCamera.MinPosX = 51.73f;
+                    followCamera.MaxPosX = 78.78f;
+                    followCamera.MinPosY = -43.95f;
+                    followCamera.MaxPosy = -30.76f;
                 }
                 break;
 

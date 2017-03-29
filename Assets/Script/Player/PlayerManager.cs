@@ -37,8 +37,6 @@ public class PlayerManager : MonoBehaviour
     float PeriodBetweenShoot = 0.25f;
     [SerializeField]
     Transform BulletPrefab;
-    [SerializeField]float BulletLeft;
-    float EmptyGun = 0;
     [SerializeField]
     float ReloadTime = 1f;
     float DashReload = 0.3f;
@@ -156,11 +154,6 @@ public class PlayerManager : MonoBehaviour
                 CurrentGun = GetGunType(GunsOwned[CurrentIndex].name);
         }
         
-        
-        /////////////RELOAD////////////
-        Reload();
-        ///////////////////////////////
-
         ////////////////DASH///////////
         Dash();
         //////////////////////////////
@@ -200,20 +193,18 @@ public class PlayerManager : MonoBehaviour
 
         if (inputDevice != null && timeBetweenShoot > PeriodBetweenShoot &&
             (Mathf.Abs(inputDevice.RightStick.X) > WalkDeadZone || Mathf.Abs(inputDevice.RightStick.Y) > WalkDeadZone)
-            && InputManager.Devices[0].RightBumper.WasPressed && BulletLeft > EmptyGun)
+            && InputManager.Devices[0].RightBumper.WasPressed)
         {
             direction = new Vector3(inputDevice.RightStick.X, inputDevice.RightStick.Y);
             timeBetweenShoot = 0;
-            BulletLeft -= 1;
 
         }
-        else if (Input.GetMouseButtonDown(0) && timeBetweenShoot > PeriodBetweenShoot && BulletLeft > EmptyGun)
+        else if (Input.GetMouseButtonDown(0) && timeBetweenShoot > PeriodBetweenShoot)
         {
             Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y);
             mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
             direction = mousePosition - transform.position;
             timeBetweenShoot = 0;
-            BulletLeft -= 1;
         }
         else
         {
@@ -223,7 +214,7 @@ public class PlayerManager : MonoBehaviour
         switch(CurrentGun)
         {
             case Guns.BasicGun:
-                PeriodBetweenShoot = 0.25f;
+                PeriodBetweenShoot = 0f;
                 SoundManager.Instance.BasicFire();
                 var BasicBullet = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
                 BasicBullet.position = transform.position;
@@ -235,7 +226,7 @@ public class PlayerManager : MonoBehaviour
                 }
                 break;
             case Guns.Shotgun:
-                PeriodBetweenShoot = 1.25f;
+                PeriodBetweenShoot = 0.5f;
                 SoundManager.Instance.ShotgunFire();
                 for(int i = -2; i <= 2;i++)
                 {
@@ -254,7 +245,7 @@ public class PlayerManager : MonoBehaviour
                 InvokeRepeating("AK_47Fire", 0f, 0.1f);                                              
                 break;
             case Guns.Sniper:
-                PeriodBetweenShoot = 2f;
+                PeriodBetweenShoot = 0.75f;
                 SoundManager.Instance.SniperFire();
                 for(int i = 0; i <= 5; i++)
                 {
@@ -272,29 +263,19 @@ public class PlayerManager : MonoBehaviour
        
     }
 
-    void Reload()
-    {
-        if(BulletLeft <= EmptyGun)
-        {
-            ReloadTime -= Time.deltaTime;
-        }
-        if(ReloadTime <= 0 && BulletLeft <= EmptyGun)
-        {
-            BulletLeft = 10;
-            ReloadTime = 1f;
-        }
-    }
+    
+    
     void Dash()
     {
         var inputDevice = (InputManager.Devices.Count > 0) ? InputManager.Devices[0] : null;
 
-        if ((inputDevice != null && InputManager.Devices[0].Action2.WasPressed && DashReload > PeriodBetweenDash) || (Input.GetMouseButtonDown(1) && DashReload > PeriodBetweenDash))
+        if ((inputDevice != null && InputManager.Devices[0].Action2.WasPressed && DashReload >= PeriodBetweenDash) || (Input.GetMouseButtonDown(1) && DashReload >= PeriodBetweenDash))
         {
             ActualSpeed = DashSpeed;
             DashReload = 0f;
             Dashed = true;
         }
-        if (DashReload > PeriodBetweenDash)
+        if (DashReload >= PeriodBetweenDash)
         {
             ActualSpeed = BasicSpeed;
             Dashed = false;
@@ -418,12 +399,14 @@ public class PlayerManager : MonoBehaviour
             Destroy(collision.gameObject);
         }
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Door1"))
+        if (collision.gameObject.name == "Door1")
         {
-            if(gameManager.SwitchArea == GameManager.SwitchRoom.DEFAULT)
+            collision.gameObject.GetComponent<DoorManager>().MovePlayer(this);
+            if (gameManager.SwitchArea == GameManager.SwitchRoom.DEFAULT)
             {
                 gameManager.SwitchArea = GameManager.SwitchRoom.ROOM2;
-                gameManager.CheckRoom();           
+                gameManager.CheckRoom();
+                                
             }
             else
             {
@@ -433,9 +416,10 @@ public class PlayerManager : MonoBehaviour
                                                                                                                  
         }
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Door2"))
+        if (collision.gameObject.name =="Door2")
         {
-            if(gameManager.SwitchArea == GameManager.SwitchRoom.ROOM2)
+            collision.gameObject.GetComponent<DoorManager>().MovePlayer(this);
+            if (gameManager.SwitchArea == GameManager.SwitchRoom.ROOM2)
             {
                 gameManager.SwitchArea = GameManager.SwitchRoom.ROOM3;
                 gameManager.CheckRoom();
@@ -447,8 +431,9 @@ public class PlayerManager : MonoBehaviour
             }
          }
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Door3"))
+        if (collision.gameObject.name =="Door3")
         {
+            collision.gameObject.GetComponent<DoorManager>().MovePlayer(this);
             if (gameManager.SwitchArea == GameManager.SwitchRoom.ROOM3)
             {
                 gameManager.SwitchArea = GameManager.SwitchRoom.ROOM4;
@@ -461,8 +446,9 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Door4"))
+        if (collision.gameObject.name == "Door4")
         {
+            collision.gameObject.GetComponent<DoorManager>().MovePlayer(this);
             if (gameManager.SwitchArea == GameManager.SwitchRoom.ROOM4)
             {
                 gameManager.SwitchArea = GameManager.SwitchRoom.ROOM5;
@@ -475,8 +461,9 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Door5"))
+        if (collision.gameObject.name == "Door5")
         {
+            collision.gameObject.GetComponent<DoorManager>().MovePlayer(this);
             if (gameManager.SwitchArea == GameManager.SwitchRoom.ROOM4)
             {
                 gameManager.SwitchArea = GameManager.SwitchRoom.ROOM6;
@@ -490,8 +477,9 @@ public class PlayerManager : MonoBehaviour
         }
 
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Door6"))
+        if (collision.gameObject.name == "Door6")
         {
+            collision.gameObject.GetComponent<DoorManager>().MovePlayer(this);
             if (gameManager.SwitchArea == GameManager.SwitchRoom.ROOM4)
             {
                 gameManager.SwitchArea = GameManager.SwitchRoom.ROOM7;
@@ -506,8 +494,9 @@ public class PlayerManager : MonoBehaviour
 
 
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Door7"))
+        if (collision.gameObject.name == "Door7")
         {
+            collision.gameObject.GetComponent<DoorManager>().MovePlayer(this);
             if (gameManager.SwitchArea == GameManager.SwitchRoom.ROOM7)
             {
                 gameManager.SwitchArea = GameManager.SwitchRoom.ROOM8;
@@ -520,8 +509,9 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Door8"))
+        if (collision.gameObject.name == "Door8")
         {
+            collision.gameObject.GetComponent<DoorManager>().MovePlayer(this);
             if (gameManager.SwitchArea == GameManager.SwitchRoom.ROOM6)
             {
                 gameManager.SwitchArea = GameManager.SwitchRoom.ROOM8;
@@ -534,8 +524,9 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Door9"))
+        if (collision.gameObject.name == "Door9")
         {
+            collision.gameObject.GetComponent<DoorManager>().MovePlayer(this);
             if (gameManager.SwitchArea == GameManager.SwitchRoom.ROOM6)
             {
                 gameManager.SwitchArea = GameManager.SwitchRoom.ROOM9;
@@ -544,6 +535,21 @@ public class PlayerManager : MonoBehaviour
             else
             {
                 gameManager.SwitchArea = GameManager.SwitchRoom.ROOM6;
+                gameManager.CheckRoom();
+            }
+        }
+
+        if (collision.gameObject.name == "Door10")
+        {
+            collision.gameObject.GetComponent<DoorManager>().MovePlayer(this);
+            if (gameManager.SwitchArea == GameManager.SwitchRoom.ROOM9)
+            {
+                gameManager.SwitchArea = GameManager.SwitchRoom.ROOM10;
+                gameManager.CheckRoom();
+            }
+            else
+            {
+                gameManager.SwitchArea = GameManager.SwitchRoom.ROOM9;
                 gameManager.CheckRoom();
             }
         }
