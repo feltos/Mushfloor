@@ -475,6 +475,79 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Door5"))
+        {
+            if (gameManager.SwitchArea == GameManager.SwitchRoom.ROOM4)
+            {
+                gameManager.SwitchArea = GameManager.SwitchRoom.ROOM6;
+                gameManager.CheckRoom();
+            }
+            else
+            {
+                gameManager.SwitchArea = GameManager.SwitchRoom.ROOM4;
+                gameManager.CheckRoom();
+            }
+        }
+
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Door6"))
+        {
+            if (gameManager.SwitchArea == GameManager.SwitchRoom.ROOM4)
+            {
+                gameManager.SwitchArea = GameManager.SwitchRoom.ROOM7;
+                gameManager.CheckRoom();
+            }
+            else
+            {
+                gameManager.SwitchArea = GameManager.SwitchRoom.ROOM4;
+                gameManager.CheckRoom();
+            }
+        }
+
+
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Door7"))
+        {
+            if (gameManager.SwitchArea == GameManager.SwitchRoom.ROOM7)
+            {
+                gameManager.SwitchArea = GameManager.SwitchRoom.ROOM8;
+                gameManager.CheckRoom();
+            }
+            else
+            {
+                gameManager.SwitchArea = GameManager.SwitchRoom.ROOM7;
+                gameManager.CheckRoom();
+            }
+        }
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Door8"))
+        {
+            if (gameManager.SwitchArea == GameManager.SwitchRoom.ROOM6)
+            {
+                gameManager.SwitchArea = GameManager.SwitchRoom.ROOM8;
+                gameManager.CheckRoom();
+            }
+            else
+            {
+                gameManager.SwitchArea = GameManager.SwitchRoom.ROOM6;
+                gameManager.CheckRoom();
+            }
+        }
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Door9"))
+        {
+            if (gameManager.SwitchArea == GameManager.SwitchRoom.ROOM6)
+            {
+                gameManager.SwitchArea = GameManager.SwitchRoom.ROOM9;
+                gameManager.CheckRoom();
+            }
+            else
+            {
+                gameManager.SwitchArea = GameManager.SwitchRoom.ROOM6;
+                gameManager.CheckRoom();
+            }
+        }
+
         if (collision.gameObject.layer == LayerMask.NameToLayer("Hole"))
         {
             if(!Dashed)

@@ -18,7 +18,12 @@ public class GameManager : MonoBehaviour
         ROOM2,
         ROOM3,
         ROOM4,
-        ROOM5
+        ROOM5,
+        ROOM6,
+        ROOM7,
+        ROOM8,
+        ROOM9,
+        ROOM10
     }
     public SwitchRoom SwitchArea = SwitchRoom.DEFAULT;
 
@@ -85,6 +90,46 @@ public class GameManager : MonoBehaviour
                     followCamera.MaxPosX = 23.79f;
                     followCamera.MinPosY = -12.67f;
                     followCamera.MaxPosy = -8.15f;
+                }
+                break;
+            case SwitchRoom.ROOM6:
+                {
+                    followCamera.MinPosX = 34.5f;
+                    followCamera.MaxPosX = 43.1f;
+                    followCamera.MinPosY = -22.9f;
+                    followCamera.MaxPosy = -18.9f;
+                }
+                break;
+            case SwitchRoom.ROOM7:
+                {
+                    followCamera.MinPosX = 53f;
+                    followCamera.MaxPosX = 61.5f;
+                    followCamera.MinPosY = -12.82f;
+                    followCamera.MaxPosy = -8.4f;
+                }
+                break;
+            case SwitchRoom.ROOM8:
+                {
+                    followCamera.MinPosX = 53f;
+                    followCamera.MaxPosX = 61.5f;
+                    followCamera.MinPosY = -23.1f;
+                    followCamera.MaxPosy = -19f;
+                }
+                break;
+            case SwitchRoom.ROOM9:
+                {
+                    followCamera.MinPosX = 34.84f;
+                    followCamera.MaxPosX = 40.64f;
+                    followCamera.MinPosY = -38.87f;
+                    followCamera.MaxPosy = -30.12f;
+                }
+                break;
+            case SwitchRoom.ROOM10:
+                {
+                    followCamera.MinPosX = 53f;
+                    followCamera.MaxPosX = 61.5f;
+                    followCamera.MinPosY = -23.1f;
+                    followCamera.MaxPosy = -19f;
                 }
                 break;
 
