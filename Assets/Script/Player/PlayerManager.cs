@@ -43,6 +43,8 @@ public class PlayerManager : MonoBehaviour
     float PeriodBetweenDash = 0.3f;
     [SerializeField]
     float HP;
+    [SerializeField]
+    Slider HealthSlider;
     float TimeBetweenDamage = 2f;
     float PeriodBetweenDamage = 2f;
     bool IsEnemy = true;
@@ -289,6 +291,7 @@ public class PlayerManager : MonoBehaviour
         {
             SoundManager.Instance.PlayerHurt();
             HP -= 1;
+            HealthSlider.value -= 1;
             TimeBetweenDamage = 0;
         }
        
@@ -304,19 +307,11 @@ public class PlayerManager : MonoBehaviour
             {
                 SoundManager.Instance.PlayerHurt();
                 HP -= shot.damage;
+                HealthSlider.value -= 1;
                 Destroy(shot.gameObject);
                 TimeBetweenDamage = 0;
             }
 
-        }
-
-        if (collision.gameObject.layer == LayerMask.NameToLayer("AOE") && !Dashed)
-        {
-            if (!ImmuneToTraps)
-            {
-                SoundManager.Instance.PlayerHurt();
-                HP -= 1;
-            }
         }
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("AntiTraps"))
@@ -332,6 +327,7 @@ public class PlayerManager : MonoBehaviour
             {
                 HP += 1;
                 SoundManager.Instance.HearthPick();
+                HealthSlider.value += 1;
                 Destroy(collision.gameObject);
             }         
         }
@@ -340,13 +336,6 @@ public class PlayerManager : MonoBehaviour
         {
             SoundManager.Instance.KeyPick();
             BasicKeyHold += 1f;
-            Destroy(collision.gameObject);
-        }
-
-        if (collision.gameObject.layer == LayerMask.NameToLayer("BossKey"))
-        {
-            SoundManager.Instance.KeyPick();
-            BossKeyHold = true;
             Destroy(collision.gameObject);
         }
 

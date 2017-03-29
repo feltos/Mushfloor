@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
         {
             case SwitchRoom.DEFAULT:
                 {
-                    followCamera.MinPosX = -4.2f;
+                    followCamera.MinPosX = -4f;
                     followCamera.MaxPosX = 3.998743f;
                     followCamera.MinPosY = -2.25f;
                     followCamera.MaxPosy = 2.55f;                    
