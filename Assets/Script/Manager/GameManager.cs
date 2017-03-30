@@ -23,7 +23,8 @@ public class GameManager : MonoBehaviour
         ROOM7,
         ROOM8,
         ROOM9,
-        ROOM10
+        ROOM10,
+        NONE
     }
     public SwitchRoom SwitchArea = SwitchRoom.DEFAULT;
 
