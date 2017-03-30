@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
 
             case SwitchRoom.ROOM3:
                 {
-                    followCamera.MinPosX = 35.25f;
+                    followCamera.MinPosX = 34.75f;
                     followCamera.MaxPosX = 42f;
                     followCamera.MinPosY = -2.20f;
                     followCamera.MaxPosy = 2.55f;                   

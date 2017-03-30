@@ -20,7 +20,7 @@ public class CréditsManager : MonoBehaviour
         TimeBeforeLeave += Time.deltaTime;
         if(TimeBeforeLeave >= CooldownBeforeLeave && InputManager.AnyKeyIsPressed)
         {
-            SceneManager.LoadScene(3);
+            SceneManager.LoadScene(0);
         }
 	}
 }

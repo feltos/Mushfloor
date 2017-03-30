@@ -214,7 +214,7 @@ public class PlayerManager : MonoBehaviour
 
         if (inputDevice != null && timeBetweenShoot > PeriodBetweenShoot &&
             (Mathf.Abs(inputDevice.RightStick.X) > WalkDeadZone || Mathf.Abs(inputDevice.RightStick.Y) > WalkDeadZone)
-            && InputManager.Devices[0].RightBumper.WasPressed)
+            && InputManager.Devices[0].RightBumper.IsPressed)
         {
             direction = new Vector3(inputDevice.RightStick.X, inputDevice.RightStick.Y);
             timeBetweenShoot = 0;
@@ -235,7 +235,7 @@ public class PlayerManager : MonoBehaviour
         switch(CurrentGun)
         {
             case Guns.BasicGun:
-                PeriodBetweenShoot = 0f;
+                PeriodBetweenShoot = 0.4f;
                 SoundManager.Instance.BasicFire();
                 var BasicBullet = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
                 BasicBullet.position = transform.position;
@@ -247,7 +247,7 @@ public class PlayerManager : MonoBehaviour
                 }
                 break;
             case Guns.Shotgun:
-                PeriodBetweenShoot = 0.5f;
+                PeriodBetweenShoot = 1f;
                 SoundManager.Instance.ShotgunFire();
                 for(int i = -2; i <= 2;i++)
                 {
@@ -266,7 +266,7 @@ public class PlayerManager : MonoBehaviour
                 InvokeRepeating("AK_47Fire", 0f, 0.05f);                                              
                 break;
             case Guns.Sniper:
-                PeriodBetweenShoot = 0.75f;
+                PeriodBetweenShoot = 1f;
                 SoundManager.Instance.SniperFire();
                 for(int i = 0; i <= 5; i++)
                 {
@@ -586,10 +586,10 @@ public class PlayerManager : MonoBehaviour
         GrowTime += Time.deltaTime;
         if(GrowTime >= GrowCooldown)
         {
-            transform.localScale -= NewScale;
+            transform.localScale *= 0.8f;
         }                   
             
-        if (transform.localScale.x <= 0)
+        if (Mathf.Abs (transform.localScale.x) <= 0.01)
         {
             transform.position = PositionbeforeFall.transform.position;
             transform.localScale = DefaultScale;
@@ -598,6 +598,7 @@ public class PlayerManager : MonoBehaviour
             HealthSlider.value -= 1;
             DamageImage.color = FlashColor;
             Fall = false;
+            IsTurnedRight = true;
         }
     }
 
