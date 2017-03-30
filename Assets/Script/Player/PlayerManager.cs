@@ -77,14 +77,15 @@ public class PlayerManager : MonoBehaviour
     Transform sniperBullet;
     [SerializeField]
     Text Keystext;
+    [SerializeField]
+    Text AntiGouffres;
     Guns CurrentGun = Guns.BasicGun;
     int CurrentIndex = 0;
 
 
     [SerializeField]
     AudioClip DungeonMusic;
-    [SerializeField]
-    AudioClip BossMusic;
+
 
     [SerializeField]
     GameObject GameOverUI;
@@ -181,8 +182,8 @@ public class PlayerManager : MonoBehaviour
         //////////////DIE/////////////////////
         if (HP <= 0)
         {
-            Time.timeScale = 0;
             GameOverUI.SetActive(true);
+            Time.timeScale = 0;           
             RestartTimer += Time.unscaledDeltaTime;
             if(RestartTimer >= RestartCooldown && InputManager.AnyKeyIsPressed)
             {
@@ -194,7 +195,7 @@ public class PlayerManager : MonoBehaviour
 
      void FixedUpdate()
     {        
-        if(!Fall)
+        if(!Fall && HP !=0)
         {
             rb2d.velocity = Movement;
         }
@@ -339,6 +340,7 @@ public class PlayerManager : MonoBehaviour
         {
             ImmuneToTraps = true;
             SoundManager.Instance.GunPick();
+           AntiGouffres.text = "Anti-gouffres : Oui";
             Destroy(collision.gameObject);
         }
 

@@ -26,10 +26,10 @@ public class LittleMonster : AllEnemiesManager
         Target = GameObject.Find("Player");
     }
 
-    void Start()
+    protected override void Start()
     {
         ShootCooldown = 0f;
-        OriginPosition = transform.position;      
+        base.Start();  
 	}
 	
 	

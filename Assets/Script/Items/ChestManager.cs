@@ -13,6 +13,8 @@ public class ChestManager : MonoBehaviour
     GameObject SpawnPoint;
     PlayerManager PlayerScript;
     float BasicKeyHold;
+    [SerializeField]
+    GameManager gameManager;
     
 
     void Start ()
@@ -33,7 +35,8 @@ public class ChestManager : MonoBehaviour
         {
             SoundManager.Instance.ChestOpen();
             Chest.enabled = true;
-            Instantiate(GunsPrefab[Random.Range(0,GunsPrefab.Length)],SpawnPoint.transform.position,SpawnPoint.transform.rotation);
+           
+            Instantiate(GunsPrefab[(int)gameManager.ChooseGun()-1], SpawnPoint.transform.position,SpawnPoint.transform.rotation);
             ChestOpen = true;
             PlayerScript.SetKeyHold();
         }

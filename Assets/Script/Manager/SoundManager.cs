@@ -31,10 +31,7 @@ public class SoundManager : MonoBehaviour
     AudioClip PickGun;
     [SerializeField]
     AudioClip PickHearth;
-    [SerializeField]
-    AudioClip DonjonMusic;
-    [SerializeField]
-    AudioClip BossMusic;
+
 
     void Awake()
     {
@@ -111,13 +108,5 @@ public class SoundManager : MonoBehaviour
     public void GunPick()
     {
         MakeSound(PickGun);
-    }
-    public void BossBattleMusic()
-    {
-        MakeSound(BossMusic);
-    }
-    public void DungeonMusic()
-    {
-        MakeSound(DonjonMusic);
     }
 }

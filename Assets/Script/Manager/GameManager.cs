@@ -143,5 +143,13 @@ public class GameManager : MonoBehaviour
             if (room != Rooms[(int)SwitchArea])
                 room.Desactivate();
         }
+
+    }
+    public PlayerManager.Guns ChooseGun()
+    {
+        int GunIndex = Random.Range(0,AvailableGun.Count);
+        PlayerManager.Guns gun = AvailableGun[GunIndex];
+        AvailableGun.RemoveAt(GunIndex);
+        return gun;
     }
 }

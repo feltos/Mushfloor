@@ -15,7 +15,7 @@ public class Room : MonoBehaviour
 
 
 
-    void Start ()
+    void Awake ()
     {
         foreach(var e in Ennemies)
         {
@@ -56,6 +56,7 @@ public class Room : MonoBehaviour
             if(e != null)
             {
                 e.SetActive(true);
+                e.GetComponent<AllEnemiesManager>().Init();
                 e.GetComponent<AllEnemiesManager>().Reset();
             }
         }
@@ -63,7 +64,7 @@ public class Room : MonoBehaviour
 
     public void DropItem()
     {           
-            Instantiate(Items[UnityEngine.Random.Range(0, 3)], transform.position, transform.rotation);
+            Instantiate(Items[UnityEngine.Random.Range(0, 3)], transform.position + Vector3.up * 2, transform.rotation);
             EnnemiesDown = false;             
     }
 

@@ -30,12 +30,12 @@ public class RafaleEnemy : AllEnemiesManager
         Target = GameObject.Find("Player");
     }
 
-    void Start ()
+    protected override void Start ()
     {
         RafaleCooldown = 0f;
         BulletLeft = 0f;
         StopToShoot = true;
-        OriginPosition = transform.position;
+        base.Start();
         
 	}
 	

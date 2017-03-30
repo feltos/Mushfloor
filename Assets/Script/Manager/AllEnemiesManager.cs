@@ -7,9 +7,9 @@ public class AllEnemiesManager : MonoBehaviour
     public Vector3 OriginPosition;
     public Room room;
 
-	public void Start ()
+	protected virtual void Start ()
     {
-              
+        Init();
 	}
 	
 	
@@ -22,4 +22,8 @@ public class AllEnemiesManager : MonoBehaviour
     {        
         transform.position = OriginPosition;
     }
+    public void Init()
+    {
+        OriginPosition = transform.position;
+    } 
 }

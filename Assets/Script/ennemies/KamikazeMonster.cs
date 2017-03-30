@@ -24,10 +24,7 @@ public class KamikazeMonster : AllEnemiesManager
         Target = GameObject.Find("Player");
     }
 
-    void Start ()
-    {
-        OriginPosition = transform.position;
-	}
+
 	
 	
 	void Update ()

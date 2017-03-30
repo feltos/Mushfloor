@@ -35,6 +35,12 @@ public class BossManager : AllEnemiesManager
     Slider HealthSlider;
     float AngleOfShoot = 0f;
 
+    bool Dying = false;
+    float FadeInTimer = 0f;
+    float FadeInPeriod = 3f;
+    [SerializeField]
+    SpriteRenderer FadeRenderer;
+
     int attackListBossLenght = AttackListBoss.GetNames(typeof(AttackListBoss)).Length;
 
     enum AttackListBoss
@@ -50,12 +56,12 @@ public class BossManager : AllEnemiesManager
         Target = GameObject.Find("Player");
     }
 
-    void Start()
+    protected override void Start()
     {
         FireCircleCooldown = 0f;
         HeavyBulletCooldown = 0f;
         AttackList = AttackListBoss.CircleFire;
-        OriginPosition = transform.position;
+        base.Start();
     }
 
 
@@ -129,13 +135,19 @@ public class BossManager : AllEnemiesManager
         FireCircleCooldown += Time.deltaTime;
         HeavyBulletCooldown += Time.deltaTime;
         DirectionOfShoot = Target.transform.position - transform.position;
+        if(Dying)
+        {
+            FadeRenderer.color = new Color(1.0f, 1.0f, 1.0f,
+            FadeRenderer.color.a + 1.0f / FadeInPeriod * Time.deltaTime);
+
+        }
 
         if (!StopToShoot)
         {
             AttackCooldown += Time.deltaTime;
         }  
              
-        if (AttackCooldown >= AttackShoot && !StopToShoot)
+        if (AttackCooldown >= AttackShoot && !StopToShoot && !Dying)
         {
             AttackList = (AttackListBoss)Random.Range(0, attackListBossLenght);
             
@@ -233,13 +245,10 @@ public class BossManager : AllEnemiesManager
 
             if (HP <= 0)
             {
-                Destroy(gameObject);
+                Dying = true;              
             }
         }
-        if (collision.gameObject.layer == LayerMask.NameToLayer("AOE"))
-        {
-            HP -= 1;
-        }
+    
     }
 
 }
