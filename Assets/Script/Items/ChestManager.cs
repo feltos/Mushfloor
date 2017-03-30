@@ -23,10 +23,8 @@ public class ChestManager : MonoBehaviour
 	
         
 	void Update ()
-    {
-        
+    {        
         BasicKeyHold = PlayerScript.GetKeyHold();
-
     }
 
     void OnCollisionEnter2D(Collision2D collision)

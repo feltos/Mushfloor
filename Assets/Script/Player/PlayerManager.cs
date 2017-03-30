@@ -57,7 +57,7 @@ public class PlayerManager : MonoBehaviour
     float BasicKeyHold = 0;
     bool BossKeyHold = false;
     float GrowTime = 0f;
-    float GrowCooldown = 1.5f;
+    float GrowCooldown = 1f;
     Vector3 DefaultScale = new Vector3(0.15f, 0.15f, 1f);
     Vector3 NewScale = new Vector3(0.01f, 0.01f, 0.01f);
     GameObject PositionbeforeFall;
@@ -86,6 +86,17 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     AudioClip BossMusic;
 
+    [SerializeField]
+    GameObject GameOverUI;
+    float RestartTimer = 0f;
+    float RestartCooldown = 1f;
+
+    [SerializeField]
+    Image DamageImage;
+    float FlashSpeed = 5f;
+    [SerializeField]
+    Color FlashColor = new Color(1f, 0f, 0f, 0.1f);
+
 
     void Awake()
     {
@@ -106,6 +117,7 @@ public class PlayerManager : MonoBehaviour
         timeBetweenShoot += Time.deltaTime;
         DashReload += Time.deltaTime;
         TimeBetweenDamage += Time.deltaTime;
+        DamageImage.color = Color.Lerp(DamageImage.color, Color.clear, FlashSpeed * Time.deltaTime);
         ////////////////WALK//////////////////
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
@@ -161,9 +173,7 @@ public class PlayerManager : MonoBehaviour
         
         ////////////////DASH///////////
         Dash();
-        //////////////////////////////
-
-        //////////////FALL IN A HOLE/////////////
+        
         if(Fall)
         {
             FallInHole();
@@ -171,7 +181,13 @@ public class PlayerManager : MonoBehaviour
         //////////////DIE/////////////////////
         if (HP <= 0)
         {
-            SceneManager.LoadScene(2);
+            Time.timeScale = 0;
+            GameOverUI.SetActive(true);
+            RestartTimer += Time.unscaledDeltaTime;
+            if(RestartTimer >= RestartCooldown && InputManager.AnyKeyIsPressed)
+            {
+                SceneManager.LoadScene(2);
+            }
         }
 
     }
@@ -246,8 +262,8 @@ public class PlayerManager : MonoBehaviour
                 }
                 break;
             case Guns.AK_47:
-                PeriodBetweenShoot = 1.5f;             
-                InvokeRepeating("AK_47Fire", 0f, 0.1f);                                              
+                PeriodBetweenShoot = 0.8f;             
+                InvokeRepeating("AK_47Fire", 0f, 0.05f);                                              
                 break;
             case Guns.Sniper:
                 PeriodBetweenShoot = 0.75f;
@@ -296,6 +312,7 @@ public class PlayerManager : MonoBehaviour
             HP -= 1;
             HealthSlider.value -= 1;
             TimeBetweenDamage = 0;
+            DamageImage.color = FlashColor;
         }
        
     }
@@ -313,6 +330,7 @@ public class PlayerManager : MonoBehaviour
                 HealthSlider.value -= 1;
                 Destroy(shot.gameObject);
                 TimeBetweenDamage = 0;
+                DamageImage.color = FlashColor;
             }
 
         }
@@ -326,7 +344,7 @@ public class PlayerManager : MonoBehaviour
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Hearth"))
         {
-            if(HP <= 5)
+            if(HP < 5)
             {
                 HP += 1;
                 SoundManager.Instance.HearthPick();
@@ -555,38 +573,32 @@ public class PlayerManager : MonoBehaviour
                 {
                     PositionbeforeFall = collision.gameObject.transform.FindChild("PositionBeforeFall").gameObject;
                     Fall = true;
+                     
                 }      
             }
                                 
         }
     }
 
-    public float GetKeyHold()
-    {
-        return BasicKeyHold;
-    }
-
-    public void SetKeyHold()
-    {
-        BasicKeyHold -= 1;
-    }
-
     void FallInHole()
     {
-            rb2d.velocity = Vector3.zero;
-            GrowTime += Time.deltaTime;
-            if (GrowTime >= GrowCooldown)
-            {
-                transform.localScale -= NewScale;
-            }
-            if (transform.localScale.x <= 0)
-            {
-                transform.position = PositionbeforeFall.transform.position;
-                transform.localScale = DefaultScale;
-                GrowTime = 0;
-                HP -= 1;
-                Fall = false;
-            }
+        rb2d.velocity = Vector3.zero;
+        GrowTime += Time.deltaTime;
+        if(GrowTime >= GrowCooldown)
+        {
+            transform.localScale -= NewScale;
+        }                   
+            
+        if (transform.localScale.x <= 0)
+        {
+            transform.position = PositionbeforeFall.transform.position;
+            transform.localScale = DefaultScale;
+            GrowTime = 0;
+            HP -= 1;
+            HealthSlider.value -= 1;
+            DamageImage.color = FlashColor;
+            Fall = false;
+        }
     }
 
     void AK_47Fire()
@@ -628,6 +640,16 @@ public class PlayerManager : MonoBehaviour
             gunType = Guns.Sniper;           
         }
         return gunType;
+    }
+
+    public float GetKeyHold()
+    {
+        return BasicKeyHold;
+    }
+
+    public void SetKeyHold()
+    {
+        BasicKeyHold -= 1;
     }
 
 }
