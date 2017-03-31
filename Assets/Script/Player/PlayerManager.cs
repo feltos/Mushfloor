@@ -5,7 +5,7 @@ using InControl;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Spine.Unity;
-
+//Contributeurs : Volgyesi / Secret
 public class PlayerManager : MonoBehaviour
 {
 
@@ -106,7 +106,6 @@ public class PlayerManager : MonoBehaviour
     void Awake()
     {
         Cursor.visible = true;
-
     }
 
     void Start ()
@@ -145,8 +144,7 @@ public class PlayerManager : MonoBehaviour
         //////////CHANGE WEAPON/////////////
         var inputDevice = (InputManager.Devices.Count > 0) ? InputManager.Devices[0] : null;
         if (Input.GetAxis("Mouse ScrollWheel") > 0f || inputDevice != null && InputManager.Devices[0].RightTrigger.WasPressed)
-        {
-            
+        {         
             CurrentIndex++;
             if(CurrentIndex >= GunsOwned.Count)
             {
@@ -184,9 +182,7 @@ public class PlayerManager : MonoBehaviour
                 SceneManager.LoadScene(2);
             }
         }
-
     }
-
      void FixedUpdate()
     {        
         if(!Fall && HP !=0)
@@ -229,7 +225,6 @@ public class PlayerManager : MonoBehaviour
         {
             return;
         }
-
         switch(CurrentGun)
         {
             case Guns.Rifle:
@@ -282,12 +277,9 @@ public class PlayerManager : MonoBehaviour
                     }
                 }
                 break;                         
-        }
-       
+        }      
     }
-
-    
-    
+///////////////DASH//////////////////   
     void Dash()
     {
         var inputDevice = (InputManager.Devices.Count > 0) ? InputManager.Devices[0] : null;
@@ -307,8 +299,8 @@ public class PlayerManager : MonoBehaviour
             PlayerAnim.loop = true;
         }
     }
-  
-
+    /////////////////COLLISION WITH ENEMY///////////
+    
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") && TimeBetweenDamage >= PeriodBetweenDamage && bossManager.Dying == false)
@@ -320,10 +312,11 @@ public class PlayerManager : MonoBehaviour
             DamageImage.color = FlashColor;
             PlayerAnim.loop = false;
             PlayerAnim.AnimationName = "Sursaut";
-        }
-       
+        }    
     }
 
+    
+    //////////////////ALL TRIGGER////////////
     void OnTriggerEnter2D(Collider2D collision)
     {
         
@@ -341,7 +334,6 @@ public class PlayerManager : MonoBehaviour
                 PlayerAnim.loop = false;
                 PlayerAnim.AnimationName = "Sursaut";
             }
-
         }
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("AntiTraps"))
@@ -381,8 +373,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         if(collision.gameObject.layer == LayerMask.NameToLayer("AK_47"))
-        {
-          
+        {        
             PlayerAnim.skeleton.SetSkin("Tromblon");
             GunsOwned.Add("Tromblon");
             CurrentGun = Guns.Tromblon;               
@@ -399,17 +390,12 @@ public class PlayerManager : MonoBehaviour
             CurrentIndex = GunsOwned.Count - 1;
             SoundManager.Instance.GunPick();
             Destroy(collision.gameObject);
-        }
-
-       
+        }    
          
-
         if (collision.gameObject.layer == LayerMask.NameToLayer ("Door"))
         {
             collision.gameObject.GetComponent<DoorManager>().MovePlayer(this);   
         }
-
-        
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Hole"))
         {
@@ -418,14 +404,13 @@ public class PlayerManager : MonoBehaviour
                 if(!ImmuneToTraps)
                 {
                     PositionbeforeFall = collision.gameObject.transform.FindChild("PositionBeforeFall").gameObject;
-                    Fall = true;
-                     
+                    Fall = true;                     
                 }      
-            }
-                                
+            }                       
         }
     }
-
+   
+    ///////////FALL////////
     void FallInHole()
     {
         rb2d.velocity = Vector3.zero;
@@ -466,6 +451,8 @@ public class PlayerManager : MonoBehaviour
             AK_47BulletsRemaining = 8;
         }       
     }
+ 
+ //////GUNTYPE//////
 
     Guns GetGunType(string name)
     {
@@ -506,7 +493,6 @@ public class PlayerManager : MonoBehaviour
             return;
         }
 
-
         if (Mathf.Abs(horizontal) >= WalkDeadZone || Mathf.Abs(vertical) >= WalkDeadZone)
         {
             PlayerAnim.loop = true;
@@ -517,7 +503,5 @@ public class PlayerManager : MonoBehaviour
             PlayerAnim.loop = true;
             PlayerAnim.AnimationName = "Debout";
         }
-    }
-       
-   
+    }        
 }

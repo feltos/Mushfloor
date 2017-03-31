@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//Contributeurs : Volgyesi
 public class BackgroundMenuManager : MonoBehaviour
 {
 
@@ -9,8 +9,7 @@ public class BackgroundMenuManager : MonoBehaviour
     GameObject Spawn;
     [SerializeField]
     GameObject DeSpawn;
-    float Speed = 2;
- 
+    float Speed = 2; 
 
 	void Start ()
     {
@@ -27,8 +26,7 @@ public class BackgroundMenuManager : MonoBehaviour
     {
        
         if(collision.gameObject.layer == LayerMask.NameToLayer("DeSpawn"))
-        {
-            
+        {  
             transform.position = Spawn.transform.position;
         }
     }

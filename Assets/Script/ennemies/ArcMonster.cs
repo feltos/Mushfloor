@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//Contributeurs : Volgyesi
 public class ArcMonster : AllEnemiesManager
 {
 
@@ -70,8 +70,6 @@ public class ArcMonster : AllEnemiesManager
         var shotTransform = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
         shotTransform.position = transform.position;
         BulletBasic shot = shotTransform.gameObject.GetComponent<BulletBasic>();
-
-
         shot.isEnemyShot = true;
         shot.Direction = direction.normalized;
         ShootCooldown = 0f;
@@ -87,7 +85,6 @@ public class ArcMonster : AllEnemiesManager
                 HP -= shot.damage;
                 Destroy(shot.gameObject);
             }
-
             if (HP <= 0)
             {
                 SoundManager.Instance.EnnemyHurt();

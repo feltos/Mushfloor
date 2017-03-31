@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//Contributeurs : Volgyesi
 
 public class AllEnemiesManager : MonoBehaviour
 {

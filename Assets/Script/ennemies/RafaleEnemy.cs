@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//Contributeurs : Volgyesi
 public class RafaleEnemy : AllEnemiesManager
 {
     [SerializeField]
@@ -35,8 +35,7 @@ public class RafaleEnemy : AllEnemiesManager
         RafaleCooldown = 0f;
         BulletLeft = 0f;
         StopToShoot = true;
-        base.Start();
-        
+        base.Start();      
 	}
 	
 	
@@ -84,8 +83,7 @@ public class RafaleEnemy : AllEnemiesManager
                     room.RemoveEnemy(gameObject);
                     Destroy(gameObject);
                 }
-            }
-             
+            }            
         }
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("AOE"))
@@ -102,15 +100,11 @@ public class RafaleEnemy : AllEnemiesManager
             var RafaleShot = Instantiate(RafalePrefab, transform.position, transform.rotation) as Transform;
             RafaleShot.position = transform.position;
             BulletBasic Rafale = RafaleShot.gameObject.GetComponent<BulletBasic>();
-
-
             Rafale.isEnemyShot = true;
             Rafale.Direction = Direction;
             BulletShoot = 0f;
-            BulletLeft -= 1f;
-           
-        }
-       
+            BulletLeft -= 1f;          
+        }      
     }
 
     void reload()

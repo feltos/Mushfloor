@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Threading;
 using UnityEngine.UI;
 using Spine.Unity;
-
+//Contributeurs : Volgyesi
 public class BossManager : AllEnemiesManager
 {
     [SerializeField]
@@ -69,7 +69,6 @@ public class BossManager : AllEnemiesManager
         base.Start();
     }
 
-
     void DoAttack()
     {
         switch (AttackList)
@@ -120,10 +119,8 @@ public class BossManager : AllEnemiesManager
                         {
                             FireHeavyBullet();
                             HeavyBulletremaining -= 1;
-                            HeavyBulletCooldown = 0;
-                           
+                            HeavyBulletCooldown = 0;        
                         }
-
                     }   
                     AttackCooldown = 0f;
                     if(HeavyBulletremaining <= 0)
@@ -181,7 +178,6 @@ public class BossManager : AllEnemiesManager
 
     void FireCircle(Vector2 direction)
     {
-
         SoundManager.Instance.CircleFire();
         var shotTransform = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
         shotTransform.position = transform.position;
@@ -195,7 +191,6 @@ public class BossManager : AllEnemiesManager
 
     void FireHeavyBullet()
     {
-
         SoundManager.Instance.BigBulletFire();
         var shotTransform = Instantiate(HeavyBulletPrefab, transform.position, transform.rotation) as Transform;
         shotTransform.position = transform.position;
@@ -205,12 +200,10 @@ public class BossManager : AllEnemiesManager
         HeavyBulletCooldown = 0f;
         BossAnim.loop = true;
         BossAnim.AnimationName = "Attack";
-
     }
 
     void TornadoFire()
     {
-
         SoundManager.Instance.TornadoFire();
         var TornadoShoot = Instantiate(TornadoBullet, transform.position, transform.rotation) as Transform;
         TornadoShoot.position = transform.position;
@@ -228,9 +221,6 @@ public class BossManager : AllEnemiesManager
         {
             CancelInvoke("TornadoFire");
         }
-
-
-
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -244,7 +234,6 @@ public class BossManager : AllEnemiesManager
                 Destroy(shot.gameObject);
                 HealthSlider.value = HP;
             }
-
             if (HP <= 0)
             {
                 Dying = true;

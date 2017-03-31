@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class PauseManager : MonoBehaviour
+//Contributeurs : Volgyesi / Secret
 {
     [SerializeField]
     GameObject PauseUI;
     private bool Paused = false;
-
     void Start()
     {
         PauseUI.SetActive(false);
@@ -19,20 +19,16 @@ public class PauseManager : MonoBehaviour
         {
             Paused = !Paused;
         }
-
         if (Paused)
         {
             PauseUI.SetActive(true);
             Time.timeScale = 0;
-
         }
-
         if (!Paused)
         {
             PauseUI.SetActive(false);
             Time.timeScale = 1;
         }
-
     }
 
     public void Reprendre()

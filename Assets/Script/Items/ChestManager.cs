@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//Contributeurs : Volgyesi / Secret
 public class ChestManager : MonoBehaviour
 {
     [SerializeField]
@@ -34,8 +34,7 @@ public class ChestManager : MonoBehaviour
         if(collision.gameObject.layer == LayerMask.NameToLayer("Player") && !ChestOpen && BasicKeyHold > 0)
         {
             SoundManager.Instance.ChestOpen();
-            Chest.enabled = true;
-           
+            Chest.enabled = true;         
             Instantiate(GunsPrefab[(int)gameManager.ChooseGun()-1], SpawnPoint.transform.position,SpawnPoint.transform.rotation);
             ChestOpen = true;
             PlayerScript.SetKeyHold();

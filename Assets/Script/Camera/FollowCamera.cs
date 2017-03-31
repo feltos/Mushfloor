@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+//Contributeurs : Volgyesi / Secret
 public class FollowCamera : MonoBehaviour
 {
    
@@ -54,7 +54,5 @@ public class FollowCamera : MonoBehaviour
             CameraPosition.y = MaxPosy;
         }
         transform.position = CameraPosition;
-	}
-
-   
+	}  
 }

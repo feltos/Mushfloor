@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//Contributeurs : Volgyesi
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
@@ -47,12 +47,6 @@ public class SoundManager : MonoBehaviour
         DontDestroyOnLoad(this);
 	}
 	
-	
-	void Update ()
-    {
-        
-	}
-
     private void MakeSound(AudioClip OriginalClip)
     {
         AudioSource.PlayClipAtPoint(OriginalClip, transform.position);

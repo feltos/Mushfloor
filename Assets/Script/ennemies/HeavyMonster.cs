@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//Contributeurs : Volgyesi
 public class HeavyMonster : AllEnemiesManager
 {
     [SerializeField]
@@ -34,8 +34,7 @@ public class HeavyMonster : AllEnemiesManager
         ShootCooldown = 0f;
         base.Start();
     }
-	
-	
+
 	void Update ()
     {
         ShootCooldown += Time.deltaTime;
@@ -54,14 +53,11 @@ public class HeavyMonster : AllEnemiesManager
         }
         /////////////FIRE//////////////
         fire();
-     
-
     }
 
     void FixedUpdate()
     {
-        rb2dHM.velocity = Movement;
-      
+        rb2dHM.velocity = Movement;     
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -89,24 +85,18 @@ public class HeavyMonster : AllEnemiesManager
         }
     }
 
-
     void fire()
-    {
-        
-
+    {       
         if (ShootCooldown >= BulletShoot)
         {
             SoundManager.Instance.BigBulletFire();
             var HeavyBulletShot = Instantiate(HeavyBulletPrefab, transform.position, transform.rotation);
             HeavyBulletShot.transform.position = transform.position;
             BulletBasic HeavyBullet = HeavyBulletShot.gameObject.GetComponent<BulletBasic>();
-
             HeavyBullet.isEnemyShot = true;
-            HeavyBullet.Direction = Direction;
-           
+            HeavyBullet.Direction = Direction;           
             ShootCooldown = 0f;
         }
-
     }
 
     void Flip()

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//Contributeurs : Volgyesi
 public class DoorManager : MonoBehaviour
 {
 
@@ -64,7 +64,6 @@ public class DoorManager : MonoBehaviour
         }
         gameManager.CheckRoom();
     }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using InControl;
 using UnityEngine.SceneManagement;
-
+//Contributeurs : Volgyesi / Secret
 public class CréditsManager : MonoBehaviour
 {
 

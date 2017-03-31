@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+//Contributeurs : Volgyesi
 public class GameManager : MonoBehaviour
 {
 
@@ -48,15 +48,6 @@ public class GameManager : MonoBehaviour
         }
         StartVolume = DungeonTheme.volume;      
     }
-	
-	
-	void Update ()
-    {
-       
-        
-    }
-  
-    
 
     public void CheckRoom()
     {
@@ -145,10 +136,7 @@ public class GameManager : MonoBehaviour
                     followCamera.MinPosY = -43.95f;
                     followCamera.MaxPosy = -30.76f;
                 }
-                break;
-
-            
-               
+                break;                  
         }
         Rooms[(int)SwitchArea].Activate();
         foreach (Room room in Rooms)
@@ -176,6 +164,6 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(4);
         }
     }
-    }
+}
         
 
