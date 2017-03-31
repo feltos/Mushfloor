@@ -4,16 +4,17 @@ using UnityEngine;
 using InControl;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Spine.Unity;
 
 public class PlayerManager : MonoBehaviour
 {
 
     public enum Guns
     {
-        BasicGun,
+        Rifle,
+        Tromblon,
         Shotgun,
-        AK_47,
-        Sniper,
+        Fusil,
         Length
     }
 
@@ -66,7 +67,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]GameManager gameManager;
 
     public
-    List<GameObject> GunsOwned = new List<GameObject>();
+    List<string> GunsOwned = new List<string>();
 
 
     [SerializeField]GameObject[] GunsPrefab;
@@ -78,7 +79,7 @@ public class PlayerManager : MonoBehaviour
     Text Keystext;
     [SerializeField]
     Text AntiGouffres;
-    Guns CurrentGun = Guns.BasicGun;
+    Guns CurrentGun = Guns.Rifle;
     int CurrentIndex = 0;
 
 
@@ -97,6 +98,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     Color FlashColor = new Color(1f, 0f, 0f, 0.1f);
 
+    [SerializeField]
+    SkeletonAnimation PlayerAnim;
 
     void Awake()
     {
@@ -107,7 +110,7 @@ public class PlayerManager : MonoBehaviour
     void Start ()
     {
         ActualSpeed = BasicSpeed;
-        CurrentGun = Guns.BasicGun;
+        CurrentGun = Guns.Rifle;
 	}
 	
 	
@@ -143,32 +146,24 @@ public class PlayerManager : MonoBehaviour
         var inputDevice = (InputManager.Devices.Count > 0) ? InputManager.Devices[0] : null;
         if (Input.GetAxis("Mouse ScrollWheel") > 0f || inputDevice != null && InputManager.Devices[0].RightTrigger.WasPressed)
         {
-            foreach(var g in GunsOwned)
-            {
-                g.SetActive(false);
-            }
             
             CurrentIndex++;
             if(CurrentIndex >= GunsOwned.Count)
             {
                 CurrentIndex = 0;
             }
-            GunsOwned[CurrentIndex].SetActive(true);
-            CurrentGun = GetGunType(GunsOwned[CurrentIndex].name);
+            CurrentGun = GetGunType(GunsOwned[CurrentIndex]);
+            PlayerAnim.skeleton.SetSkin(CurrentGun.ToString());
         }
         if(Input.GetAxis("Mouse ScrollWheel") < 0f || inputDevice != null && InputManager.Devices[0].LeftTrigger.WasPressed)
         {
-            foreach(var g in GunsOwned)
-            {
-                g.SetActive(false);
-            }
             CurrentIndex--;
             if(CurrentIndex < 0)
             {
                 CurrentIndex = GunsOwned.Count -1;
-            }
-                GunsOwned[CurrentIndex].SetActive(true);
-                CurrentGun = GetGunType(GunsOwned[CurrentIndex].name);
+            }            
+                CurrentGun = GetGunType(GunsOwned[CurrentIndex]);
+                PlayerAnim.skeleton.SetSkin(CurrentGun.ToString());
         }
         
         ////////////////DASH///////////
@@ -234,7 +229,8 @@ public class PlayerManager : MonoBehaviour
 
         switch(CurrentGun)
         {
-            case Guns.BasicGun:
+            case Guns.Rifle:
+                PlayerAnim.skeleton.SetSkin("Rifle");
                 PeriodBetweenShoot = 0.4f;
                 SoundManager.Instance.BasicFire();
                 var BasicBullet = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
@@ -247,6 +243,7 @@ public class PlayerManager : MonoBehaviour
                 }
                 break;
             case Guns.Shotgun:
+                PlayerAnim.skeleton.SetSkin("Shotgun");
                 PeriodBetweenShoot = 1f;
                 SoundManager.Instance.ShotgunFire();
                 for(int i = -2; i <= 2;i++)
@@ -261,11 +258,13 @@ public class PlayerManager : MonoBehaviour
                     }
                 }
                 break;
-            case Guns.AK_47:
+            case Guns.Tromblon:
+                PlayerAnim.skeleton.SetSkin("Tromblon");
                 PeriodBetweenShoot = 0.8f;             
                 InvokeRepeating("AK_47Fire", 0f, 0.05f);                                              
                 break;
-            case Guns.Sniper:
+            case Guns.Fusil:
+                PlayerAnim.skeleton.SetSkin("Fusil");
                 PeriodBetweenShoot = 1f;
                 SoundManager.Instance.SniperFire();
                 for(int i = 0; i <= 5; i++)
@@ -292,6 +291,8 @@ public class PlayerManager : MonoBehaviour
 
         if ((inputDevice != null && InputManager.Devices[0].Action2.WasPressed && DashReload >= PeriodBetweenDash) || (Input.GetMouseButtonDown(1) && DashReload >= PeriodBetweenDash))
         {
+            PlayerAnim.loop = false;
+            PlayerAnim.AnimationName = "Dash";
             ActualSpeed = DashSpeed;
             DashReload = 0f;
             Dashed = true;
@@ -300,6 +301,8 @@ public class PlayerManager : MonoBehaviour
         {
             ActualSpeed = BasicSpeed;
             Dashed = false;
+            PlayerAnim.loop = true;
+            PlayerAnim.AnimationName = "Debout";
         }
     }
   
@@ -339,7 +342,7 @@ public class PlayerManager : MonoBehaviour
         {
             ImmuneToTraps = true;
             SoundManager.Instance.GunPick();
-           AntiGouffres.text = "Anti-gouffres : Oui";
+            AntiGouffres.text = "Anti-gouffres : Oui";
             Destroy(collision.gameObject);
         }
 
@@ -363,16 +366,9 @@ public class PlayerManager : MonoBehaviour
 
         if(collision.gameObject.layer == LayerMask.NameToLayer("Shotgun"))
         {
-            foreach(var g in GunsOwned)
-            {
-                g.SetActive(false);
-                
-            }
-            var Shotgun = Instantiate(GunsPrefab[0], transform.position, transform.rotation);
-            Shotgun.transform.parent = transform;
-            GunsOwned.Add(Shotgun.gameObject);
+            PlayerAnim.skeleton.SetSkin("Shotgun");
+            GunsOwned.Add("Shotgun");
             CurrentGun = Guns.Shotgun;
-            Shotgun.transform.localScale = Vector3.one;
             CurrentIndex = GunsOwned.Count -1;
             SoundManager.Instance.GunPick();
             Destroy(collision.gameObject);
@@ -380,15 +376,10 @@ public class PlayerManager : MonoBehaviour
 
         if(collision.gameObject.layer == LayerMask.NameToLayer("AK_47"))
         {
-            foreach(var g in GunsOwned)
-            {
-                g.SetActive(false);
-            }
-            var AK_47 = Instantiate(GunsPrefab[1], transform.position, transform.rotation);
-            AK_47.transform.parent = transform;
-            GunsOwned.Add(AK_47.gameObject);
-            CurrentGun = Guns.AK_47;
-            AK_47.transform.localScale = Vector3.one;
+          
+            PlayerAnim.skeleton.SetSkin("Tromblon");
+            GunsOwned.Add("Tromblon");
+            CurrentGun = Guns.Tromblon;               
             CurrentIndex = GunsOwned.Count - 1;
             SoundManager.Instance.GunPick();
             Destroy(collision.gameObject);
@@ -396,15 +387,9 @@ public class PlayerManager : MonoBehaviour
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Sniper"))
         {
-            foreach(var g in GunsOwned)
-            {
-                g.SetActive(false);
-            }
-            var Sniper = Instantiate(GunsPrefab[2], transform.position, transform.rotation);
-            Sniper.transform.parent = transform;
-            GunsOwned.Add(Sniper.gameObject);
-            Sniper.transform.localScale = Vector3.one;
-            CurrentGun = Guns.Sniper;
+            PlayerAnim.skeleton.SetSkin("Fusil");
+            GunsOwned.Add("Fusil");
+            CurrentGun = Guns.Fusil;
             CurrentIndex = GunsOwned.Count - 1;
             SoundManager.Instance.GunPick();
             Destroy(collision.gameObject);
@@ -478,14 +463,14 @@ public class PlayerManager : MonoBehaviour
 
     Guns GetGunType(string name)
     {
-        Guns gunType = Guns.BasicGun;
+        Guns gunType = Guns.Rifle;
         if(name.Contains("Basic_gun"))
         {
-            gunType= Guns.BasicGun;
+            gunType= Guns.Rifle;
         }
         if(name.Contains("AK_47"))
         {
-            gunType = Guns.AK_47;            
+            gunType = Guns.Tromblon;            
         }
         if(name.Contains("Shotgun"))
         {
@@ -493,7 +478,7 @@ public class PlayerManager : MonoBehaviour
         }
         if(name.Contains("Sniper_gun"))
         {
-            gunType = Guns.Sniper;           
+            gunType = Guns.Fusil;           
         }
         return gunType;
     }
