@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,7 +11,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Room[]Rooms;
     public List<PlayerManager.Guns> AvailableGun = new List<PlayerManager.Guns>();
-      
+    [SerializeField]
+    SpriteRenderer WhiteSquare;
+    float IncrementationWS = 0f;
+    Color colorWS;
+    float FadeTimer = 0f;
+    float FadePeriod = 0.5f;
     
     public enum SwitchRoom
     {
@@ -35,6 +41,7 @@ public class GameManager : MonoBehaviour
         {
             AvailableGun.Add((PlayerManager.Guns)i);
         }
+        colorWS = WhiteSquare.material.color;
     }
 	
 	
@@ -152,4 +159,22 @@ public class GameManager : MonoBehaviour
         AvailableGun.RemoveAt(GunIndex);
         return gun;
     }
+
+    public void FadeIn()
+    {
+        FadeTimer += Time.deltaTime;
+        for (IncrementationWS =0 ; IncrementationWS < 255; IncrementationWS++)
+        {         
+            if(FadeTimer >= FadePeriod)
+            {
+                colorWS.a = IncrementationWS;
+                WhiteSquare.material.color = colorWS;
+            }                      
+        }
+        if(IncrementationWS == 250)
+        {
+            SceneManager.LoadScene(5);
+        }
+    }
+        
 }

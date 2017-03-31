@@ -39,7 +39,8 @@ public class BossManager : AllEnemiesManager
     float FadeInTimer = 0f;
     float FadeInPeriod = 3f;
     [SerializeField]
-    SpriteRenderer FadeRenderer;
+    GameManager gameManager;
+    
 
     int attackListBossLenght = AttackListBoss.GetNames(typeof(AttackListBoss)).Length;
 
@@ -239,7 +240,8 @@ public class BossManager : AllEnemiesManager
 
             if (HP <= 0)
             {
-                Dying = true;              
+                Dying = true;
+                gameManager.FadeIn();            
             }
         }
     

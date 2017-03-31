@@ -68,21 +68,24 @@ public class RafaleEnemy : AllEnemiesManager
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        BulletBasic shot = collision.gameObject.GetComponent<BulletBasic>();
-        
+        BulletBasic shot = collision.gameObject.GetComponent<BulletBasic>();        
         {
-            if (shot.isEnemyShot != IsEnemy)
+            if(shot != null)
             {
-                HP -= shot.damage;
-                Destroy(shot.gameObject);
-            }
+                if (shot.isEnemyShot != IsEnemy)
+                {
+                    HP -= shot.damage;
+                    Destroy(shot.gameObject);
+                }
 
-            if (HP <= 0)
-            {
-                SoundManager.Instance.EnnemyHurt();
-                room.RemoveEnemy(gameObject);
-                Destroy(gameObject);
-            }       
+                if (HP <= 0)
+                {
+                    SoundManager.Instance.EnnemyHurt();
+                    room.RemoveEnemy(gameObject);
+                    Destroy(gameObject);
+                }
+            }
+             
         }
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("AOE"))
