@@ -38,8 +38,7 @@ public class DoorManager : MonoBehaviour
                 if (Player.transform.position.y - transform.position.y > 0)
                 {
                     Player.transform.position = transform.position + (Vector3.down * 3);
-                    gameManager.SwitchArea = RoomDown;
-                        
+                    gameManager.SwitchArea = RoomDown;                        
                 }
                 else
                 {
@@ -64,5 +63,14 @@ public class DoorManager : MonoBehaviour
                 
         }
         gameManager.CheckRoom();
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Bullet"))
+        {
+            Destroy(collision.gameObject);
+        }
     }
 }

@@ -18,7 +18,10 @@ public class GameManager : MonoBehaviour
    
     float FadeTimer = 0f;
     float FadePeriod = 3f;
-    
+
+    [SerializeField]
+    AudioSource DungeonTheme;
+    float StartVolume;
     
     public enum SwitchRoom
     {
@@ -43,7 +46,7 @@ public class GameManager : MonoBehaviour
         {
             AvailableGun.Add((PlayerManager.Guns)i);
         }
-        
+        StartVolume = DungeonTheme.volume;      
     }
 	
 	
@@ -165,13 +168,14 @@ public class GameManager : MonoBehaviour
 
     public void FadeIn()
     {
-            WhiteSquare.color = new Color(WhiteSquare.color.r, WhiteSquare.color.g, 
-            WhiteSquare.color.b, WhiteSquare.color.a + 1 * Time.deltaTime);
-            if (WhiteSquare.color.a >= 1.0f)
-            {
-                SceneManager.LoadScene(4);
-            }
+        DungeonTheme.volume -= StartVolume * Time.deltaTime;
+        WhiteSquare.color = new Color(WhiteSquare.color.r, WhiteSquare.color.g, 
+        WhiteSquare.color.b, WhiteSquare.color.a + 1 * Time.deltaTime);
+        if (WhiteSquare.color.a >= 1.0f)
+        {
+            SceneManager.LoadScene(4);
         }
+    }
     }
         
 

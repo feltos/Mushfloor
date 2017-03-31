@@ -20,9 +20,9 @@ public class Room : MonoBehaviour
         foreach(var e in Ennemies)
         {
             e.GetComponent<AllEnemiesManager>().room = this;
+            e.GetComponent<AllEnemiesManager>().Init();
         }
-        Desactivate();
-       
+        Desactivate();      
 	}
 	
 	public void RemoveEnemy(GameObject enemy)
@@ -30,9 +30,7 @@ public class Room : MonoBehaviour
         Ennemies.Remove(enemy);
     }
 	void Update ()
-    {      
-        
-
+    {             
         if(Ennemies.Count == 0 && EnnemiesDown)
         {
             DropItem();
@@ -45,7 +43,7 @@ public class Room : MonoBehaviour
         {
             if(e != null)
             {
-                e.SetActive(false);
+                e.SetActive(false);             
             }
         }
     }
@@ -55,17 +53,16 @@ public class Room : MonoBehaviour
         {
             if(e != null)
             {
-                e.SetActive(true);
-                e.GetComponent<AllEnemiesManager>().Init();
                 e.GetComponent<AllEnemiesManager>().Reset();
+                e.SetActive(true);               
             }
         }
     }
 
     public void DropItem()
     {           
-            Instantiate(Items[UnityEngine.Random.Range(0, 3)], transform.position + Vector3.up * 2, transform.rotation);
-            EnnemiesDown = false;             
+        Instantiate(Items[UnityEngine.Random.Range(0, 3)], transform.position + Vector3.up * 2, transform.rotation);
+        EnnemiesDown = false;             
     }
 
 

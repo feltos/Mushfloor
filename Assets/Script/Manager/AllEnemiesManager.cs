@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class AllEnemiesManager : MonoBehaviour
 {
-    public Vector3 OriginPosition;
+    Vector3 OriginPosition;
     public Room room;
 
-	protected virtual void Start ()
+	protected virtual void Start()
     {
         Init();
 	}

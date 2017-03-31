@@ -29,7 +29,7 @@ public class LittleMonster : AllEnemiesManager
     protected override void Start()
     {
         ShootCooldown = 0f;
-        base.Start();  
+        base.Start(); 
 	}
 	
 	
@@ -81,13 +81,7 @@ public class LittleMonster : AllEnemiesManager
                 Destroy(gameObject);
             }
         }
-
-        if (collision.gameObject.layer == LayerMask.NameToLayer("AOE"))
-        {
-            HP -= 1;
-        }
-
-    
+           
 
     }
 
@@ -95,14 +89,14 @@ public class LittleMonster : AllEnemiesManager
     {
         
         
-            var shotTransform = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
-            shotTransform.position = transform.position;
-            BulletBasic shot = shotTransform.gameObject.GetComponent<BulletBasic>();
+        var shotTransform = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
+        shotTransform.position = transform.position;
+        BulletBasic shot = shotTransform.gameObject.GetComponent<BulletBasic>();
             
 
-            shot.isEnemyShot = true;
-            shot.Direction = Direction;
-            ShootCooldown = 0f;       
+        shot.isEnemyShot = true;
+        shot.Direction = Direction;
+        ShootCooldown = 0f;       
     }
 
     void Flip()

@@ -179,7 +179,7 @@ public class PlayerManager : MonoBehaviour
             GameOverUI.SetActive(true);
             Time.timeScale = 0;           
             RestartTimer += Time.unscaledDeltaTime;
-            if(RestartTimer >= RestartCooldown && InputManager.AnyKeyIsPressed)
+            if((RestartTimer >= RestartCooldown) && (InputManager.AnyKeyIsPressed || Input.GetKey(KeyCode.Joystick1Button0)))
             {
                 SceneManager.LoadScene(2);
             }
@@ -216,7 +216,7 @@ public class PlayerManager : MonoBehaviour
             PlayerAnim.loop = false;
             PlayerAnim.AnimationName = "Marche Tir";
         }
-        else if (Input.GetMouseButtonDown(0) && timeBetweenShoot > PeriodBetweenShoot)
+        else if (Input.GetMouseButton(0) && timeBetweenShoot > PeriodBetweenShoot)
         {
             Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y);
             mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);

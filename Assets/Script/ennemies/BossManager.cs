@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading;
 using UnityEngine.UI;
+using Spine.Unity;
 
 public class BossManager : AllEnemiesManager
 {
@@ -40,7 +41,10 @@ public class BossManager : AllEnemiesManager
     float FadeInPeriod = 3f;
     [SerializeField]
     GameManager gameManager;
-    
+    [SerializeField]
+    SkeletonAnimation BossAnim;
+    [SerializeField]
+    Slider PlayerSLiderHP;
 
     int attackListBossLenght = AttackListBoss.GetNames(typeof(AttackListBoss)).Length;
 
@@ -71,9 +75,8 @@ public class BossManager : AllEnemiesManager
         switch (AttackList)
         {
             case AttackListBoss.CircleFire:
-                {
-                                
-                    if (FireCircleremaining >= 0)
+                {                              
+                    if (FireCircleremaining >= 0 && !Dying)
                     {                                                      
                         if (FireCircleCooldown >= FireCircleShoot)
                         {
@@ -95,7 +98,7 @@ public class BossManager : AllEnemiesManager
 
             case AttackListBoss.Tornadofire:
                 {
-                    if(TornadoFireRemaining >= 0) 
+                    if(TornadoFireRemaining >= 0 && !Dying) 
                     {
                         InvokeRepeating("TornadoFire", 0f, 0.05f);                                                                                                 
                     }
@@ -110,9 +113,10 @@ public class BossManager : AllEnemiesManager
             case AttackListBoss.HeavyBulletFire:
                 {
                    
-                    if(HeavyBulletremaining >= 0)
+                    if(HeavyBulletremaining >= 0 && !Dying)
                     {
-                        if(HeavyBulletCooldown >= HeavyBulletShoot)
+                        
+                        if (HeavyBulletCooldown >= HeavyBulletShoot)
                         {
                             FireHeavyBullet();
                             HeavyBulletremaining -= 1;
@@ -144,12 +148,14 @@ public class BossManager : AllEnemiesManager
         if (!StopToShoot)
         {
             AttackCooldown += Time.deltaTime;
+            BossAnim.loop = true;
+            BossAnim.AnimationName = "Idle";
         }  
              
         if (AttackCooldown >= AttackShoot && !StopToShoot && !Dying)
         {
             AttackList = (AttackListBoss)Random.Range(0, attackListBossLenght);
-            
+          
             switch (AttackList)
             {
             case AttackListBoss.CircleFire:
@@ -176,33 +182,30 @@ public class BossManager : AllEnemiesManager
     void FireCircle(Vector2 direction)
     {
 
-            SoundManager.Instance.CircleFire();
-            var shotTransform = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
-            shotTransform.position = transform.position;
-            BulletBasic shot = shotTransform.gameObject.GetComponent<BulletBasic>();
-
-
-            shot.isEnemyShot = true;
-            shot.Direction = direction.normalized;
-            FireCircleCooldown = 0f;
-        
-           
+        SoundManager.Instance.CircleFire();
+        var shotTransform = Instantiate(BulletPrefab, transform.position, transform.rotation) as Transform;
+        shotTransform.position = transform.position;
+        BulletBasic shot = shotTransform.gameObject.GetComponent<BulletBasic>();
+        shot.isEnemyShot = true;
+        shot.Direction = direction.normalized;
+        FireCircleCooldown = 0f;
+        BossAnim.loop = true;
+        BossAnim.AnimationName = "Attack";
     }
 
     void FireHeavyBullet()
     {
 
-            SoundManager.Instance.BigBulletFire();
-            var shotTransform = Instantiate(HeavyBulletPrefab, transform.position, transform.rotation) as Transform;
-            shotTransform.position = transform.position;
-            BulletBasic shot = shotTransform.gameObject.GetComponent<BulletBasic>();
+        SoundManager.Instance.BigBulletFire();
+        var shotTransform = Instantiate(HeavyBulletPrefab, transform.position, transform.rotation) as Transform;
+        shotTransform.position = transform.position;
+        BulletBasic shot = shotTransform.gameObject.GetComponent<BulletBasic>();
+        shot.isEnemyShot = true;
+        shot.Direction = DirectionOfShoot.normalized;
+        HeavyBulletCooldown = 0f;
+        BossAnim.loop = true;
+        BossAnim.AnimationName = "Attack";
 
-
-            shot.isEnemyShot = true;
-            shot.Direction = DirectionOfShoot.normalized;
-            HeavyBulletCooldown = 0f;
-        
-             
     }
 
     void TornadoFire()
@@ -244,7 +247,10 @@ public class BossManager : AllEnemiesManager
 
             if (HP <= 0)
             {
-                Dying = true;            
+                Dying = true;
+                Destroy(shot.gameObject);
+                Destroy(HealthSlider.gameObject);
+                PlayerSLiderHP.gameObject.SetActive(false);      
             }
         }
     
