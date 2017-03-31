@@ -58,7 +58,7 @@ public class PlayerManager : MonoBehaviour
     bool BossKeyHold = false;
     float GrowTime = 0f;
     float GrowCooldown = 1f;
-    Vector3 DefaultScale = new Vector3(0.15f, 0.15f, 1f);
+    Vector3 DefaultScale = new Vector3(0.1f, 0.1f, 1f);
     Vector3 NewScale = new Vector3(0.01f, 0.01f, 0.01f);
     GameObject PositionbeforeFall;
     bool Fall = false;
@@ -72,7 +72,6 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]GameObject[] GunsPrefab;
     [SerializeField]Transform AK_47Bullets;
     float AK_47BulletsRemaining = 8;
-    [SerializeField]GameObject Hand;
     [SerializeField]
     Transform sniperBullet;
     [SerializeField]
@@ -369,7 +368,7 @@ public class PlayerManager : MonoBehaviour
                 g.SetActive(false);
                 
             }
-            var Shotgun = Instantiate(GunsPrefab[0], Hand.transform.position, Hand.transform.rotation);
+            var Shotgun = Instantiate(GunsPrefab[0], transform.position, transform.rotation);
             Shotgun.transform.parent = transform;
             GunsOwned.Add(Shotgun.gameObject);
             CurrentGun = Guns.Shotgun;
@@ -385,7 +384,7 @@ public class PlayerManager : MonoBehaviour
             {
                 g.SetActive(false);
             }
-            var AK_47 = Instantiate(GunsPrefab[1], Hand.transform.position, Hand.transform.rotation);
+            var AK_47 = Instantiate(GunsPrefab[1], transform.position, transform.rotation);
             AK_47.transform.parent = transform;
             GunsOwned.Add(AK_47.gameObject);
             CurrentGun = Guns.AK_47;
@@ -401,7 +400,7 @@ public class PlayerManager : MonoBehaviour
             {
                 g.SetActive(false);
             }
-            var Sniper = Instantiate(GunsPrefab[2], Hand.transform.position, Hand.transform.rotation);
+            var Sniper = Instantiate(GunsPrefab[2], transform.position, transform.rotation);
             Sniper.transform.parent = transform;
             GunsOwned.Add(Sniper.gameObject);
             Sniper.transform.localScale = Vector3.one;

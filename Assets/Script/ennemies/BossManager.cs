@@ -135,12 +135,6 @@ public class BossManager : AllEnemiesManager
         FireCircleCooldown += Time.deltaTime;
         HeavyBulletCooldown += Time.deltaTime;
         DirectionOfShoot = Target.transform.position - transform.position;
-        if(Dying)
-        {
-            FadeRenderer.color = new Color(1.0f, 1.0f, 1.0f,
-            FadeRenderer.color.a + 1.0f / FadeInPeriod * Time.deltaTime);
-
-        }
 
         if (!StopToShoot)
         {

@@ -1,0 +1,137 @@
+
+skeleton.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Capuche
+  rotate: true
+  xy: 812, 272
+  size: 253, 209
+  orig: 253, 209
+  offset: 0, 0
+  index: -1
+Dash
+  rotate: false
+  xy: 2, 2
+  size: 401, 34
+  orig: 401, 34
+  offset: 0, 0
+  index: -1
+Jambe Gauche
+  rotate: false
+  xy: 812, 4
+  size: 182, 266
+  orig: 182, 266
+  offset: 0, 0
+  index: -1
+Sac
+  rotate: false
+  xy: 490, 57
+  size: 320, 468
+  orig: 320, 468
+  offset: 0, 0
+  index: -1
+Tete
+  rotate: true
+  xy: 2, 38
+  size: 487, 486
+  orig: 487, 486
+  offset: 0, 0
+  index: -1
+Weapons/Fusil
+  rotate: false
+  xy: 2, 527
+  size: 988, 493
+  orig: 988, 493
+  offset: 0, 0
+  index: -1
+
+skeleton2.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Bras Droit
+  rotate: true
+  xy: 785, 474
+  size: 240, 225
+  orig: 240, 225
+  offset: 0, 0
+  index: -1
+Corps
+  rotate: false
+  xy: 320, 19
+  size: 449, 633
+  orig: 449, 633
+  offset: 0, 0
+  index: -1
+Main Droite
+  rotate: false
+  xy: 916, 388
+  size: 88, 84
+  orig: 88, 84
+  offset: 0, 0
+  index: -1
+Pants Gauche
+  rotate: false
+  xy: 771, 153
+  size: 143, 319
+  orig: 143, 319
+  offset: 0, 0
+  index: -1
+Pied Gauche
+  rotate: true
+  xy: 785, 716
+  size: 285, 225
+  orig: 285, 225
+  offset: 0, 0
+  index: -1
+Weapons/Rifle
+  rotate: false
+  xy: 2, 654
+  size: 781, 347
+  orig: 781, 347
+  offset: 0, 0
+  index: -1
+Weapons/Shotgun
+  rotate: true
+  xy: 2, 2
+  size: 650, 316
+  orig: 650, 316
+  offset: 0, 0
+  index: -1
+
+skeleton3.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Bras Gauche
+  rotate: false
+  xy: 2, 330
+  size: 367, 289
+  orig: 367, 289
+  offset: 0, 0
+  index: -1
+BrasDroit
+  rotate: false
+  xy: 2, 2
+  size: 126, 326
+  orig: 126, 326
+  offset: 0, 0
+  index: -1
+Pants Droit
+  rotate: false
+  xy: 623, 668
+  size: 269, 310
+  orig: 269, 310
+  offset: 0, 0
+  index: -1
+Weapons/Tromblon
+  rotate: false
+  xy: 2, 621
+  size: 619, 357
+  orig: 619, 357
+  offset: 0, 0
+  index: -1

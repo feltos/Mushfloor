@@ -1,0 +1,273 @@
+{
+"skeleton": { "hash": "ui7kekVxmaSWSiENYkIYS7HwDfE", "spine": "3.5.51", "width": 1293.16, "height": 1536.9, "images": "" },
+"bones": [
+	{ "name": "root" },
+	{ "name": "Torse", "parent": "root", "x": 0.5, "y": 34 },
+	{ "name": "Aile_Droite", "parent": "Torse", "length": 299.7, "rotation": 29.33, "x": 67.91, "y": 161.72, "scaleY": -1 },
+	{ "name": "Aile_Gauche", "parent": "Torse", "length": 299.7, "rotation": 153.37, "x": -61.05, "y": 161.72 },
+	{ "name": "Bras_Droit", "parent": "Torse", "length": 250.94, "rotation": -102.62, "x": -122.77, "y": 186.14 },
+	{ "name": "Avant_bras_Droit", "parent": "Bras_Droit", "length": 245.69, "rotation": 11.25, "x": 338.08, "y": 2.26 },
+	{ "name": "Bras_Gauche", "parent": "Torse", "length": 250.94, "rotation": -75.6, "x": 121.72, "y": 186.14, "scaleY": -1 },
+	{ "name": "Avant_bras_Gauche", "parent": "Bras_Gauche", "length": 245.69, "rotation": 11.25, "x": 338.08, "y": 2.26 },
+	{ "name": "Capuche", "parent": "Torse", "length": 146.58, "rotation": 90.56, "x": -0.68, "y": 198.56 },
+	{ "name": "Cuisse_Droite", "parent": "Torse", "length": 389.31, "rotation": -96.37, "x": -62.71, "y": -158.95 },
+	{ "name": "Cuisse_Gauche", "parent": "Torse", "length": 389.31, "rotation": -82.3, "x": 60.97, "y": -151.27, "scaleY": -1 },
+	{ "name": "Main_Droite", "parent": "Avant_bras_Droit", "length": 152.39, "rotation": 10.19, "x": 247.15, "y": 0.03 },
+	{ "name": "Main_Gauche", "parent": "Avant_bras_Gauche", "length": 152.39, "rotation": 10.19, "x": 247.15, "y": 0.03 },
+	{ "name": "Patte_Droite", "parent": "Cuisse_Droite", "length": 343.81, "rotation": 6.37, "x": 397.68, "y": 32.4 },
+	{ "name": "Patte_Gauche", "parent": "Cuisse_Gauche", "length": 343.81, "rotation": 6.37, "x": 397.68, "y": 32.4 }
+],
+"slots": [
+	{ "name": "Aile_Droite", "bone": "Aile_Droite", "attachment": "Aile" },
+	{ "name": "Aile_Gauche", "bone": "Aile_Gauche", "attachment": "Aile" },
+	{ "name": "Bras_Droit", "bone": "Bras_Droit", "attachment": "Bras" },
+	{ "name": "Bras_Gauche", "bone": "Bras_Gauche", "attachment": "Bras" },
+	{ "name": "Torse", "bone": "Torse", "attachment": "Torse" },
+	{ "name": "Patte_Droite", "bone": "Patte_Droite", "attachment": "Patte" },
+	{ "name": "Patte_Gauche", "bone": "Patte_Gauche", "attachment": "Patte" },
+	{ "name": "Cuisse_Droite", "bone": "Cuisse_Droite", "attachment": "Cuisse" },
+	{ "name": "Cuisse_Gauche", "bone": "Cuisse_Gauche", "attachment": "Cuisse" },
+	{ "name": "Avant_bras_Droit", "bone": "Avant_bras_Droit", "attachment": "Avant_bras" },
+	{ "name": "Main_Droite", "bone": "Main_Droite", "attachment": "Main" },
+	{ "name": "Avant_bras_Gauche", "bone": "Avant_bras_Gauche", "attachment": "Avant_bras" },
+	{ "name": "Main_Gauche", "bone": "Main_Gauche", "attachment": "Main" },
+	{ "name": "Capuche2", "bone": "Capuche", "attachment": "Capuche2" },
+	{ "name": "Crane", "bone": "Capuche", "attachment": "Crane" },
+	{ "name": "Capuche1", "bone": "Capuche", "attachment": "Capuche1" },
+	{ "name": "Bec", "bone": "Capuche", "attachment": "Bec" }
+],
+"skins": {
+	"default": {
+		"Aile_Droite": {
+			"Aile": { "x": 64.02, "y": 376.59, "rotation": -166.25, "width": 467, "height": 998 }
+		},
+		"Aile_Gauche": {
+			"Aile": { "x": 64.02, "y": 376.59, "rotation": -166.25, "width": 467, "height": 998 }
+		},
+		"Avant_bras_Droit": {
+			"Avant_bras": { "x": 118.32, "y": 5.74, "rotation": 104.24, "width": 111, "height": 269 }
+		},
+		"Avant_bras_Gauche": {
+			"Avant_bras": { "x": 118.32, "y": 5.74, "rotation": 104.24, "width": 111, "height": 269 }
+		},
+		"Bec": {
+			"Bec": { "x": 21.34, "y": -0.21, "rotation": -90.56, "width": 127, "height": 287 }
+		},
+		"Bras_Droit": {
+			"Bras": { "x": 169.5, "y": 12.47, "rotation": 96.05, "width": 89, "height": 371 }
+		},
+		"Bras_Gauche": {
+			"Bras": { "x": 169.5, "y": 12.47, "rotation": 96.05, "width": 89, "height": 371 }
+		},
+		"Capuche1": {
+			"Capuche1": { "x": 152.24, "y": -2.9, "rotation": -91.07, "width": 297, "height": 344 }
+		},
+		"Capuche2": {
+			"Capuche2": { "x": 129.45, "y": -5.53, "rotation": -90.56, "width": 265, "height": 269 }
+		},
+		"Crane": {
+			"Crane": { "x": 186.4, "y": -1.81, "rotation": -90.56, "width": 185, "height": 186 }
+		},
+		"Cuisse_Droite": {
+			"Cuisse": { "x": 196.14, "y": -17.29, "rotation": 92.54, "width": 165, "height": 492 }
+		},
+		"Cuisse_Gauche": {
+			"Cuisse": { "x": 196.14, "y": -17.29, "rotation": 92.54, "width": 165, "height": 492 }
+		},
+		"Main_Droite": {
+			"Main": { "x": 136.33, "y": 39.48, "rotation": 78.41, "width": 207, "height": 284 }
+		},
+		"Main_Gauche": {
+			"Main": { "x": 136.33, "y": 39.48, "rotation": 78.41, "width": 207, "height": 284 }
+		},
+		"Patte_Droite": {
+			"Patte": { "x": 222.94, "y": -21.44, "rotation": 92.71, "width": 161, "height": 457 }
+		},
+		"Patte_Gauche": {
+			"Patte": { "x": 222.94, "y": -21.44, "rotation": 92.71, "width": 161, "height": 457 }
+		},
+		"Torse": {
+			"Torse": { "width": 339, "height": 457 }
+		}
+	}
+},
+"animations": {
+	"Idle": {
+		"bones": {
+			"Torse": {
+				"rotate": [
+					{ "time": 0, "angle": 0, "curve": "stepped" },
+					{ "time": 4, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 19.47 },
+					{ "time": 0.4, "x": 0, "y": -66.62 },
+					{ "time": 0.8333, "x": 0, "y": 17.38 },
+					{ "time": 1.2333, "x": 0, "y": -59.41 },
+					{ "time": 1.6667, "x": 0, "y": 1.66 },
+					{ "time": 2.0333, "x": 0, "y": -50.25 },
+					{ "time": 2.4333, "x": 0, "y": 8.44 },
+					{ "time": 2.8667, "x": 0, "y": -61.51 },
+					{ "time": 3.2667, "x": 0, "y": 3.68 },
+					{ "time": 3.6667, "x": 0, "y": -70.29 },
+					{ "time": 4, "x": 0, "y": 19.47 }
+				],
+				"scale": [
+					{ "time": 0, "x": 1, "y": 1, "curve": "stepped" },
+					{ "time": 4, "x": 1, "y": 1 }
+				]
+			},
+			"Aile_Gauche": {
+				"rotate": [
+					{ "time": 0, "angle": 10 },
+					{ "time": 0.4, "angle": 0 },
+					{ "time": 0.8333, "angle": 10 },
+					{ "time": 1.2333, "angle": 0 },
+					{ "time": 1.6667, "angle": 10 },
+					{ "time": 2.0667, "angle": 0 },
+					{ "time": 2.4333, "angle": 10 },
+					{ "time": 2.8667, "angle": 0 },
+					{ "time": 3.2667, "angle": 10 },
+					{ "time": 3.6667, "angle": 0 },
+					{ "time": 4, "angle": 10 }
+				]
+			},
+			"Aile_Droite": {
+				"rotate": [
+					{ "time": 0, "angle": -10 },
+					{ "time": 0.4, "angle": 0 },
+					{ "time": 0.8333, "angle": -10 },
+					{ "time": 1.2333, "angle": 0 },
+					{ "time": 1.6667, "angle": -10 },
+					{ "time": 2.0667, "angle": 0 },
+					{ "time": 2.4333, "angle": -10 },
+					{ "time": 2.8667, "angle": 0 },
+					{ "time": 3.2667, "angle": -10 },
+					{ "time": 3.6667, "angle": 0 },
+					{ "time": 4, "angle": -10 }
+				]
+			},
+			"Bras_Droit": {
+				"rotate": [
+					{ "time": 0, "angle": -14.95 },
+					{ "time": 0.4, "angle": 335.05 },
+					{ "time": 0.8333, "angle": -14.95 },
+					{ "time": 1.2333, "angle": 335.05 },
+					{ "time": 1.6667, "angle": -14.95 },
+					{ "time": 2.0667, "angle": 335.05 },
+					{ "time": 2.4333, "angle": -14.95 },
+					{ "time": 2.8667, "angle": 335.05 },
+					{ "time": 3.2667, "angle": -14.95 },
+					{ "time": 3.6667, "angle": 335.05 },
+					{ "time": 4, "angle": -14.95 }
+				]
+			},
+			"Avant_bras_Droit": {
+				"rotate": [
+					{ "time": 0, "angle": 102.23 },
+					{ "time": 0.4, "angle": 116.75 },
+					{ "time": 0.8333, "angle": 102.23 },
+					{ "time": 1.2333, "angle": 116.75 },
+					{ "time": 1.6667, "angle": 102.23 },
+					{ "time": 2.0667, "angle": 116.75 },
+					{ "time": 2.4333, "angle": 102.23 },
+					{ "time": 2.8667, "angle": 116.75 },
+					{ "time": 3.2667, "angle": 102.23 },
+					{ "time": 3.6667, "angle": 116.75 },
+					{ "time": 4, "angle": 102.23 }
+				]
+			},
+			"Bras_Gauche": {
+				"rotate": [
+					{ "time": 0, "angle": 18.25 },
+					{ "time": 0.4, "angle": 388.25 },
+					{ "time": 0.8333, "angle": 18.25 },
+					{ "time": 1.2333, "angle": 388.25 },
+					{ "time": 1.6667, "angle": 18.25 },
+					{ "time": 2.0667, "angle": 388.25 },
+					{ "time": 2.4333, "angle": 18.25 },
+					{ "time": 2.8667, "angle": 388.25 },
+					{ "time": 3.2667, "angle": 18.25 },
+					{ "time": 3.6667, "angle": 388.25 },
+					{ "time": 4, "angle": 18.25 }
+				]
+			},
+			"Avant_bras_Gauche": {
+				"rotate": [
+					{ "time": 0, "angle": 98.52 },
+					{ "time": 0.4, "angle": 118.64 },
+					{ "time": 0.8333, "angle": 98.52 },
+					{ "time": 1.2333, "angle": 118.64 },
+					{ "time": 1.6667, "angle": 98.52 },
+					{ "time": 2.0667, "angle": 118.64 },
+					{ "time": 2.4333, "angle": 98.52 },
+					{ "time": 2.8667, "angle": 118.64 },
+					{ "time": 3.2667, "angle": 98.52 },
+					{ "time": 3.6667, "angle": 118.64 },
+					{ "time": 4, "angle": 98.52 }
+				]
+			},
+			"Cuisse_Droite": {
+				"rotate": [
+					{ "time": 0, "angle": 0.76 },
+					{ "time": 0.4, "angle": -5.98 },
+					{ "time": 0.8333, "angle": 0.76 },
+					{ "time": 1.2333, "angle": -5.98 },
+					{ "time": 1.6667, "angle": 0.76 },
+					{ "time": 2.0667, "angle": -5.98 },
+					{ "time": 2.4333, "angle": 0.76 },
+					{ "time": 2.8667, "angle": -5.98 },
+					{ "time": 3.2667, "angle": 0.76 },
+					{ "time": 3.6667, "angle": -5.98 },
+					{ "time": 4, "angle": 0.76 }
+				]
+			},
+			"Cuisse_Gauche": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.4, "angle": 6.2 },
+					{ "time": 0.8333, "angle": 0 },
+					{ "time": 1.2333, "angle": 6.2 },
+					{ "time": 1.6667, "angle": 0 },
+					{ "time": 2.0667, "angle": 6.2 },
+					{ "time": 2.4333, "angle": 0 },
+					{ "time": 2.8667, "angle": 6.2 },
+					{ "time": 3.2667, "angle": 0 },
+					{ "time": 3.6667, "angle": 6.2 },
+					{ "time": 4, "angle": 0 }
+				]
+			},
+			"Patte_Droite": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.4, "angle": 10.48 },
+					{ "time": 0.8333, "angle": 0 },
+					{ "time": 1.2333, "angle": 10.48 },
+					{ "time": 1.6667, "angle": 0 },
+					{ "time": 2.0667, "angle": 10.48 },
+					{ "time": 2.4333, "angle": 0 },
+					{ "time": 2.8667, "angle": 10.48 },
+					{ "time": 3.2667, "angle": 0 },
+					{ "time": 3.6667, "angle": 10.48 },
+					{ "time": 4, "angle": 0 }
+				]
+			},
+			"Patte_Gauche": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.4, "angle": 11.18 },
+					{ "time": 0.8333, "angle": 0 },
+					{ "time": 1.2333, "angle": 11.18 },
+					{ "time": 1.6667, "angle": 0 },
+					{ "time": 2.0667, "angle": 11.18 },
+					{ "time": 2.4333, "angle": 0 },
+					{ "time": 2.8667, "angle": 11.18 },
+					{ "time": 3.2667, "angle": 0 },
+					{ "time": 3.6667, "angle": 11.18 },
+					{ "time": 4, "angle": 0 }
+				]
+			}
+		}
+	}
+}
+}

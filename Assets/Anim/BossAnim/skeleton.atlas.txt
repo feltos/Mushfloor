@@ -1,0 +1,89 @@
+
+skeleton.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Aile
+  rotate: false
+  xy: 2, 19
+  size: 467, 998
+  orig: 467, 998
+  offset: 0, 0
+  index: -1
+Bras
+  rotate: false
+  xy: 930, 479
+  size: 89, 371
+  orig: 89, 371
+  offset: 0, 0
+  index: -1
+Capuche1
+  rotate: false
+  xy: 471, 2
+  size: 297, 344
+  orig: 297, 344
+  offset: 0, 0
+  index: -1
+Cuisse
+  rotate: true
+  xy: 471, 852
+  size: 165, 492
+  orig: 165, 492
+  offset: 0, 0
+  index: -1
+Main
+  rotate: false
+  xy: 770, 62
+  size: 207, 284
+  orig: 207, 284
+  offset: 0, 0
+  index: -1
+Patte
+  rotate: true
+  xy: 471, 348
+  size: 161, 457
+  orig: 161, 457
+  offset: 0, 0
+  index: -1
+Torse
+  rotate: true
+  xy: 471, 511
+  size: 339, 457
+  orig: 339, 457
+  offset: 0, 0
+  index: -1
+
+skeleton2.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Avant_bras
+  rotate: false
+  xy: 398, 190
+  size: 111, 269
+  orig: 111, 269
+  offset: 0, 0
+  index: -1
+Bec
+  rotate: false
+  xy: 269, 172
+  size: 127, 287
+  orig: 127, 287
+  offset: 0, 0
+  index: -1
+Capuche2
+  rotate: false
+  xy: 2, 190
+  size: 265, 269
+  orig: 265, 269
+  offset: 0, 0
+  index: -1
+Crane
+  rotate: false
+  xy: 2, 2
+  size: 185, 186
+  orig: 185, 186
+  offset: 0, 0
+  index: -1
