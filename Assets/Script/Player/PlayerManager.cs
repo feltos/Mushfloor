@@ -100,6 +100,8 @@ public class PlayerManager : MonoBehaviour
 
     [SerializeField]
     SkeletonAnimation PlayerAnim;
+    [SerializeField]
+    BossManager bossManager;
 
     void Awake()
     {
@@ -303,14 +305,13 @@ public class PlayerManager : MonoBehaviour
             ActualSpeed = BasicSpeed;
             Dashed = false;
             PlayerAnim.loop = true;
-           //PlayerAnim.AnimationName = "Debout";
         }
     }
   
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") && TimeBetweenDamage >= PeriodBetweenDamage)
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") && TimeBetweenDamage >= PeriodBetweenDamage && bossManager.Dying == false)
         {
             SoundManager.Instance.PlayerHurt();
             HP -= 1;
@@ -329,7 +330,7 @@ public class PlayerManager : MonoBehaviour
         BulletBasic shot = collision.gameObject.GetComponent<BulletBasic>();
         if (shot != null)
         {
-            if (shot.isEnemyShot == IsEnemy && TimeBetweenDamage >= PeriodBetweenDamage && !Dashed)
+            if (shot.isEnemyShot == IsEnemy && TimeBetweenDamage >= PeriodBetweenDamage && !Dashed && bossManager.Dying == false)
             {
                 SoundManager.Instance.PlayerHurt();
                 HP -= shot.damage;

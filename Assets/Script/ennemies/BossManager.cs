@@ -35,7 +35,7 @@ public class BossManager : AllEnemiesManager
     Slider HealthSlider;
     float AngleOfShoot = 0f;
 
-    bool Dying = false;
+    public bool Dying = false;
     float FadeInTimer = 0f;
     float FadeInPeriod = 3f;
     [SerializeField]
@@ -133,6 +133,10 @@ public class BossManager : AllEnemiesManager
 
     void Update()
     {
+        if(Dying)
+        {
+            gameManager.FadeIn();
+        }
         FireCircleCooldown += Time.deltaTime;
         HeavyBulletCooldown += Time.deltaTime;
         DirectionOfShoot = Target.transform.position - transform.position;
@@ -148,15 +152,15 @@ public class BossManager : AllEnemiesManager
             
             switch (AttackList)
             {
-                case AttackListBoss.CircleFire:
+            case AttackListBoss.CircleFire:
                 FireCircleremaining = 2;
-                    break;
-                case AttackListBoss.HeavyBulletFire:
-                    HeavyBulletremaining = 4;
-                    break;
-                case AttackListBoss.Tornadofire:
-                    TornadoFireRemaining = 108;
-                    break;
+                break;
+            case AttackListBoss.HeavyBulletFire:
+                HeavyBulletremaining = 4;
+                break;
+            case AttackListBoss.Tornadofire:
+                TornadoFireRemaining = 108;
+                break;
             }
             StopToShoot = true;
         }
@@ -231,7 +235,7 @@ public class BossManager : AllEnemiesManager
         BulletBasic shot = collision.gameObject.GetComponent<BulletBasic>();
         if (shot != null)
         {
-            if (shot.isEnemyShot != IsEnemy)
+            if (shot.isEnemyShot != IsEnemy && !Dying)
             {
                 HP -= shot.damage;
                 Destroy(shot.gameObject);
@@ -240,8 +244,7 @@ public class BossManager : AllEnemiesManager
 
             if (HP <= 0)
             {
-                Dying = true;
-                gameManager.FadeIn();            
+                Dying = true;            
             }
         }
     

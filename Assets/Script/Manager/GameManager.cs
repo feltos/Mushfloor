@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,10 +14,11 @@ public class GameManager : MonoBehaviour
     public List<PlayerManager.Guns> AvailableGun = new List<PlayerManager.Guns>();
     [SerializeField]
     SpriteRenderer WhiteSquare;
-    float IncrementationWS = 0f;
-    Color colorWS;
+    
+   
     float FadeTimer = 0f;
-    float FadePeriod = 0.5f;
+    float FadePeriod = 3f;
+    
     
     public enum SwitchRoom
     {
@@ -41,14 +43,15 @@ public class GameManager : MonoBehaviour
         {
             AvailableGun.Add((PlayerManager.Guns)i);
         }
-        colorWS = WhiteSquare.material.color;
+        
     }
 	
 	
 	void Update ()
     {
+       
         
-	}
+    }
   
     
 
@@ -127,7 +130,7 @@ public class GameManager : MonoBehaviour
             case SwitchRoom.ROOM9:
                 {
                     followCamera.MinPosX = 34.84f;
-                    followCamera.MaxPosX = 40.64f;
+                    followCamera.MaxPosX = 41f;
                     followCamera.MinPosY = -38.87f;
                     followCamera.MaxPosy = -30.12f;
                 }
@@ -162,19 +165,13 @@ public class GameManager : MonoBehaviour
 
     public void FadeIn()
     {
-        FadeTimer += Time.deltaTime;
-        for (IncrementationWS =0 ; IncrementationWS < 255; IncrementationWS++)
-        {         
-            if(FadeTimer >= FadePeriod)
+            WhiteSquare.color = new Color(WhiteSquare.color.r, WhiteSquare.color.g, 
+            WhiteSquare.color.b, WhiteSquare.color.a + 1 * Time.deltaTime);
+            if (WhiteSquare.color.a >= 1.0f)
             {
-                colorWS.a = IncrementationWS;
-                WhiteSquare.material.color = colorWS;
-            }                      
-        }
-        if(IncrementationWS == 250)
-        {
-            SceneManager.LoadScene(5);
+                SceneManager.LoadScene(4);
+            }
         }
     }
         
-}
+
