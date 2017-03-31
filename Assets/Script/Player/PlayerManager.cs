@@ -127,7 +127,7 @@ public class PlayerManager : MonoBehaviour
         Movement = new Vector2(
         ActualSpeed.x * horizontal,
         ActualSpeed.y * vertical);
-        /////////////////////////////////////
+        IdleAndRun(horizontal,vertical);
 
         //////////////FLIP/////////////////
         if(horizontal > 0 && !IsTurnedRight)
@@ -138,8 +138,6 @@ public class PlayerManager : MonoBehaviour
         {
             Flip();
         }
-        ///////////////////////////////////
-
         ////////////FIRE////////////////
         Fire(false);
         //////////CHANGE WEAPON/////////////
@@ -162,8 +160,8 @@ public class PlayerManager : MonoBehaviour
             {
                 CurrentIndex = GunsOwned.Count -1;
             }            
-                CurrentGun = GetGunType(GunsOwned[CurrentIndex]);
-                PlayerAnim.skeleton.SetSkin(CurrentGun.ToString());
+            CurrentGun = GetGunType(GunsOwned[CurrentIndex]);
+            PlayerAnim.skeleton.SetSkin(CurrentGun.ToString());
         }
         
         ////////////////DASH///////////
@@ -191,7 +189,7 @@ public class PlayerManager : MonoBehaviour
     {        
         if(!Fall && HP !=0)
         {
-            rb2d.velocity = Movement;
+            rb2d.velocity = Movement;          
         }
     }
 
@@ -302,7 +300,7 @@ public class PlayerManager : MonoBehaviour
             ActualSpeed = BasicSpeed;
             Dashed = false;
             PlayerAnim.loop = true;
-            PlayerAnim.AnimationName = "Debout";
+           //PlayerAnim.AnimationName = "Debout";
         }
     }
   
@@ -464,11 +462,11 @@ public class PlayerManager : MonoBehaviour
     Guns GetGunType(string name)
     {
         Guns gunType = Guns.Rifle;
-        if(name.Contains("Basic_gun"))
+        if(name.Contains("Rifle"))
         {
             gunType= Guns.Rifle;
         }
-        if(name.Contains("AK_47"))
+        if(name.Contains("Tromblon"))
         {
             gunType = Guns.Tromblon;            
         }
@@ -476,7 +474,7 @@ public class PlayerManager : MonoBehaviour
         {
             gunType = Guns.Shotgun;            
         }
-        if(name.Contains("Sniper_gun"))
+        if(name.Contains("Fusil"))
         {
             gunType = Guns.Fusil;           
         }
@@ -493,4 +491,25 @@ public class PlayerManager : MonoBehaviour
         BasicKeyHold -= 1;
     }
 
+    void IdleAndRun(float horizontal,float vertical)
+    {
+        if (Dashed)
+        {
+            return;
+        }
+
+
+        if (Mathf.Abs(horizontal) >= WalkDeadZone || Mathf.Abs(vertical) >= WalkDeadZone)
+        {
+            PlayerAnim.loop = true;
+            PlayerAnim.AnimationName = "Marche";       
+        }
+        else
+        {
+            PlayerAnim.loop = true;
+            PlayerAnim.AnimationName = "Debout";
+        }
+    }
+       
+   
 }
