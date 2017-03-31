@@ -19,7 +19,7 @@ public class LittleMonster : AllEnemiesManager
     Transform BulletPrefab;
     float ShootCooldown = 1.5f;
     float BulletShoot = 1.5f;
-    
+    bool IsTurnedRight = false;
 
     void Awake()
     {
@@ -41,8 +41,16 @@ public class LittleMonster : AllEnemiesManager
         Movement = new Vector2(
             Speed.x * Direction.x,
             Speed.y * Direction.y);
+        if (rb2dLM.velocity.x > 0 && !IsTurnedRight)
+        {
+            Flip();
+        }
+        if (rb2dLM.velocity.x < 0 && IsTurnedRight)
+        {
+            Flip();
+        }
         /////////////FIRE//////////////
-        if(ShootCooldown >= BulletShoot)
+        if (ShootCooldown >= BulletShoot)
         {
             SoundManager.Instance.BasicFire();
             fire();
@@ -97,6 +105,12 @@ public class LittleMonster : AllEnemiesManager
             ShootCooldown = 0f;       
     }
 
-   
+    void Flip()
+    {
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
+        IsTurnedRight = !IsTurnedRight;
+    }
 
 }

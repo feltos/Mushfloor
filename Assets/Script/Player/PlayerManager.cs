@@ -211,7 +211,8 @@ public class PlayerManager : MonoBehaviour
         {
             direction = new Vector3(inputDevice.RightStick.X, inputDevice.RightStick.Y);
             timeBetweenShoot = 0;
-
+            PlayerAnim.loop = false;
+            PlayerAnim.AnimationName = "Marche Tir";
         }
         else if (Input.GetMouseButtonDown(0) && timeBetweenShoot > PeriodBetweenShoot)
         {
@@ -219,6 +220,8 @@ public class PlayerManager : MonoBehaviour
             mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
             direction = mousePosition - transform.position;
             timeBetweenShoot = 0;
+            PlayerAnim.loop = false;
+            PlayerAnim.AnimationName = "Marche Tir";
         }
         else
         {
@@ -314,6 +317,8 @@ public class PlayerManager : MonoBehaviour
             HealthSlider.value -= 1;
             TimeBetweenDamage = 0;
             DamageImage.color = FlashColor;
+            PlayerAnim.loop = false;
+            PlayerAnim.AnimationName = "Sursaut";
         }
        
     }
@@ -332,6 +337,8 @@ public class PlayerManager : MonoBehaviour
                 Destroy(shot.gameObject);
                 TimeBetweenDamage = 0;
                 DamageImage.color = FlashColor;
+                PlayerAnim.loop = false;
+                PlayerAnim.AnimationName = "Sursaut";
             }
 
         }

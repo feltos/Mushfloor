@@ -1,0 +1,96 @@
+
+skeleton.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Pants/front_blue_pant
+  rotate: false
+  xy: 2, 429
+  size: 324, 584
+  orig: 324, 584
+  offset: 0, 0
+  index: -1
+Pants/front_red_pant
+  rotate: false
+  xy: 328, 429
+  size: 324, 584
+  orig: 324, 584
+  offset: 0, 0
+  index: -1
+Pants/front_yellow_pant
+  rotate: false
+  xy: 654, 429
+  size: 324, 584
+  orig: 324, 584
+  offset: 0, 0
+  index: -1
+ear
+  rotate: false
+  xy: 582, 10
+  size: 64, 92
+  orig: 64, 92
+  offset: 0, 0
+  index: -1
+forearm
+  rotate: false
+  xy: 648, 14
+  size: 210, 88
+  orig: 210, 88
+  offset: 0, 0
+  index: -1
+front_paw
+  rotate: true
+  xy: 748, 240
+  size: 187, 272
+  orig: 187, 272
+  offset: 0, 0
+  index: -1
+head
+  rotate: true
+  xy: 2, 27
+  size: 400, 453
+  orig: 400, 453
+  offset: 0, 0
+  index: -1
+jaw
+  rotate: false
+  xy: 457, 2
+  size: 123, 100
+  orig: 123, 100
+  offset: 0, 0
+  index: -1
+torso
+  rotate: false
+  xy: 457, 104
+  size: 289, 323
+  orig: 289, 323
+  offset: 0, 0
+  index: -1
+upper_arm
+  rotate: true
+  xy: 748, 106
+  size: 132, 199
+  orig: 132, 199
+  offset: 0, 0
+  index: -1
+
+skeleton2.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+front_paw_pant
+  rotate: true
+  xy: 2, 36
+  size: 174, 314
+  orig: 174, 314
+  offset: 0, 0
+  index: -1
+tail
+  rotate: true
+  xy: 318, 2
+  size: 208, 171
+  orig: 208, 171
+  offset: 0, 0
+  index: -1

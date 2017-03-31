@@ -22,7 +22,7 @@ public class HeavyMonster : AllEnemiesManager
     Transform HeavyBulletPrefab;
     float ShootCooldown = 4f;
     float BulletShoot = 4f;
-    
+    bool IsTurnedRight = false;
 
     void Awake()
     {
@@ -44,6 +44,14 @@ public class HeavyMonster : AllEnemiesManager
         Movement = new Vector2(
             Speed.x * Direction.x,
             Speed.y * Direction.y);
+        if (rb2dHM.velocity.x > 0 && !IsTurnedRight)
+        {
+            Flip();
+        }
+        if (rb2dHM.velocity.x < 0 && IsTurnedRight)
+        {
+            Flip();
+        }
         /////////////FIRE//////////////
         fire();
      
@@ -101,5 +109,11 @@ public class HeavyMonster : AllEnemiesManager
 
     }
 
-
+    void Flip()
+    {
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
+        IsTurnedRight = !IsTurnedRight;
+    }
 }

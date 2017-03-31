@@ -23,7 +23,7 @@ public class RafaleEnemy : AllEnemiesManager
     float RafaleCooldown = 3f;
     float BulletLeft = 12f;
     bool StopToShoot;
-    
+    bool IsTurnedRight = false;
 
     void Awake()
     {
@@ -48,6 +48,14 @@ public class RafaleEnemy : AllEnemiesManager
         Movement = new Vector2(
             Speed.x * Direction.x,
             Speed.y * Direction.y);
+        if (rb2dRM.velocity.x > 0 && !IsTurnedRight)
+        {
+            Flip();
+        }
+        if (rb2dRM.velocity.x < 0 && IsTurnedRight)
+        {
+            Flip();
+        }
         //////////FIRE//////////////
         fire();
         reload();
@@ -114,11 +122,16 @@ public class RafaleEnemy : AllEnemiesManager
         {
             BulletLeft = 12f;
             RafaleCooldown = 0f;
-            StopToShoot = false;
-            
+            StopToShoot = false;            
         }
     }
 
-
+    void Flip()
+    {
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
+        IsTurnedRight = !IsTurnedRight;
+    }
 
 }

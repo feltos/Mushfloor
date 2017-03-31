@@ -19,7 +19,7 @@ public class ArcMonster : AllEnemiesManager
     float ShootCooldown = 1.5f;
     float BulletShoot = 1.5f;
     bool IsEnemy = true;
-    
+    bool IsTurnedRight = false;
 
     void Awake()
     {
@@ -41,6 +41,14 @@ public class ArcMonster : AllEnemiesManager
         Movement = new Vector2(
             Speed.x * Direction.x,
             Speed.y * Direction.y);
+        if (rb2dAM.velocity.x > 0 && !IsTurnedRight)
+        {
+            Flip();
+        }
+        if (rb2dAM.velocity.x < 0 && IsTurnedRight)
+        {
+            Flip();
+        }
         /////////////////FIRE/////////////////////
         if (ShootCooldown >= BulletShoot)
         {
@@ -91,5 +99,13 @@ public class ArcMonster : AllEnemiesManager
         {
             HP -= 1;
         }     
+    }
+
+    void Flip()
+    {
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
+        IsTurnedRight = !IsTurnedRight;
     }
 }
